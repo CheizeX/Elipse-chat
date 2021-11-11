@@ -222,7 +222,8 @@ export const WrapperAgents = styled.div`
 
     & > :nth-child(2) {
       overflow: scroll;
-      min-height: 472px;
+      min-height: 442px;
+      max-height: 442px;
       margin-top: 30px;
       &::-webkit-scrollbar {
         display: none;
