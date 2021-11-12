@@ -54,7 +54,7 @@ export const ReviewChart: FC = () => {
   const dataReview = reviewChats?.map((item, index) => {
     return {
       id: item._id,
-      day: weekdays[index].day,
+      day: weekdays[index]?.day,
       Satisfactorio: item.satisfactory,
       Insatisfactorio: item.unsatisfactory,
     };
