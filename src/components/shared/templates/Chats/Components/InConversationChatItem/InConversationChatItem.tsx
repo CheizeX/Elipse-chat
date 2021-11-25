@@ -3,7 +3,7 @@
 import React, { FC } from 'react';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
-import { Channels } from '../../../../../../models/chat/chat';
+import { Channels, Chat } from '../../../../../../models/chat/chat';
 import {
   StyledLabel,
   StyledClientAndAgentAvatars,
@@ -111,36 +111,36 @@ export const InConversationChatItem: FC<
                 channelsToFilter.length === 0 &&
                 chatsOnConversation),
           )
-          .map((user) => (
+          .map((chat: Chat) => (
             <StyledInConversationWrapper
-              focusedItem={user.client.clientId === userSelected}
-              key={user.createdAt.toString()}
-              onClick={() => handleSendMessageToUser(user.client.clientId)}>
+              focusedItem={chat.client.clientId === userSelected}
+              key={chat.createdAt.toString()}
+              onClick={() => handleSendMessageToUser(chat.client.clientId)}>
               <StyledInConversationChatItem>
                 <StyledClientAndAgentAvatars>
-                  {user.client.profilePic ? (
-                    <img src={user.client.profilePic} alt={user.client.name} />
+                  {chat.client.profilePic ? (
+                    <img src={chat.client.profilePic} alt={chat.client.name} />
                   ) : (
                     <SVGIcon iconFile="/icons/user.svg" />
                   )}
-                  {user.channel === Channels.WHATSAPP && (
+                  {chat.channel === Channels.WHATSAPP && (
                     <SVGIcon iconFile="/icons/whatsapp.svg" />
                   )}
-                  {user.channel === Channels.MESSENGER && (
+                  {chat.channel === Channels.MESSENGER && (
                     <SVGIcon iconFile="/icons/messenger.svg" />
                   )}
-                  {user.channel === Channels.INSTAGRAM && (
+                  {chat.channel === Channels.INSTAGRAM && (
                     <SVGIcon iconFile="/icons/Instagram.svg" />
                   )}
                 </StyledClientAndAgentAvatars>
                 <StyledNameAndDialog>
                   <Text>
-                    {user.client.name.substr(0, 16) ||
-                      user.client.clientId.substr(0, 16)}
+                    {chat.client.name.substr(0, 16) ||
+                      chat.client.clientId.substr(0, 16)}
                   </Text>
                   <Text>
-                    {user.messages &&
-                      user.messages[user.messages.length - 1].content.substr(
+                    {chat.messages &&
+                      chat.messages[chat.messages.length - 1].content.substr(
                         0,
                         14,
                       )}
@@ -151,17 +151,17 @@ export const InConversationChatItem: FC<
                   <div>
                     <SVGIcon iconFile="/icons/watch.svg" />
                     {Math.floor(
-                      (timeLapse - new Date(user.createdAt).getTime()) /
+                      (timeLapse - new Date(chat.createdAt).getTime()) /
                         (1000 * 60),
                     ) > 59 &&
                       (Math.floor(
-                        (timeLapse - new Date(user.createdAt).getTime()) /
+                        (timeLapse - new Date(chat.createdAt).getTime()) /
                           (1000 * 60),
                       ) > 119 ? (
                         <Text>
                           Hace +
                           {Math.floor(
-                            (timeLapse - new Date(user.createdAt).getTime()) /
+                            (timeLapse - new Date(chat.createdAt).getTime()) /
                               (1000 * 60) /
                               60,
                           )}{' '}
@@ -171,7 +171,7 @@ export const InConversationChatItem: FC<
                         <Text>
                           Hace +
                           {Math.floor(
-                            (timeLapse - new Date(user.createdAt).getTime()) /
+                            (timeLapse - new Date(chat.createdAt).getTime()) /
                               (1000 * 60) /
                               60,
                           )}{' '}
@@ -179,13 +179,13 @@ export const InConversationChatItem: FC<
                         </Text>
                       ))}
                     {Math.floor(
-                      (Date.now() - new Date(user.createdAt).getTime()) /
+                      (Date.now() - new Date(chat.createdAt).getTime()) /
                         (1000 * 60),
                     ) <= 59 && (
                       <Text>
                         Hace{' '}
                         {Math.floor(
-                          (timeLapse - new Date(user.createdAt).getTime()) /
+                          (timeLapse - new Date(chat.createdAt).getTime()) /
                             (1000 * 60),
                         )}{' '}
                         min.
@@ -193,16 +193,16 @@ export const InConversationChatItem: FC<
                     )}
                   </div>
                   <div>
-                    {user.isTransfer === true && (
+                    {chat.isTransfer === true && (
                       <SVGIcon iconFile="/icons/exchange_alt.svg" />
                     )}
                     {/* <div>{user.number}</div> */}
                   </div>
                 </StyledTimeAndState>
               </StyledInConversationChatItem>
-              {user.tags && (
+              {chat.tags && (
                 <StyledLabelsContainer>
-                  {user.tags.map((tag: Tag, index: number) => (
+                  {chat.tags.map((tag: Tag, index: number) => (
                     <StyledLabel color={tag.color} key={index.toString()}>
                       <Text>{tag.name}</Text>
                     </StyledLabel>

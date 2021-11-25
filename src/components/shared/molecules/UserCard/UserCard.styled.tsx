@@ -110,6 +110,14 @@ export const StyledAvatar = styled.div`
   text-align: center;
   top: -20px;
   width: 100%;
+  & > img {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 54px;
+    height: 54px;
+    position: absolute;
+    top: -11px;
+  }
   svg {
     align-self: baseline;
     position: relative;

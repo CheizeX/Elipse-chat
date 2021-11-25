@@ -12,6 +12,7 @@ import {
 } from './MonitorFirstSection.styled';
 import { IFirstSetionProps } from './MonitorFirstSection.interface';
 import { ChatsCardMonitor } from '../ChatsCardMonitor/ChatsCardMonitor';
+import useLocalStorage from '../../../../../../hooks/use-local-storage';
 
 export const MonitorFirstSection: FC<IFirstSetionProps> = ({
   onChange,
@@ -27,6 +28,7 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
   resetHandle,
 }) => {
   const [timeChat, setTimeChat] = useState(Date.now());
+  const [accessToken] = useLocalStorage('AccessToken', '');
   const finishChat =
     chats && chats.filter((item) => item.status === 'FINISHED');
   const onConversationChats = chats?.filter(
@@ -42,7 +44,6 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
     }, 10000);
     return () => clearInterval(intervalToGetActualTime);
   }, []);
-
   return (
     <StyledMonitorFirstSection>
       <StyledHeaderFirstSection>
@@ -92,7 +93,7 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
             </span>
             <span>
               <Text color="black">Agente</Text>
-              <Text color="black">Últ.Interacción</Text>
+              <Text color="black">Últ. Interacción</Text>
             </span>
           </span>
           <div>
@@ -110,11 +111,25 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
                     </BadgeMolecule>
                   </span>
                   <span>
-                    {status !== 'ASSIGNMENT_PENDING' ? (
-                      <SVGIcon iconFile="/icons/unknown_user.svg" />
-                    ) : null}
-
-                    {!assignedAgent ? 'Sin Asignación' : assignedAgent.name}
+                    {dateAgent
+                      ?.filter(
+                        (item) =>
+                          assignedAgent && item._id === assignedAgent._id,
+                      )
+                      .map(
+                        (ele) =>
+                          (ele.urlAvatar ? (
+                            <img
+                              src={`${ele.urlAvatar}?token=${accessToken}`}
+                              alt={ele.name}
+                            />
+                          ) : (
+                            <SVGIcon iconFile="/icons/unknown_user.svg" />
+                          )) ?? <SVGIcon iconFile="/icons/unknown_user.svg" />,
+                      )}
+                    {!assignedAgent
+                      ? 'Sin Asignación'
+                      : assignedAgent.name.slice(0, 16)}
                   </span>
                   <span>
                     {status !== 'ASSIGNMENT_PENDING' ? (

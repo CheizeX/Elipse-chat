@@ -9,6 +9,7 @@ import {
   FilterByAgents,
 } from './FilterByAgent.styled';
 import { IFilterAgent } from './FilterByAgent.interface';
+import useLocalStorage from '../../../../../../hooks/use-local-storage';
 // eslint-disable-next-line import/no-cycle
 
 export const FilterByAgent: FC<IFilterAgent> = ({
@@ -17,6 +18,7 @@ export const FilterByAgent: FC<IFilterAgent> = ({
   handleFilterAgents,
   byAgents,
 }) => {
+  const [accessToken] = useLocalStorage('AccessToken', '');
   return (
     <ContainerFilterByAgent>
       <ContainerInput
@@ -26,7 +28,7 @@ export const FilterByAgent: FC<IFilterAgent> = ({
         onChange={onChange}
       />
       <StyledWrapperFilterByAgents>
-        {dateAgent?.map(({ _id, name }) => (
+        {dateAgent?.map(({ _id, name, urlAvatar }) => (
           <FilterByAgents
             onChange={onChange}
             key={_id}
@@ -36,7 +38,12 @@ export const FilterByAgent: FC<IFilterAgent> = ({
               checked={byAgents.indexOf(_id) !== -1}
               onClick={() => handleFilterAgents(_id)}
             />
-            <SVGIcon iconFile="/icons/unknown_user.svg" />
+            {urlAvatar && urlAvatar !== '' ? (
+              <img src={`${urlAvatar}?token=${accessToken}`} alt={name} />
+            ) : (
+              // <StyledMyAccountAvatar src="/icons/user.svg" />
+              <SVGIcon iconFile="/icons/unknown_user.svg" />
+            )}
             <Text color="black">{name}</Text>
           </FilterByAgents>
         )) ?? []}

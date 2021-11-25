@@ -10,6 +10,6 @@ export default {
 storiesOf('Ailalia/Organisms/Dashboard/ReviewChart', module).add(
   'Default',
   () => {
-    return <ReviewChart />;
+    return <ReviewChart setIsDisableReview={() => {}} />;
   },
 );

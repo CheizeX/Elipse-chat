@@ -15,9 +15,15 @@ import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
 import { readReviewChats } from '../../../../../../api/chat';
 import { setReviewChatsFinished } from '../../../../../../redux/slices/dashboard/dashboard-review';
+import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
+import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
+import { IPropsReview } from './ReviewChart.interface';
 
-export const ReviewChart: FC = () => {
-  const { reviewChats } = useAppSelector(
+export const ReviewChart: FC<IPropsReview> = ({
+  isDisableReview,
+  setIsDisableReview,
+}) => {
+  const { reviewChats, reviewByAgent } = useAppSelector(
     (state) => state.review.chatContainerReviewState,
   );
 
@@ -32,6 +38,7 @@ export const ReviewChart: FC = () => {
       } else {
         dispatch(setReviewChatsFinished(currentDts));
       }
+      setIsDisableReview(true);
     } catch (err) {
       showAlert?.addToast({
         alert: Toast.ERROR,
@@ -40,16 +47,21 @@ export const ReviewChart: FC = () => {
       });
     }
   };
+
+  const handleResetAll = () => {
+    readReview();
+  };
   useEffect(() => {
     readReview();
   }, []);
 
   const weekdays = [
-    { id: 1, day: 'Lunes' },
-    { id: 2, day: 'Martes' },
-    { id: 3, day: 'Miercoles' },
-    { id: 4, day: 'Jueves' },
-    { id: 5, day: 'Viernes' },
+    { id: 2, day: 'Lunes' },
+    { id: 3, day: 'Martes' },
+    { id: 4, day: 'Miercoles' },
+    { id: 5, day: 'Jueves' },
+    { id: 6, day: 'Viernes' },
+    { id: 7, day: 'Sabado' },
   ];
   const dataReview = reviewChats?.map((item, index) => {
     return {
@@ -63,7 +75,20 @@ export const ReviewChart: FC = () => {
   return (
     <StyledReviewChart>
       <StyledReviewChatsHeader>
-        <Text>Total de Comentarios</Text>
+        <Text>
+          {!isDisableReview
+            ? `Chats finalizados de ${reviewByAgent}`
+            : 'Chats finalizados por semana'}
+        </Text>
+        <button
+          type="button"
+          onClick={handleResetAll}
+          disabled={isDisableReview}>
+          <BadgeMolecule
+            leftIcon={() => <SVGIcon iconFile="/icons/bars-graphic.svg" />}>
+            <Text>Todos</Text>
+          </BadgeMolecule>
+        </button>
       </StyledReviewChatsHeader>
       <StyledChart>
         <ResponsiveBar
@@ -76,6 +101,7 @@ export const ReviewChart: FC = () => {
           valueScale={{ type: 'linear' }}
           indexScale={{ type: 'band', round: true }}
           enableGridX
+          enableLabel={false}
           colors={{ scheme: 'purpleRed_green' }}
           defs={[
             {
@@ -118,7 +144,7 @@ export const ReviewChart: FC = () => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'Dìas de la Semana',
+            legend: '',
             legendPosition: 'middle',
             legendOffset: 32,
           }}
@@ -126,7 +152,7 @@ export const ReviewChart: FC = () => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'Cantidad',
+            legend: '',
             legendPosition: 'middle',
             legendOffset: -40,
           }}

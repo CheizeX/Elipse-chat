@@ -125,7 +125,7 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
   height: 56px;
   display: flex;
   justify-content: space-between;
-  padding-right: 2.3rem;
+  padding-right: 2.5rem;
   align-items: center;
   background-color: ${({ theme, index }) =>
     index && index % 2 !== 0 ? theme.Colors.grays[10] : theme.Colors.grays[9]};
@@ -136,6 +136,13 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
     display: flex;
     align-items: center;
     margin: 12px 25px;
+    & > img {
+      width: 24px;
+      height: 24px;
+
+      border-radius: 50%;
+      object-fit: cover;
+    }
     & > div {
       & > div {
         & > div {
@@ -154,9 +161,41 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
         }
       }
     }
+
+    & > :nth-child(3) {
+      width: 18px;
+      height: 13px;
+      margin-left: 14px;
+      & > :hover {
+        cursor: pointer;
+
+        & * {
+          & > svg {
+            & > :nth-child(1) {
+              & > path {
+                fill: ${({ theme }) => theme.Colors.purples[1]};
+              }
+            }
+          }
+        }
+      }
+      &:active {
+        opacity: 0.9;
+      }
+      & > div {
+        & * {
+          & > svg {
+            & > :nth-child(1) {
+              & > path {
+                fill: ${({ theme }) => theme.Colors.grays[6]};
+              }
+            }
+          }
+        }
+      }
+    }
   }
   span {
-    width: 100%;
     margin-left: 14px;
     color: ${({ theme }) => theme.Colors.grays[1]};
     font-weight: ${({ theme }) => theme.fontWeight[500]};
@@ -180,9 +219,5 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
       font-weight: ${({ theme }) => theme.fontWeight[700]};
       font-size: ${({ theme }) => theme.fontSize[12]};
     }
-  }
-  & > :nth-child(3) {
-    width: 18px;
-    height: 13px;
   }
 `;

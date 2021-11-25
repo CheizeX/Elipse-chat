@@ -170,6 +170,13 @@ export const StyledAgentSection = styled.div<IContainerProps>`
         }
       }
     }
+    & > img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 8px;
+    }
   }
   & > :nth-child(4) {
     display: flex;
@@ -225,6 +232,7 @@ export const WrapperAgents = styled.div`
       min-height: 442px;
       max-height: 442px;
       margin-top: 30px;
+      max-height: 472px;
       &::-webkit-scrollbar {
         display: none;
       }

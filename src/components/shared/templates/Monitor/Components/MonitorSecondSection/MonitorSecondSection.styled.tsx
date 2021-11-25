@@ -160,12 +160,19 @@ export const WrapperSecondSectionAgent = styled.div`
     background-color: ${({ theme }) => theme.Colors.grays[10]};
     margin-bottom: 8px;
     padding: 16px 20px;
+    & img {
+      border-radius: 50%;
+      object-fit: cover;
+      max-width: 42px;
+      max-height: 42px;
+    }
     & > :nth-child(1) {
       display: flex;
       justify-content: flex-start;
+      align-items: flex-end;
       & > :nth-child(1) {
-        width: 52px;
-        height: 52px;
+        width: 50px;
+        height: 50px;
         & > div {
           & * {
             & > svg {
@@ -181,11 +188,12 @@ export const WrapperSecondSectionAgent = styled.div`
         width: 108px;
         justify-content: flex-end;
         margin-left: 17px;
+        margin-bottom: 4px;
         padding: 0;
         & > :nth-child(1) {
           position: relative;
-          right: 30px;
-          top: 28px;
+          right: 28px;
+          top: 32px;
         }
         & > :nth-child(2) {
           color: ${({ theme }) => theme.Colors.grays[3]};

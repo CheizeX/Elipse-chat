@@ -13,6 +13,7 @@ export interface IUserCardMoleculeProps {
   infoUserEmail: string;
   infoUserRole: string;
   containerTags?: Tag[];
+  avatar?: string;
 }
 
 export interface IUserCardContainerProps {

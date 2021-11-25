@@ -98,6 +98,7 @@ export const StyledClientAndAgentAvatars = styled.div`
   width: 60px;
   & > img {
     border-radius: 50%;
+    object-fit: cover;
   }
   & > :first-child {
     display: flex;
@@ -145,6 +146,7 @@ export const StyledNameAndDialog = styled.div`
     font-size: ${({ theme }) => theme.fontSize[12]};
     font-weight: ${({ theme }) => theme.fontWeight[600]};
     color: ${({ theme }) => theme.Colors.grays[1]};
+    overflow: hidden;
   }
   & > :nth-child(2) {
     max-height: 17px;

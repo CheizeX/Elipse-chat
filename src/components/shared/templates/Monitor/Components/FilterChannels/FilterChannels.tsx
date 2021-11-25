@@ -21,15 +21,15 @@ export const Channels = [
     name: 'Instagram',
     icon: 'Instagram',
   },
+  {
+    id: 44,
+    name: 'Chat web',
+    icon: 'WebChat',
+  },
   // {
   //   id: 4,
   //   name: 'Telegram',
   //   icon: 'Telegram',
-  // },
-  // {
-  //   id: 5,
-  //   name: 'Chat web',
-  //   icon: 'WebChat',
   // },
 ];
 

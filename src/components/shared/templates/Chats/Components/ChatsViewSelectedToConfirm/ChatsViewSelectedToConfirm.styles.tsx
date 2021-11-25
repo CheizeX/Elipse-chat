@@ -23,6 +23,7 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
     width: 40px;
     height: 40px;
     padding: 0;
+    object-fit: cover;
   }
   & > div {
     height: 100%;
@@ -39,7 +40,7 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
       border-radius: 50%;
       display: flex;
       align-items: center;
-      width: fit-content;
+      /* width: fit-content; */
       height: 40px;
       margin-right: 10px;
       text-align: left;

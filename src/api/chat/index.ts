@@ -47,6 +47,8 @@ export const readChatsToday = async (date: string) => {
   );
 };
 
-export const readReviewChats = async () => {
-  return baseRestApi.get<Chat>('/chats/statistics/finishedChats');
+export const readReviewChats = async (filter = 'all') => {
+  return baseRestApi.get<Chat>(
+    `/chats/statistics/finishedChats?filter=${filter}`,
+  );
 };

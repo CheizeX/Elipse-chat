@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useJwt } from 'react-jwt';
 import { Text } from '../../../atoms/Text/Text';
 import { SVGIcon } from '../../../atoms/SVGIcon/SVGIcon';
 import {
@@ -12,13 +13,17 @@ import {
 import { IBackOfficeProps } from './NavBarBackOffice.interface';
 import { BadgeMolecule } from '../../../molecules/Badge/Badge';
 import { useAuth } from '../../../../../hooks/auth/main-auth.hook';
-import { useAppDispatch } from '../../../../../redux/hook/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../redux/hook/hooks';
 import { setUserDataInState } from '../../../../../redux/slices/auth/user-credentials';
 import { useToastContext } from '../../../molecules/Toast/useToast';
 import { Toast } from '../../../molecules/Toast/Toast.interface';
 import { DecodedToken } from '../../../../../models/users/user';
 import { MyAccountSidebarOrganism } from '../../MyAccountSidebar/MyAccountSidebar';
 import useDisplayElementOrNot from '../../../../../hooks/use-display-element-or-not';
+import useLocalStorage from '../../../../../hooks/use-local-storage';
 
 export const BackOffice: FC<IBackOfficeProps> = ({ text }) => {
   const { signOut } = useAuth();
@@ -29,7 +34,11 @@ export const BackOffice: FC<IBackOfficeProps> = ({ text }) => {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useDisplayElementOrNot(false);
   const [myAccount, setMyAccount] = React.useState<number>(0);
-
+  const [accessToken] = useLocalStorage('AccessToken', '');
+  const { decodedToken }: any = useJwt(accessToken);
+  const { userDataInState } = useAppSelector(
+    (state) => state.userAuthCredentials,
+  );
   const handleNavUserDropdown = () => {
     setIsComponentVisible(!isComponentVisible);
   };
@@ -52,6 +61,14 @@ export const BackOffice: FC<IBackOfficeProps> = ({ text }) => {
       });
     }
   };
+  const profilePicture = userDataInState.urlAvatar
+    ? `${userDataInState.urlAvatar}?token=${accessToken}`
+    : '';
+  useEffect(() => {
+    if (decodedToken) {
+      dispatch(setUserDataInState(decodedToken));
+    }
+  }, [decodedToken]);
 
   return (
     <>
@@ -69,7 +86,11 @@ export const BackOffice: FC<IBackOfficeProps> = ({ text }) => {
         <StyledNotificationBackOffice /> */}
           <TriggerElement>
             <StyledAvatar>
-              <SVGIcon iconFile="/icons/unknown_user.svg" />
+              {profilePicture !== '' ? (
+                <img src={profilePicture} alt={userDataInState.name} />
+              ) : (
+                <SVGIcon iconFile="/icons/unknown_user.svg" />
+              )}
             </StyledAvatar>
             <ArrowIcon onClick={handleNavUserDropdown}>
               {isComponentVisible ? (

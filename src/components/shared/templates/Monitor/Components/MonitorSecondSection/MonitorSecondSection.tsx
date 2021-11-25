@@ -15,6 +15,7 @@ import {
 import { ChatsCardMonitor } from '../ChatsCardMonitor/ChatsCardMonitor';
 import { IMonitorSecondSection } from './MonitorSecondSection.interface';
 import { UserStatus } from '../../../../../../models/users/status';
+import useLocalStorage from '../../../../../../hooks/use-local-storage';
 
 export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
   onChange,
@@ -33,6 +34,8 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
   const allAgentAvailable = dateAgent?.filter(
     (item) => item.status === UserStatus.AVAILABLE,
   );
+  const [accessToken] = useLocalStorage('AccessToken', '');
+  // const profilePicture = `${userDataInState?.urlAvatar}?token=${accessToken}`;
 
   return (
     <StyledWrapperSectionMonitor>
@@ -71,10 +74,15 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
         onChange={onChange}
       />
       <WrapperSecondSectionAgent>
-        {dateAgent?.map(({ _id, name, email, status }) => (
+        {dateAgent?.map(({ _id, name, email, status, urlAvatar }) => (
           <div key={_id}>
             <div>
-              <SVGIcon iconFile="/icons/unknown_user.svg" />
+              {urlAvatar && urlAvatar !== '' ? (
+                <img src={`${urlAvatar}?token=${accessToken}`} alt={name} />
+              ) : (
+                // <StyledMyAccountAvatar src="/icons/user.svg" />
+                <SVGIcon iconFile="/icons/unknown_user.svg" />
+              )}
               <div>
                 <span>
                   {status === UserStatus.AVAILABLE ? (

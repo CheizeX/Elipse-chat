@@ -356,8 +356,21 @@ export const LiveStyledAvatar = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.Colors.grays[9]};
+  & > img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
   & > :first-child {
-    transform: translate(-1px, 7px);
+    & > div {
+      & > div {
+        // transform: translate(-1px, 7px);
+        top: 7px;
+        display: flex;
+        position: absolute;
+      }
+    }
   }
   & svg {
     border: 4px solid ${({ theme }) => theme && theme.Colors.purples[3]};

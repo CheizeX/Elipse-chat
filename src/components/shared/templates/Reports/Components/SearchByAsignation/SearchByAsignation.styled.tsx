@@ -41,6 +41,8 @@ export const StyledSearchByAsignation = styled.div<ISearchByAsignation>`
     height: 24px;
     margin-left: 18px;
     margin-right: 8px;
+    border-radius: 50%;
+    object-fit: cover;
     & > div {
       & * {
         & > svg {

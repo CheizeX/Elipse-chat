@@ -51,6 +51,10 @@ export const FilterByAgents = styled.div<IFilterByAgentProps>`
     height: 24px;
     margin-left: 18px;
     margin-right: 8px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
     & > div {
       & * {
         & > svg {

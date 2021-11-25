@@ -12,6 +12,7 @@ export const InputMolecule: FC<IInputMoleculeProps> = ({
   onChange,
   value,
   name,
+  maxLength,
   onKeyPress,
 }) => {
   return (
@@ -27,6 +28,7 @@ export const InputMolecule: FC<IInputMoleculeProps> = ({
       onBlur={() => setFocus(false)}
       onChange={onChange}
       onKeyPress={onKeyPress}
+      maxLength={maxLength}
     />
   );
 };

@@ -26,7 +26,7 @@ import {
   setSortedByFirstDate,
   setSortedByLastDate,
 } from '../../../../../../redux/slices/live-chat/pending-chats';
-import { Channels } from '../../../../../../models/chat/chat';
+import { Channels, Chat } from '../../../../../../models/chat/chat';
 import { Tag } from '../../../../../../models/tags/tag';
 
 export const PendingsChatItem: FC<
@@ -98,38 +98,38 @@ export const PendingsChatItem: FC<
                 channelsToFilter.length === 0 &&
                 chatsPendings),
           )
-          .map((user: any) => (
+          .map((chat: Chat) => (
             <StyledPendingWrapper
-              focusedItem={user.client.clientId === userSelected}
-              key={user.createdAt.toString()}
-              onClick={() => handleClick(user.client.clientId)}>
+              focusedItem={chat.client.clientId === userSelected}
+              key={chat.createdAt.toString()}
+              onClick={() => handleClick(chat.client.clientId)}>
               <StyledPendingChatItem>
                 <StyledClientAndAgentAvatars>
-                  {user.client.profilePic ? (
-                    <img src={user.client.profilePic} alt={user.client.name} />
+                  {chat.client.profilePic ? (
+                    <img src={chat.client.profilePic} alt={chat.client.name} />
                   ) : (
                     <SVGIcon iconFile="/icons/user.svg" />
                   )}
-                  {user.channel === Channels.WHATSAPP && (
+                  {chat.channel === Channels.WHATSAPP && (
                     <SVGIcon iconFile="/icons/whatsapp.svg" />
                   )}
-                  {user.channel === Channels.MESSENGER && (
+                  {chat.channel === Channels.MESSENGER && (
                     <SVGIcon iconFile="/icons/messenger.svg" />
                   )}
-                  {user.channel === Channels.INSTAGRAM && (
+                  {chat.channel === Channels.INSTAGRAM && (
                     <SVGIcon iconFile="/icons/Instagram.svg" />
                   )}
                 </StyledClientAndAgentAvatars>
                 <StyledNameAndDialog>
                   <Text>
-                    {(user.client.name.substr(0, 16) ||
-                      (user.client.clientId &&
-                        user.client.clientId.substr(0, 16))) ??
+                    {(chat.client.name.substr(0, 16) ||
+                      (chat.client.clientId &&
+                        chat.client.clientId.substr(0, 16))) ??
                       ''}
                   </Text>
                   <Text>
-                    {user.messages &&
-                      user.messages[user.messages.length - 1].content.substr(
+                    {chat.messages &&
+                      chat.messages[chat.messages.length - 1].content.substr(
                         0,
                         14,
                       )}
@@ -140,13 +140,13 @@ export const PendingsChatItem: FC<
                   <div>
                     <SVGIcon iconFile="/icons/watch.svg" />
                     {Math.floor(
-                      (timeLapse - new Date(user.createdAt).getTime()) /
+                      (timeLapse - new Date(chat.createdAt).getTime()) /
                         (1000 * 60),
                     ) > 59 ? (
                       <Text>
                         Hace +
                         {Math.floor(
-                          (timeLapse - new Date(user.createdAt).getTime()) /
+                          (timeLapse - new Date(chat.createdAt).getTime()) /
                             (1000 * 60) /
                             60,
                         )}{' '}
@@ -154,13 +154,13 @@ export const PendingsChatItem: FC<
                       </Text>
                     ) : (
                       Math.floor(
-                        (Date.now() - new Date(user.createdAt).getTime()) /
+                        (Date.now() - new Date(chat.createdAt).getTime()) /
                           (1000 * 60),
                       ) <= 59 && (
                         <Text>
                           Hace{' '}
                           {Math.floor(
-                            (timeLapse - new Date(user.createdAt).getTime()) /
+                            (timeLapse - new Date(chat.createdAt).getTime()) /
                               (1000 * 60),
                           )}{' '}
                           min.
@@ -170,13 +170,13 @@ export const PendingsChatItem: FC<
                   </div>
                   <div>
                     <div />
-                    <div>{user.messages.length}</div>
+                    <div>{chat.messages.length}</div>
                   </div>
                 </StyledTimeAndState>
               </StyledPendingChatItem>
-              {user.tags && (
+              {chat.tags && (
                 <StyledLabelsContainer>
-                  {user.tags.map((tag: Tag, index: number) => (
+                  {chat.tags.map((tag: Tag, index: number) => (
                     <StyledLabel color={tag.color} key={index.toString()}>
                       <Text>{tag.name}</Text>
                     </StyledLabel>

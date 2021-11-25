@@ -348,6 +348,7 @@ export const AddedUsersSection: FC = () => {
               containerTags={user.tags}
               infoUserEmail={user.email}
               infoUserRole={user.role}
+              avatar={user.urlAvatar}
               key={user._id}>
               <StyledUsernameEmail>
                 <Text>{user.name}</Text>

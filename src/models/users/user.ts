@@ -9,6 +9,7 @@ export type User = {
   role: UserRole;
   tags: Tag[] | undefined;
   status?: UserStatus;
+  urlAvatar?: string;
 };
 
 export type Status = {
@@ -26,6 +27,6 @@ export type DecodedToken = {
   iat?: number;
   name?: string;
   role?: string;
-  urlAvatar?: string;
+  urlAvatar: string;
   _id?: string;
 };

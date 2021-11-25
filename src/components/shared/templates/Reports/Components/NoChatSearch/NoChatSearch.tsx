@@ -12,7 +12,7 @@ export const NoChatSearch: FC = () => {
           <SVGIcon iconFile="/icons/times.svg" />
         </div>
       </div>
-      <Text>Aún no haz realizado ninguna búsqueda de chats</Text>
+      <Text>Aún no has realizado ninguna búsqueda de chats</Text>
     </StyledMainView>
   );
 };

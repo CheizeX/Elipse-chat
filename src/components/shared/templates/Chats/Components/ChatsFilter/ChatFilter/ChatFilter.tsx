@@ -29,7 +29,6 @@ import {
 export const ChatFilter: FC<FilterChannelsProps & FilterChannel> = () => {
   const dispatch = useAppDispatch();
 
-  const [filterOnClose, setFilterOnClose] = useState(false);
   const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
   const [checkedTags, setCheckedTags] = useState<any[]>([]);
 
@@ -65,10 +64,8 @@ export const ChatFilter: FC<FilterChannelsProps & FilterChannel> = () => {
   };
 
   return (
-    <Dropdown
-      onClick={() => setFilterOnClose(false)}
-      triggerElement={() => <SVGIcon iconFile="/icons/filter.svg" />}>
-      <StyledChatFilter filterOnClose={filterOnClose}>
+    <Dropdown triggerElement={() => <SVGIcon iconFile="/icons/filter.svg" />}>
+      <StyledChatFilter>
         <StyledChatFilterHeader>
           <Text color="black">Filtrar por:</Text>
           {/* <button type="button" onClick={() => setFilterOnClose(true)}>

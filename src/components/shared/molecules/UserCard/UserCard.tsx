@@ -19,6 +19,7 @@ import {
   StyledUsernameEmail,
 } from './UserCard.styled';
 import { IUserCardMoleculeProps } from './UseCard.interface';
+import useLocalStorage from '../../../../hooks/use-local-storage';
 
 export const UserCardMolecule: FC<IUserCardMoleculeProps> = ({
   isAdmin,
@@ -30,9 +31,11 @@ export const UserCardMolecule: FC<IUserCardMoleculeProps> = ({
   containerTags,
   infoUserEmail,
   infoUserRole,
+  avatar,
 }) => {
   // Redux
   const dispatch = useAppDispatch();
+  const [accessToken] = useLocalStorage('AccessToken', '');
 
   const handleCardClick = (
     arg: string,
@@ -85,7 +88,11 @@ export const UserCardMolecule: FC<IUserCardMoleculeProps> = ({
         </Dropdown>
       </StyledCardHeader>
       <StyledAvatar>
-        <SVGIcon iconFile="/icons/unknown_user.svg" />
+        {avatar && avatar !== '' ? (
+          <img src={`${avatar}?token=${accessToken}`} alt={byNameUser} />
+        ) : (
+          <SVGIcon iconFile="/icons/unknown_user.svg" />
+        )}
       </StyledAvatar>
       <StyledUsernameEmail>{children}</StyledUsernameEmail>
     </StyledUserCardMolecule>

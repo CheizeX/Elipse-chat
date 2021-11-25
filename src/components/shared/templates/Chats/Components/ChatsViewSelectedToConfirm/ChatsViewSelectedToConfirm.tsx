@@ -153,6 +153,12 @@ export const ChatsViewSelectedToConfirm: FC<
             bodyObject,
           );
         }
+        if (chatToTalkWithUser?.channel === 'Webchat') {
+          await baseRestApi.patch(
+            `/webchat/sendMessageToUser/${chatToTalkWithUserId}`,
+            bodyObject,
+          );
+        }
       } catch (error) {
         showAlert?.addToast({
           alert: Toast.ERROR,
@@ -192,6 +198,12 @@ export const ChatsViewSelectedToConfirm: FC<
           bodyObject,
         );
       }
+      if (chatToTalkWithUser?.channel === 'Webchat') {
+        await baseRestApi.patch(
+          `/webchat/sendMessageToUser/${chatToTalkWithUserId}`,
+          bodyObject,
+        );
+      }
       setSendingMessage(false);
     } catch (error) {
       showAlert?.addToast({
@@ -227,6 +239,12 @@ export const ChatsViewSelectedToConfirm: FC<
       if (chatToTalkWithUser?.channel === 'Instagram') {
         await baseRestApi.patch(
           `/messenger/sendMessageToUser/${chatToTalkWithUserId}/${chatToTalkWithUserNumber}`,
+          bodyObject,
+        );
+      }
+      if (chatToTalkWithUser?.channel === 'Webchat') {
+        await baseRestApi.patch(
+          `/webchat/sendMessageToUser/${chatToTalkWithUserId}`,
           bodyObject,
         );
       }

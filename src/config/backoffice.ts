@@ -16,6 +16,10 @@ export const supervisorSection: BackofficeSection[] = [
     name: 'Reportes',
     icon: '/icons/reports.svg',
   },
+  {
+    name: 'Canales',
+    icon: '/icons/sidebar_chats.svg',
+  },
 ];
 
 export const adminSection: BackofficeSection[] = [
@@ -35,13 +39,13 @@ export const adminSection: BackofficeSection[] = [
     name: 'Reportes',
     icon: '/icons/reports.svg',
   },
+  {
+    name: 'Canales',
+    icon: '/icons/sidebar_chats.svg',
+  },
   // {
   //   name: 'Configuración',
   //   icon: '/icons/sidebar_disponibilidad.svg',
-  // },
-  // {
-  //   name: 'Canales',
-  //   icon: '/icons/sidebar_chats.svg',
   // },
 ];
 

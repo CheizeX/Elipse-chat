@@ -12,11 +12,14 @@ import {
   IPropsSearchAsignation,
   ISearchByAsignation,
 } from './SearchByAsignation.interface';
+import useLocalStorage from '../../../../../../hooks/use-local-storage';
 
 export const SearchByAsignation: FC<
   IPropsSearchAsignation & ISearchByAsignation
 > = ({ filterByAsignation, filtersAsignation }) => {
   const [searchAgent, setSearchAgent] = useState('');
+  const [accessToken] = useLocalStorage('AccessToken', '');
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchAgent(event.target.value);
   };
@@ -38,7 +41,7 @@ export const SearchByAsignation: FC<
         placeHolder="Buscar agente..."
         LeftIcon={() => <SVGIcon iconFile="/icons/search-solid.svg" />}
       />
-      {dateFilterAgent?.map(({ _id, name }) => (
+      {dateFilterAgent?.map(({ _id, name, urlAvatar }) => (
         <StyledSearchByAsignation
           key={_id}
           checkedAgent={filtersAsignation.indexOf(_id) !== -1}>
@@ -46,7 +49,11 @@ export const SearchByAsignation: FC<
             checked={filtersAsignation.indexOf(_id) !== -1}
             onClick={() => filterByAsignation(_id)}
           />
-          <SVGIcon iconFile="/icons/unknown_user.svg" />
+          {urlAvatar && urlAvatar !== '' ? (
+            <img src={`${urlAvatar}?token=${accessToken}`} alt={name} />
+          ) : (
+            <SVGIcon iconFile="/icons/unknown_user.svg" />
+          )}
           <Text>{name}</Text>
         </StyledSearchByAsignation>
       ))}

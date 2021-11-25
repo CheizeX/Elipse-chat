@@ -1,9 +1,11 @@
+import { Tag } from '../tags/tag';
 import { User } from '../users/user';
 
 export enum Channels {
   WHATSAPP = 'WhatsApp',
   MESSENGER = 'Messenger',
   INSTAGRAM = 'Instagram',
+  WEBCHAT = 'Webchat',
 }
 
 export enum ChatStatus {
@@ -11,6 +13,7 @@ export enum ChatStatus {
   ON_CONVERSATION = 'ON_CONVERSATION',
   FINISHED = 'FINISHED',
 }
+
 export type StatusChats = {
   name: string;
   index: number;
@@ -55,7 +58,7 @@ export type Chat = {
   channel: Channels;
   status: ChatStatus;
   assignedAgent: User;
-  tags: any;
+  tags: Tag[];
   finishedStatus?: ChatFinishedStatus;
   feedback?: string;
   messages: Message[];

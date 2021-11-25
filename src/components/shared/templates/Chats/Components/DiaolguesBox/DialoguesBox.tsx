@@ -11,9 +11,11 @@ import {
   StyledAgentOrSUpervisorDialogue,
   StyledAgentAvatar,
   StyledUserPendingDialogue,
+  StyledBoxAvatar,
 } from './DialoguesBox.styles';
 import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import { ModalBackgroundProps } from '../../../../molecules/Modal/Modal';
+import useLocalStorage from '../../../../../../hooks/use-local-storage';
 
 export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   userSelected,
@@ -26,6 +28,12 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   const { chatsPendings } = useAppSelector(
     (state) => state.liveChat.chatsPendings,
   );
+  const { userDataInState } = useAppSelector(
+    (state) => state.userAuthCredentials,
+  );
+
+  const [accessToken] = useLocalStorage('AccessToken', '');
+  const profilePicture = `${userDataInState?.urlAvatar}?token=${accessToken}`;
 
   const dialogueBoxRef = useRef<HTMLDivElement>(null);
 
@@ -518,7 +526,14 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                     </div>
                   </div>
                   <StyledAgentAvatar>
-                    <SVGIcon iconFile="/icons/user.svg" />
+                    {userDataInState && userDataInState.urlAvatar !== '' ? (
+                      <StyledBoxAvatar
+                        src={profilePicture}
+                        alt={userDataInState.name}
+                      />
+                    ) : (
+                      <SVGIcon iconFile="/icons/user.svg" />
+                    )}
                   </StyledAgentAvatar>
                 </StyledAgentOrSUpervisorDialogue>
               ),

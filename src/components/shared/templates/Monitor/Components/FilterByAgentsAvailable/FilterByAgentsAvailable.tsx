@@ -9,6 +9,7 @@ import {
   FilterByAgents,
 } from './FilterByAgentsAvailable.styled';
 import { IFilterByAgent } from './FilterByAgentsAvailable.interface';
+import useLocalStorage from '../../../../../../hooks/use-local-storage';
 
 export const FilterAgentsAvailable: FC<IFilterByAgent> = ({
   onChange,
@@ -16,6 +17,8 @@ export const FilterAgentsAvailable: FC<IFilterByAgent> = ({
   handleFilterAgents,
   byAgents,
 }) => {
+  const [accessToken] = useLocalStorage('AccessToken', '');
+
   return (
     <ContainerFilterByAgent>
       <ContainerInput
@@ -25,7 +28,7 @@ export const FilterAgentsAvailable: FC<IFilterByAgent> = ({
         onChange={onChange}
       />
       <StyledWrapperFilterByAgents>
-        {dateAgent?.map(({ _id, name }) => (
+        {dateAgent?.map(({ _id, name, urlAvatar }) => (
           <FilterByAgents
             onChange={onChange}
             key={_id}
@@ -35,7 +38,11 @@ export const FilterAgentsAvailable: FC<IFilterByAgent> = ({
               checked={byAgents.indexOf(_id) !== -1}
               onClick={() => handleFilterAgents(_id)}
             />
-            <SVGIcon iconFile="/icons/unknown_user.svg" />
+            {urlAvatar && urlAvatar !== '' ? (
+              <img src={`${urlAvatar}?token=${accessToken}`} alt={name} />
+            ) : (
+              <SVGIcon iconFile="/icons/unknown_user.svg" />
+            )}
             <Text color="black">{name}</Text>
           </FilterByAgents>
         )) ?? []}

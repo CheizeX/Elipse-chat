@@ -14,13 +14,16 @@ export const DashboardSection: FC<IPropsAgents> = () => {
   const [onClose, setOnClose] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [reviewByUser, setReviewByUser] = useState<string>('');
+  const [isDisableReview, setIsDisableReview] = useState<boolean>(false);
 
   return (
     <StyledDashboardSection>
       <DashTotalChatsByState close={close} setClose={setClose} />
       <WrapperSection>
-        <ReviewChart />
+        <ReviewChart
+          isDisableReview={isDisableReview}
+          setIsDisableReview={setIsDisableReview}
+        />
         <Agents
           startDate={startDate}
           endDate={endDate}
@@ -30,8 +33,8 @@ export const DashboardSection: FC<IPropsAgents> = () => {
           setDatePicker={setDatePicker}
           close={onClose}
           setClose={setOnClose}
-          reviewByUser={reviewByUser}
-          setReviewByUser={setReviewByUser}
+          isDisableReview={isDisableReview}
+          setIsDisableReview={setIsDisableReview}
         />
       </WrapperSection>
     </StyledDashboardSection>

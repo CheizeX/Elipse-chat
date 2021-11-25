@@ -155,6 +155,13 @@ export const StyledUserDialogue = styled.div`
   }
 `;
 
+export const StyledBoxAvatar = styled.img`
+  width: 30px;
+  height: 30px;
+  max-width: 1.9rem;
+  max-height: 1.9rem;
+`;
+
 export const StyledAgentOrSUpervisorDialogue = styled.div`
   min-height: 65px;
   max-height: fit-content;

@@ -25,12 +25,16 @@ import { INavBarLiveProps } from './NavBarLive.interface';
 import { useAuth } from '../../../../../hooks/auth';
 import { changeStatus } from '../../../../../api/users';
 import { StatusAgent } from '../../../../../models/users/status';
-import { useAppDispatch } from '../../../../../redux/hook/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../redux/hook/hooks';
 import { setUserDataInState } from '../../../../../redux/slices/auth/user-credentials';
 import { DecodedToken } from '../../../../../models/users/user';
 import { MyAccountSidebarOrganism } from '../../MyAccountSidebar/MyAccountSidebar';
 import useDisplayElementOrNot from '../../../../../hooks/use-display-element-or-not';
 import { IBackOfficeProps } from '../BackOffice/NavBarBackOffice.interface';
+import useLocalStorage from '../../../../../hooks/use-local-storage';
 
 export const NavBarLive: FC<INavBarLiveProps & IBackOfficeProps> = ({
   elipsis,
@@ -71,7 +75,13 @@ export const NavBarLive: FC<INavBarLiveProps & IBackOfficeProps> = ({
 
   // Manejo de Logout
   const { signOut } = useAuth();
-
+  const [accessToken] = useLocalStorage('AccessToken', '');
+  const { userDataInState }: any = useAppSelector(
+    (state) => state.userAuthCredentials,
+  );
+  const profilePicture = userDataInState?.urlAvatar
+    ? `${userDataInState.urlAvatar}?token=${accessToken}`
+    : '';
   const handleCloseSession = async () => {
     try {
       await signOut();
@@ -170,7 +180,11 @@ export const NavBarLive: FC<INavBarLiveProps & IBackOfficeProps> = ({
           </Dropdown>
           <LiveTriggerElement>
             <LiveStyledAvatar>
-              <SVGIcon iconFile="/icons/unknown_user.svg" />
+              {profilePicture && profilePicture !== '' ? (
+                <img src={profilePicture} alt={userDataInState.name} />
+              ) : (
+                <SVGIcon iconFile="/icons/unknown_user.svg" />
+              )}
             </LiveStyledAvatar>
             <LiveArrowIcon onClick={handleNavUserDropdown}>
               {isComponentVisible ? (

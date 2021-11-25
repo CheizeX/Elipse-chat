@@ -90,7 +90,8 @@ export const ReportsSection: FC = () => {
   const responseChannels = filterChannel.map(
     (item) =>
       (item === 11 ? Channels.WHATSAPP : null) ||
-      (item === 22 ? Channels.MESSENGER : Channels.INSTAGRAM),
+      (item === 22 ? Channels.MESSENGER : null) ||
+      (item === 33 ? Channels.INSTAGRAM : Channels.WEBCHAT),
   );
   const responseStatus = filterState.map(
     (item) =>

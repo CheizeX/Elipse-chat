@@ -2,12 +2,11 @@
 import React, { FC, useCallback, useState, MouseEventHandler } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { IconButtonMolecule } from '../../atoms/IconButton/IconButton';
 import { SVGIcon } from '../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../atoms/Text/Text';
 import { BadgeMolecule } from '../../molecules/Badge/Badge';
 import { ButtonMolecule, ButtonState, Size } from '../../atoms/Button/Button';
-import { useAppSelector } from '../../../../redux/hook/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../redux/hook/hooks';
 import { IBackOfficeProps } from '../NavBar/BackOffice/NavBarBackOffice.interface';
 import { useToastContext } from '../../molecules/Toast/useToast';
 import { Toast } from '../../molecules/Toast/Toast.interface';
@@ -25,6 +24,13 @@ import {
   StyledUserChangePasswordRestrictions,
 } from './MyAccountSidebar.styled';
 import { authApi } from '../../../../api/base';
+import useLocalStorage from '../../../../hooks/use-local-storage';
+import { uploadFilePicture } from '../../../../api/uploads';
+import {
+  IconButtonMolecule,
+  IconButtonState,
+} from '../../atoms/IconButton/IconButton';
+import { setUpdateDataInState } from '../../../../redux/slices/auth/user-credentials';
 
 interface LoginChangePasswordProps {
   onClick?: MouseEventHandler;
@@ -51,11 +57,59 @@ export const MyAccountSidebarOrganism: FC<
   IBackOfficeProps & LoginChangePasswordProps
 > = ({ myAccount, setMyAccount, onClick = () => {} }) => {
   const toasts = useToastContext();
-  const { userDataInState }: any = useAppSelector(
+
+  const dispatch = useAppDispatch();
+  const { userDataInState } = useAppSelector(
     (state) => state.userAuthCredentials,
   );
+
+  const [accessToken] = useLocalStorage('AccessToken', '');
+  const profilePicture = userDataInState?.urlAvatar
+    ? `${userDataInState.urlAvatar}?token=${accessToken}`
+    : '';
   const [visibleOld, setVisibleOld] = useState(false);
   const [visibleNew, setVisibleNew] = useState(false);
+  const [isLoanding, setIsLoanding] = useState(false);
+
+  const handleInput = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.click();
+    input.addEventListener('change', async (event: any) => {
+      setIsLoanding(true);
+      const formData = new FormData();
+      const file = event.target.files[0];
+      formData.append('file', file);
+      try {
+        if (userDataInState.urlAvatar !== '') {
+          const duplicatedUrl = userDataInState.urlAvatar.split('/');
+          const oldName = duplicatedUrl[duplicatedUrl.length - 1];
+          if (oldName !== file.name) {
+            const result = await uploadFilePicture(formData);
+            dispatch(setUpdateDataInState(result));
+          } else {
+            toasts?.addToast({
+              alert: Toast.WARNING,
+              title: 'Advertencia',
+              message: 'La imagen no puede ser la misma que la actual',
+            });
+          }
+        } else {
+          const result = await uploadFilePicture(formData);
+          dispatch(setUpdateDataInState(result));
+        }
+        setIsLoanding(false);
+      } catch (err) {
+        setIsLoanding(false);
+        toasts?.addToast({
+          alert: Toast.ERROR,
+          title: 'Error',
+          message: 'No se pudo cargar la imagen',
+        });
+      }
+    });
+  };
 
   const handleClickOld = useCallback(
     (event) => {
@@ -134,16 +188,20 @@ export const MyAccountSidebarOrganism: FC<
             </button>
           </StyledMyAccountHeader>
           <StyledImageAndButtonContainer>
-            {userDataInState && userDataInState.urlAvatar !== '' ? (
+            {profilePicture && profilePicture !== '' ? (
               <StyledMyAccountAvatar
-                src={userDataInState.urlAvatar}
-                alt="asdasd"
+                src={profilePicture}
+                alt={userDataInState.name}
               />
             ) : (
               <StyledMyAccountAvatar src="/icons/user.svg" />
             )}
             <IconButtonMolecule
-              bgColor="#8769FF"
+              color="#8769ff"
+              state={
+                !isLoanding ? IconButtonState.NORMAL : IconButtonState.LOADING
+              }
+              onClick={() => handleInput()}
               Icon={() => <SVGIcon iconFile="/icons/camera.svg" />}
             />
           </StyledImageAndButtonContainer>
@@ -171,7 +229,6 @@ export const MyAccountSidebarOrganism: FC<
                 </Text>
               </button>
             </div>
-            {/* <ButtonMolecule bgColor="#8769FF" text="Guardar cambios" /> */}
           </StyledMyAccountInputsContainer>
         </StyledMyAccountSidebar>
       )}

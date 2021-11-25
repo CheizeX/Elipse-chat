@@ -78,7 +78,7 @@ export const MonitorSection: FC = () => {
     if (agentIDIndex === -1) {
       currentChecked.push(_id);
     } else {
-      currentChecked?.splice(0, 1);
+      currentChecked?.splice(agentIDIndex, 1);
     }
     setIDAgents(currentChecked);
   };
@@ -88,7 +88,7 @@ export const MonitorSection: FC = () => {
     if (indexAgent === -1) {
       currentByAgent.push(_id);
     } else {
-      currentByAgent?.splice(0, 1);
+      currentByAgent?.splice(indexAgent, 1);
     }
     setByAgentAvailable(currentByAgent);
   };
@@ -210,7 +210,8 @@ export const MonitorSection: FC = () => {
     const responseChannel = byChannels.map(
       (item) =>
         (item === 11 ? Channels.WHATSAPP : null) ||
-        (item === 22 ? Channels.MESSENGER : Channels.INSTAGRAM),
+        (item === 22 ? Channels.MESSENGER : null) ||
+        (item === 33 ? Channels.INSTAGRAM : Channels.WEBCHAT),
     );
     const responseStatus = statusAgent.map(
       (item) =>

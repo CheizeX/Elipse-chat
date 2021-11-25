@@ -51,7 +51,7 @@ export const SearchForChats: FC<ISearchForChats> = ({ datsReports }) => {
                 </span>
                 <Text>{!assignedAgent ? '  ' : assignedAgent.name}</Text>
                 <Text>
-                  {new Date(createdAt).getDate() + 1}{' '}
+                  {new Date(createdAt).getDate()}{' '}
                   {months[new Date(createdAt).getMonth()]}{' '}
                   {new Date(createdAt).getFullYear()}
                 </Text>

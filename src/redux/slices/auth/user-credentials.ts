@@ -17,8 +17,12 @@ export const userDataInState = createSlice({
     setUserDataInState: (state, action: PayloadAction<DecodedToken>) => {
       state.userDataInState = action.payload;
     },
+    setUpdateDataInState: (state, action: PayloadAction<string>) => {
+      state.userDataInState.urlAvatar = action.payload;
+    },
   },
 });
 
-export const { setUserDataInState } = userDataInState.actions;
+export const { setUserDataInState, setUpdateDataInState } =
+  userDataInState.actions;
 export default userDataInState.reducer;

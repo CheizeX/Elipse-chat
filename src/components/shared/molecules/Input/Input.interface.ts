@@ -11,10 +11,12 @@ export interface IInputMoleculeProps {
   foco?: boolean;
   value?: string;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  maxLength?: number;
 }
 export interface IInputProps {
   disabled?: boolean;
   foco?: boolean;
   name?: string;
   value?: string;
+  maxLength?: number;
 }

@@ -4,6 +4,7 @@ export interface IContainerInputProps {
   disabled?: boolean;
   foco?: boolean;
   valid?: boolean;
+  maxlength?: number;
 }
 
 export interface IContainerMoleculeProps {
@@ -23,4 +24,5 @@ export interface IContainerMoleculeProps {
   onClick?: (ev: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   name?: string;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  maxLength?: number;
 }

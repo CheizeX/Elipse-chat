@@ -74,7 +74,24 @@ export const StyledImageAndButtonContainer = styled.div`
     top: -5px;
     right: -5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    background-color: #8769ff;
+    /* & * {
+      & > svg {
+        margin: 11px 12px;
+      }
+    } */
   }
+  /* & > button {
+    position: relative;
+    min-height: 40px;
+    height: 0px;
+    border-radius: 24px;
+    background-color: #8769ff;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  } */
 `;
 
 export const StyledMyAccountAvatar = styled.img`

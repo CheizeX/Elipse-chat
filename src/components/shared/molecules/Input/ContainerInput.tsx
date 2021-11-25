@@ -17,6 +17,7 @@ export const ContainerInput: FC<IContainerMoleculeProps> = ({
   name,
   onBlur,
   onKeyPress,
+  maxLength,
 }) => {
   const [foco, setFocus] = useState(false);
 
@@ -41,6 +42,7 @@ export const ContainerInput: FC<IContainerMoleculeProps> = ({
         onChange={onChange}
         onBlur={onBlur}
         onKeyPress={onKeyPress}
+        maxLength={maxLength}
       />
       <button
         type="button"
