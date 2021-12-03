@@ -25,15 +25,13 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
   chats,
   stateByAgent,
   byAgentAvailable,
+  countAgent,
   filterByAgents,
   filterByState,
   handleChange,
   handleClear,
   handleStateAgents,
 }) => {
-  const allAgentAvailable = dateAgent?.filter(
-    (item) => item.status === UserStatus.AVAILABLE,
-  );
   const [accessToken] = useLocalStorage('AccessToken', '');
   // const profilePicture = `${userDataInState?.urlAvatar}?token=${accessToken}`;
 
@@ -56,7 +54,7 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
       <WrapperFirtSectionCard>
         <ChatsCardMonitor
           name="Disponible"
-          number={(allAgentAvailable && allAgentAvailable.length) ?? 0}
+          number={countAgent}
           position="AVAILABLE"
           icon="/icons/user_Accept.svg"
         />
@@ -89,7 +87,7 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
                     <StyledAgentActive />
                   ) : null}
                 </span>
-                <span>{name}</span>
+                <span>{name.slice(0, 16)}</span>
                 <span>{email}</span>
               </div>
             </div>

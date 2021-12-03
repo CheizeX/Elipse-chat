@@ -45,6 +45,7 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
   const [customDescription, setCustomDescription] =
     useState<string>('Asistente Virtual');
   const [customAvatar, setCustomAvatar] = useState<string>('Robot 1.svg');
+  const [customizeMyAvatar, setCustomizeMyAvatar] = useState<boolean>(false);
 
   const handleToggle = () => {
     setIsSection(isSection + 1);
@@ -81,10 +82,13 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
         </div>
         <div>
           {isSection === 1 ? (
-            <WrapperNameAndDescription
-              setCustomDescription={setCustomDescription}
-              setCustomTitle={setCustomTitle}
-            />
+            <>
+              <Text>Ingresa nombre y descripción</Text>
+              <WrapperNameAndDescription
+                setCustomDescription={setCustomDescription}
+                setCustomTitle={setCustomTitle}
+              />
+            </>
           ) : null}
           {isSection === 2 ? (
             <ColorPaletteWrap
@@ -95,10 +99,13 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
           ) : null}
           {isSection === 3 || isSection === 4 ? (
             <>
-              <Text>Selecciona un ávatar</Text>
+              <Text>Selecciona un avatar</Text>
               <AvatarContainer
                 setCustomAvatar={setCustomAvatar}
                 setIsSection={setIsSection}
+                setCustomizeMyAvatar={setCustomizeMyAvatar}
+                customAvatar={customAvatar}
+                customizeMyAvatar={customizeMyAvatar}
               />
             </>
           ) : null}
@@ -110,6 +117,7 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
               color={customColor}
               title={customTitle}
               description={customDescription}
+              customizeMyAvatar={customizeMyAvatar}
             />
           </div>
         </div>

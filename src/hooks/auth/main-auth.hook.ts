@@ -27,19 +27,18 @@ export const useAuth = () => {
       });
 
       setAccessToken(response.accessToken);
-
-      toasts?.addToast({
-        alert: Toast.SUCCESS,
-        title: 'Bienvenido !',
-        message: 'Te has logueado correctamente',
-      });
+      // toasts?.addToast({
+      //   alert: Toast.SUCCESS,
+      //   title: 'Bienvenido !',
+      //   message: 'Te has logueado correctamente',
+      // });
     } catch (error) {
-      appLogger.error(error);
       toasts?.addToast({
         alert: Toast.ERROR,
         title: 'Error !',
         message: `Compruebe que el nombre de usuario y la contraseña sean correctos`,
       });
+      localStorage.removeItem('AccessToken');
     }
   };
 

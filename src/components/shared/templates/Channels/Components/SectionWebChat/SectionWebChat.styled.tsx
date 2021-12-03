@@ -125,8 +125,18 @@ export const StyledBodyWebChat = styled.div<IContainerWebChat>`
     width: 19rem;
     margin: 20px 34px;
     padding-top: 10px;
+    & > div {
+      & > span {
+        color: ${({ theme }) => theme.Colors.grays[1]};
+      }
+    }
     & > span {
       color: ${({ theme }) => theme.Colors.grays[1]};
+      display: flex;
+      max-width: 150px;
+      text-align: center;
+      justify-content: center;
+      margin: 0 auto;
     }
   }
   & > :nth-child(3) {

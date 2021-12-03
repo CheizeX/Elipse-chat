@@ -117,14 +117,18 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
                           assignedAgent && item._id === assignedAgent._id,
                       )
                       .map(
-                        (ele) =>
+                        (ele, count) =>
                           (ele.urlAvatar ? (
                             <img
                               src={`${ele.urlAvatar}?token=${accessToken}`}
                               alt={ele.name}
+                              key={count.toString()}
                             />
                           ) : (
-                            <SVGIcon iconFile="/icons/unknown_user.svg" />
+                            <SVGIcon
+                              iconFile="/icons/unknown_user.svg"
+                              key={count.toString()}
+                            />
                           )) ?? <SVGIcon iconFile="/icons/unknown_user.svg" />,
                       )}
                     {!assignedAgent

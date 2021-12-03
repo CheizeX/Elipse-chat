@@ -105,10 +105,11 @@ export const NavBarLive: FC<INavBarLiveProps & IBackOfficeProps> = ({
       <StyledNavBarLive>
         <Wrapper>
           <Logo>
-            <SVGIcon iconFile="/icons/logo_Icon.svg" />
+            <img src="/images/elipse-chat-blanco.png" alt="sidebar-1" />
+            {/* <SVGIcon iconFile="/icons/Trazado_ailalia.svg" /> */}
           </Logo>
           <Ailalia>
-            <SVGIcon iconFile="/icons/Trazado_ailalia.svg" />
+            {/* <SVGIcon iconFile="/icons/Trazado_ailalia.svg" /> */}
           </Ailalia>
           <Letter>
             <span>

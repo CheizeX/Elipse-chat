@@ -158,7 +158,7 @@ export const FilterButtonDate = ({
     const title = (child as React.ReactElement).props.title ?? index.toString();
 
     return (
-      <Wrapper>
+      <Wrapper key={index.toString()}>
         <StyledContainerRadio focusRadio={active === index}>
           <StyledRadio
             focusRadio={active === index}

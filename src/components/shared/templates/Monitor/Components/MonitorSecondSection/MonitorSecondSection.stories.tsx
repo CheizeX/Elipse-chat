@@ -10,6 +10,7 @@ storiesOf('Ailalia/Templates/Monitor/MonitorSecondSection', module).add(
         dateAgent={[]}
         chats={[]}
         agentNotAvailable={[]}
+        countAgent={0}
         stateByAgent={[]}
         filterByState={() => {}}
         filterByAgents={() => {}}

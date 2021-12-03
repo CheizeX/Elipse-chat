@@ -45,7 +45,7 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
     setCustomColor(color);
   };
   return (
-    <>
+    <div>
       <Text>Selecciona un color</Text>
       <StyledColorPaletteWrap>
         {!isOpenSectionColor ? (
@@ -92,6 +92,6 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
           </StyledCustomColor>
         ) : null}
       </StyledColorPaletteWrap>
-    </>
+    </div>
   );
 };

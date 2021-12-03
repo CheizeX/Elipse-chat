@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
 export const StyledChannelEmpty = styled.div`
-  width: 984px;
-  height: 544px;
+  width: 61.5rem;
+  height: 34rem;
   background-color: ${({ theme }) => theme.Colors.grays[9]};
   border-radius: 10px;
   margin: 20px auto;
   & > div {
-    padding: 142px;
+    padding: 8.8rem;
     & > :first-child {
-      width: 158px;
-      height: 112px;
+      width: 9.8rem;
+      height: 7rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -19,13 +19,13 @@ export const StyledChannelEmpty = styled.div`
       & > :first-child {
         display: flex;
         & > div {
-          width: 27px;
-          height: 27px;
+          width: 1.6rem;
+          height: 1.6rem;
         }
         & * {
           & > svg {
-            width: 27px;
-            height: 27px;
+            width: 1.6rem;
+            height: 1.6rem;
           }
         }
         & > :nth-child(1) {
@@ -35,8 +35,8 @@ export const StyledChannelEmpty = styled.div`
         }
         & > :nth-child(2) {
           display: flex;
-          top: 18px;
-          right: 22px;
+          top: 1.1rem;
+          right: 1.3rem;
         }
         & > :nth-child(3) {
           display: flex;
@@ -45,24 +45,24 @@ export const StyledChannelEmpty = styled.div`
         }
         & > :nth-child(4) {
           display: flex;
-          top: 20px;
-          left: 22px;
+          top: 1.25rem;
+          left: 1.3rem;
         }
         & > :nth-child(5) {
           display: flex;
-          top: 62px;
-          left: 9px;
+          top: 3.8rem;
+          left: 0.5rem;
         }
       }
       & > :nth-child(2) {
         & > div {
-          width: 56px;
-          height: 56px;
-          margin: 18px 0 16px 0;
+          width: 3.5rem;
+          height: 3.5rem;
+          margin: 1.1rem 0 1rem 0;
           & * {
             & > svg {
-              width: 56px;
-              height: 56px;
+              width: 3.5rem;
+              height: 3.5rem;
               & > path {
                 fill: ${({ theme }) => theme.Colors.purples[3]};
               }
@@ -81,18 +81,18 @@ export const StyledChannelEmpty = styled.div`
         color: ${({ theme }) => theme.Colors.grays[6]};
         font-size: ${({ theme }) => theme.fontSize[18]};
         font-weight: ${({ theme }) => theme.fontWeight[600]};
-        line-height: 21px;
-        margin-bottom: 7px;
+        line-height: 1.3rem;
+        margin-bottom: 0.4rem;
       }
       & > :nth-child(2) {
         color: ${({ theme }) => theme.Colors.grays[6]};
         font-size: ${({ theme }) => theme.fontSize[14]};
         font-weight: ${({ theme }) => theme.fontWeight[500]};
-        line-height: 17px;
-        width: 432px;
+        line-height: 1rem;
+        width: 27rem;
         text-align: center;
       }
-      margin-bottom: 30px;
+      margin-bottom: 1.8rem;
     }
     & > :nth-child(3) {
       margin: auto;

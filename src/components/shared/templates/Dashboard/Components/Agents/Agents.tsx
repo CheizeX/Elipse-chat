@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
@@ -28,6 +28,7 @@ import {
 } from '../../../../../../redux/slices/dashboard/dashboard-review';
 import { UserRole } from '../../../../../../models/users/role';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
+import { User } from '../../../../../../models/users/user';
 
 export const Agents: FC<IPropsAgents & IContainerReview> = ({
   setDatePicker,
@@ -40,8 +41,8 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
   setEndDate,
   setIsDisableReview,
 }) => {
-  const dispatch = useAppDispatch();
   const showAlert = useToastContext();
+  const dispatch = useAppDispatch();
   const [accessToken] = useLocalStorage('AccessToken', '');
 
   const { chatsByPeriod } = useAppSelector(
@@ -52,26 +53,14 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
     (state) => state.dashboardFilterChatsByDate,
   );
 
-  const dataApi = async () => {
-    try {
-      const currentDta = await readingUsers(UserStatus.ALL);
-      if (currentDta.success === false) {
-        dispatch(setDataUser([]));
-      } else {
-        dispatch(setDataUser(currentDta));
-      }
-    } catch (err) {
-      showAlert?.addToast({
-        alert: Toast.ERROR,
-        title: 'ERROR',
-        message: `${err}`,
-      });
-    }
-  };
+  const containerAgent = usersData.filter(
+    (item) => item.role === UserRole.AGENT,
+  );
 
   const handleClick = () => {
     setClose(false);
   };
+
   const handleToggle = async (arg: string, name: string) => {
     try {
       const currentDts = await readReviewChats(arg);
@@ -91,9 +80,26 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
     }
   };
 
+  const dataApi = useCallback(async () => {
+    try {
+      const currentDta = await readingUsers(UserStatus.ALL);
+      if (currentDta.success === false) {
+        dispatch(setDataUser([]));
+      } else {
+        dispatch(setDataUser(currentDta));
+      }
+    } catch (err) {
+      showAlert?.addToast({
+        alert: Toast.ERROR,
+        title: 'ERROR',
+        message: `${err}`,
+      });
+    }
+  }, [dispatch, showAlert]);
+
   useEffect(() => {
     dataApi();
-  }, []);
+  }, [dataApi]);
 
   return (
     <StyledWrapperAgent>
@@ -116,7 +122,6 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
           )}>
           {datePicker === 0 && (
             <FilterDateDashboard
-              key="tres"
               setDatePicker={setDatePicker}
               datePicker={datePicker}
               setClose={setClose}
@@ -124,7 +129,6 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
           )}
           {datePicker === 1 && (
             <FIlterByPeriod
-              key="uno"
               startDate={startDate}
               setStartDate={setStartDate}
               endDate={endDate}
@@ -137,7 +141,6 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
           )}
           {datePicker === 2 && (
             <FIlterByPeriod
-              key="dos"
               startDate={startDate}
               setStartDate={setStartDate}
               endDate={endDate}
@@ -156,58 +159,55 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
       </span>
       <div>
         <div>
-          {usersData?.length > 0 &&
-            usersData.map((user: any, index) =>
-              user.role === UserRole.AGENT ? (
-                <StyledAgent key={user._id} index={index}>
-                  <div>
-                    {user.urlAvatar && user.urlAvatar !== '' ? (
-                      <img
-                        src={`${user.urlAvatar}?token=${accessToken}`}
-                        alt={user.name}
-                      />
-                    ) : (
-                      <SVGIcon iconFile="/icons/unknown_user.svg" />
-                    )}
-                    <span>
-                      {user.name
-                        .slice(0, 1)
-                        .toUpperCase()
-                        .concat(
-                          user.name.slice(1, user.name.length).toLowerCase(),
-                        )}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleToggle(
-                          user._id,
-                          user.name
-                            .slice(0, 1)
-                            .toUpperCase()
-                            .concat(
-                              user.name
-                                .slice(1, user.name.length)
-                                .toLowerCase(),
-                            ),
-                        )
-                      }
-                      type="button">
-                      <SVGIcon iconFile="/icons/bars-graphic.svg" />
-                    </button>
-                  </div>
-                  <div>
-                    <span>
-                      {chatsByPeriod?.filter(
-                        (chat: Chat) =>
-                          chat.status === ChatStatus.FINISHED &&
-                          chat.assignedAgent &&
-                          chat.assignedAgent._id === user._id,
-                      ).length ?? 0}
-                    </span>
-                  </div>
-                </StyledAgent>
-              ) : null,
-            )}
+          {(containerAgent?.length > 0 &&
+            containerAgent.map((user: User, index) => (
+              <StyledAgent key={user._id} index={index}>
+                <div>
+                  {user.urlAvatar && user.urlAvatar !== '' ? (
+                    <img
+                      src={`${user.urlAvatar}?token=${accessToken}`}
+                      alt={user.name}
+                    />
+                  ) : (
+                    <SVGIcon iconFile="/icons/unknown_user.svg" />
+                  )}
+                  <span>
+                    {user.name
+                      .slice(0, 1)
+                      .toUpperCase()
+                      .concat(
+                        user.name.slice(1, user.name.length).toLowerCase(),
+                      )}
+                  </span>
+                  <button
+                    onClick={() =>
+                      handleToggle(
+                        user._id,
+                        user.name
+                          .slice(0, 1)
+                          .toUpperCase()
+                          .concat(
+                            user.name.slice(1, user.name.length).toLowerCase(),
+                          ),
+                      )
+                    }
+                    type="button">
+                    <SVGIcon iconFile="/icons/bars-graphic.svg" />
+                  </button>
+                </div>
+                <div>
+                  <span>
+                    {chatsByPeriod?.filter(
+                      (chat: Chat) =>
+                        chat.status === ChatStatus.FINISHED &&
+                        chat.assignedAgent &&
+                        chat.assignedAgent._id === user._id,
+                    ).length ?? 0}
+                  </span>
+                </div>
+              </StyledAgent>
+            ))) ??
+            []}
         </div>
       </div>
     </StyledWrapperAgent>

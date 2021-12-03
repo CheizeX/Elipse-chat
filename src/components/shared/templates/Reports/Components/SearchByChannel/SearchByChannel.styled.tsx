@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { IFilterChannelProps } from './SearchByChannel.interface';
 
 export const StyledSearchByChannel = styled.div`
-  height: 172px;
+  height: 192px;
 `;
 
 export const StyledWrapperCheckedChannel = styled.div<IFilterChannelProps>`

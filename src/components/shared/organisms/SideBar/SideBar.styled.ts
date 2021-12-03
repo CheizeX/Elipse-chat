@@ -14,7 +14,7 @@ export const StyledSideBar = styled.aside<
   background-color: ${({ theme }) => theme.Colors.purples[1]};
   background-image: url('/images/BackGround.svg');
   background-size: 262px 768px;
-  background-position-y: -10px;
+  background-position-y: 60px;
   background-position-x: 5px;
   border-radius: 0 20px 20px 0;
   box-shadow: 3px 0px 5px rgba(0, 0, 0, 0.25);
@@ -63,19 +63,35 @@ export const SideBarTopContainer = styled.div<SideBarContainersProps>`
       min-height: 24px;
       text-align: left;
       width: fit-content;
+      height: 100px;
+      & div {
+        height: 100%;
+        & div {
+          height: 100%;
+          & svg {
+            transform: translateX(-10px);
+            height: 100%;
+          }
+        }
+      }
       & div {
         align-items: flex-end;
         height: 100%;
+      }
+      & img {
+        position: absolute;
+        width: 190px;
+        transform: translate(-30px, -8px);
       }
     }
   }
   & button {
     align-items: center;
     display: flex;
-    height: 32px;
+    height: 40px;
     justify-content: flex-start;
     padding-bottom: 15px;
-    width: 10%;
+    width: 15%;
     & div {
       height: fit-content;
       & svg {
@@ -95,6 +111,13 @@ export const SideBarTopContainer = styled.div<SideBarContainersProps>`
       width: 100%;
       & span {
         & div {
+          & img {
+            position: absolute;
+            transform: translate(-35px, -15px);
+                width: 110px;
+                padding:0;
+                margin:0;
+          }
           & div {
             & div {
               & svg {
@@ -109,9 +132,9 @@ export const SideBarTopContainer = styled.div<SideBarContainersProps>`
       & button {
         & div {
           & svg {
-            transform: translateX(-25px);
+            transform: translate(-45px, 30px);
             &:hover {
-              transform: translateX(-23px);
+              transform: translate(-43px, 30px);
           }
         }
       }

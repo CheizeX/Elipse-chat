@@ -15,6 +15,7 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
   color,
   description,
   avatar,
+  customizeMyAvatar,
 }) => {
   return (
     <StyledCustomWebChat>
@@ -25,7 +26,11 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
           </div>
           <StyledHeaderCustomWebChat>
             <StyledAvatar>
-              <SVGIcon iconFile={`/avatars/${avatar}`} />
+              {!customizeMyAvatar ? (
+                <SVGIcon iconFile={`/avatars/${avatar}`} />
+              ) : (
+                <img src={avatar} alt={avatar} />
+              )}
             </StyledAvatar>
             <div>
               <Text>{title}</Text>
@@ -34,7 +39,11 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
           </StyledHeaderCustomWebChat>
           <StyledBodyWebChat color={color}>
             <div>
-              <SVGIcon iconFile={`/avatars/${avatar}`} />
+              {!customizeMyAvatar ? (
+                <SVGIcon iconFile={`/avatars/${avatar}`} />
+              ) : (
+                <img src={avatar} alt={avatar} />
+              )}
               <div>
                 <Text>
                   Hola mi nombre es Elipse mi función es responder preguntas ¿En

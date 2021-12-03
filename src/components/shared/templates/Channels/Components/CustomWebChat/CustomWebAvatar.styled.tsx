@@ -15,6 +15,10 @@ export const WrapperWebChat = styled.div<IPropsCustom>`
     height: 20px;
     padding: 10px 30px;
     align-items: center;
+    & > img {
+      max-width: 12px;
+      max-height: 12px;
+    }
     & > div {
       & * {
         & > svg {
@@ -86,6 +90,14 @@ export const StyledAvatar = styled.div`
       }
     }
   }
+  & > img {
+    max-width: 2.6rem;
+    max-height: 2.6rem;
+    border-radius: 50%;
+    min-height: 2.6rem;
+    min-width: 2.6rem;
+    object-fit: cover;
+  }
 `;
 export const StyledBodyWebChat = styled.div<IPropsCustom>`
   width: 97%;
@@ -114,6 +126,16 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
           }
         }
       }
+    }
+    & > img {
+      max-width: 1.6rem;
+      max-height: 1.6rem;
+      min-width: 1.6rem;
+      min-height: 1.6rem;
+      border-radius: 50%;
+      width: fit-content;
+      object-fit: cover;
+      margin-right: -25px;
     }
     & > :nth-child(2) {
       width: 180px;

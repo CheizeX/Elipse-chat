@@ -76,6 +76,9 @@ export const ChatsSection: FC<
 
   // Escucha los mensajes de usuarios que ya enviaron el primer mensaje, pero que todavía no se encuentran ON_CONVERSATION
   const getNewPendingChat = useCallback(async () => {
+    socket?.on('connect', () => {
+      console.log('WS CONNECTED');
+    });
     socket?.on('newUserMessageToBeAssigned', (data: Chat[]) => {
       dispatch(setChatsPendings(data));
     });
@@ -126,6 +129,7 @@ export const ChatsSection: FC<
         title: 'ERROR',
         message: `No se puede establecer la conexión con el servidor`,
       });
+      localStorage.removeItem('AccessToken');
     }
   }, []);
 
@@ -144,6 +148,7 @@ export const ChatsSection: FC<
         title: 'Token Expirado',
         message: `El tiempo de sesión ha expirado, intente volver a loguearse`,
       });
+      localStorage.removeItem('AccessToken');
     }
   }, []);
 

@@ -185,7 +185,7 @@ export const WrapperSecondSectionAgent = styled.div`
       & > :nth-child(2) {
         display: flex;
         flex-direction: column;
-        width: 108px;
+        width: 130px;
         justify-content: flex-end;
         margin-left: 17px;
         margin-bottom: 4px;
@@ -200,6 +200,7 @@ export const WrapperSecondSectionAgent = styled.div`
           font-weight: ${({ theme }) => theme.fontWeight[600]};
           font-size: ${({ theme }) => theme.fontSize[14]};
           line-height: 17px;
+          width: 100%;
         }
         & > :nth-child(3) {
           color: ${({ theme }) => theme.Colors.grays[3]};

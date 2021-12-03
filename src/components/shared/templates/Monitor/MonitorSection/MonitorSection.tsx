@@ -20,6 +20,7 @@ import { setAgentsAvailable } from '../../../../../redux/slices/monitor/monitor-
 import { setInfoByAgent } from '../../../../../redux/slices/monitor/monitor-info-by-agent';
 import { setAllUser } from '../../../../../redux/slices/monitor/monitor-all-agents';
 import { baseRestApi } from '../../../../../api/base';
+import { setCountAgentsAvailable } from '../../../../../redux/slices/monitor/count-agent';
 
 const StyledMonitoSection = styled.section`
   display: flex;
@@ -51,6 +52,9 @@ export const MonitorSection: FC = () => {
     (state) => state.monitor.monitorAllUserState,
   );
 
+  const { countAgent } = useAppSelector(
+    (state) => state.monitor.monitorCountAgentsAvailableState,
+  );
   const [agentInput, setAgentInput] = useState<string>('');
   const handleOnChangeState = (id: number) => {
     const currentIndex = statusAgent.indexOf(id);
@@ -256,6 +260,7 @@ export const MonitorSection: FC = () => {
       const agentNotAvailable = data.filter(
         (item: User) => item.status === 'BATHROOM' || item.status === 'LUNCH',
       );
+      dispatch(setCountAgentsAvailable(agentAvailable.length));
       dispatch(setAgentsAvailable(agentAvailable));
       dispatch(setAgentsNotAvailable(agentNotAvailable));
     });
@@ -294,6 +299,7 @@ export const MonitorSection: FC = () => {
         resetHandle={getChatsToday}
       />
       <MonitorSecondSection
+        countAgent={countAgent}
         dateAgent={dateAgent}
         allAgent={dateAllAgents}
         agentNotAvailable={agentsNotAvailable}

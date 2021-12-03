@@ -5,7 +5,7 @@ export const StyledWrapperAddChannel = styled.div`
   height: 32rem;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   border-radius: 10px;
-  padding: 20px 0 18px 0;
+  padding: 1.25rem 0 1.12rem 0;
 `;
 export const StyledHeaderAddChannel = styled.div`
   height: 2.5rem;
@@ -44,11 +44,11 @@ export const StyledBodyAddChannel = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
   display: flex;
   & > :first-child {
-    width: 240px;
+    width: 15rem;
     background-blend-mode: lighten;
     background-color: ${({ theme }) => theme.Colors.purples[1]};
     background-image: url('/images/Background_Modal.svg');
-    background-size: 255px 371px;
+    background-size: 15.9rem 23.1rem;
   }
   & > :last-child {
     width: 19rem;
@@ -62,11 +62,11 @@ export const StyledBodyAddChannel = styled.div`
       line-height: 14px;
       justify-content: flex-start;
       display: flex;
-      padding-left: 32px;
+      padding-left: 2rem;
     }
     & > div {
       background-color: ${({ theme }) => theme.Colors.grays[9]};
-      width: 304px;
+      width: 19rem;
       display: flex;
       flex-wrap: wrap;
       align-items: flex-start;
@@ -74,7 +74,7 @@ export const StyledBodyAddChannel = styled.div`
       height: 20rem;
       border-radius: 10px;
       margin: 0 auto;
-      margin-top: 7px;
+      margin-top: 0.4rem;
       overflow: scroll;
       &::-webkit-scrollbar {
         display: none;
@@ -89,8 +89,8 @@ export const StyledBodyAddChannel = styled.div`
           height: 5.5rem;
           background-color: ${({ theme }) => theme.Colors.grays[10]};
           border-radius: 10px;
-          margin-left: 10px;
-          margin-top: 10px;
+          margin-left: 0.6rem;
+          margin-top: 0.6rem;
           &:hover {
             background-color: ${({ theme }) => theme.Colors.purples[1]};
             cursor: pointer;
@@ -121,6 +121,6 @@ export const StyledFooterAddChannel = styled.div`
   display: flex;
   height: 3.3rem;
   align-items: flex-end;
-  padding-right: 15px;
+  padding-right: 0.9rem;
   justify-content: flex-end;
 `;

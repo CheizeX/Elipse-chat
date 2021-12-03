@@ -30,14 +30,9 @@ export const SideBarOrganism: FC<StyledSideBarProps & CollapseSidebar> = ({
     <StyledSideBar collapseArrow={collapseArrow}>
       <SideBarTopContainer collapseArrow={collapseArrow}>
         <span>
-          <BadgeMolecule
-            leftIcon={() => <SVGIcon iconFile="/icons/sidebar-1.svg" />}
-            rightIcon={
-              collapseArrow
-                ? undefined
-                : () => <SVGIcon iconFile="/icons/ailalia.svg" />
-            }
-          />
+          <div>
+            <img src="/images/elipse-chat-blanco.png" alt="sidebar-1" />
+          </div>
         </span>
         <button onClick={() => setCollapseArrow(!collapseArrow)}>
           {collapseArrow ? (

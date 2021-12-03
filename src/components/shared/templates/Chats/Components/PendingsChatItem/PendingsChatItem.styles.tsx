@@ -122,13 +122,13 @@ export const StyledClientAndAgentAvatars = styled.div`
     position: absolute;
     width: 25px;
     height: 25px;
-    top: -10px;
-    right: 0px;
+    top: -5px;
+    right: -5px;
     border-radius: 50%;
     & svg {
       border-radius: 50%;
-      width: 28px;
-      height: 28px;
+      width: 23px;
+      height: 23px;
     }
   }
 `;

@@ -23,25 +23,19 @@ export const StyledHeaderFirstSection = styled.div`
   justify-content: space-between;
   & > span {
     display: flex;
-    justify-content: start;
     align-items: center;
     margin: 0 23px;
     div {
-      min-width: 20px;
-      min-height: 20px;
-      padding: 4px;
+      min-width: 22px;
+      min-height: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: fit-content;
-      line-height: 14px;
       margin-left: 10px;
       color: ${({ theme }) => theme.Colors.grays[10]};
       font-weight: 700;
       font-size: 12px;
       width: fit-content;
-      position: relative;
-      top: 1px;
       background-color: ${({ theme }) => theme.Colors.purples[3]};
       border-radius: 50%;
     }
@@ -66,6 +60,7 @@ export const StyledHeaderFirstSection = styled.div`
     z-index: 2;
   }
 `;
+
 export const WrapperCard = styled.div`
   display: flex;
   justify-content: space-around;
@@ -91,6 +86,7 @@ export const WrapperCard = styled.div`
     }
   }
 `;
+
 export const StyledAgentSection = styled.div<IContainerProps>`
   width: 607px;
   height: 56px;
@@ -193,6 +189,7 @@ export const StyledAgentSection = styled.div<IContainerProps>`
     }
   }
 `;
+
 export const WrapperAgents = styled.div`
   height: 456px;
   width: 607px;
@@ -223,16 +220,14 @@ export const WrapperAgents = styled.div`
       line-height: 14px;
     }
   }
-
   & :nth-child(2) {
-    max-height: 433px;
-
+    height: 433px;
     & > :nth-child(2) {
       overflow: scroll;
       min-height: 442px;
       max-height: 442px;
       margin-top: 30px;
-      max-height: 472px;
+      height: 448px;
       &::-webkit-scrollbar {
         display: none;
       }
@@ -262,7 +257,6 @@ export const WrapperAgents = styled.div`
           }
         }
         & span {
-          color: ${({ theme }) => theme.Colors.grays[1]};
           font-weight: ${({ theme }) => theme.fontWeight[600]};
           font-size: ${({ theme }) => theme.fontSize[12]};
           line-height: 14px;

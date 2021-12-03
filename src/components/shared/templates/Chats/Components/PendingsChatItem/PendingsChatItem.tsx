@@ -119,6 +119,9 @@ export const PendingsChatItem: FC<
                   {chat.channel === Channels.INSTAGRAM && (
                     <SVGIcon iconFile="/icons/Instagram.svg" />
                   )}
+                  {chat.channel === Channels.WEBCHAT && (
+                    <SVGIcon iconFile="/icons/webchat.svg" />
+                  )}
                 </StyledClientAndAgentAvatars>
                 <StyledNameAndDialog>
                   <Text>

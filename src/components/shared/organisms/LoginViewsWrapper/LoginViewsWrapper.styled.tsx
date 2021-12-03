@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledBackgroundLogin = styled.article`
-  background: url('./images/MaskGroup.svg');
+  /* background: url('./images/MaskGroup.svg'); */
+  position: relative;
   background-color: ${({ theme }) => theme.Colors.purples[1]};
   background-blend-mode: lighten;
   width: 100%;
@@ -9,9 +10,20 @@ export const StyledBackgroundLogin = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
+  & > span {
+    z-index: 0;
+    & * {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100vh;
+    }
+  }
 `;
 
 export const StyledLoginWrapper = styled.div`
+  z-index: 1;
   min-height: 428px;
   background-color: transparent;
   min-width: 411px;
@@ -36,6 +48,9 @@ export const StyledLoginHeader = styled.div`
     width: 110px;
     height: 28px;
     margin-left: 10px;
+  }
+  & > img {
+    width: 300px;
   }
 `;
 

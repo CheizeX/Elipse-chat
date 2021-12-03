@@ -31,10 +31,15 @@ const dataChannel = [
 export const AddChannel: FC<IPropsAddChannel> = ({
   setIsOpenModal,
   setIsSectionWebChat,
+  setSeletedComponent,
 }) => {
   const closeModal = () => {
+    setIsOpenModal(false);
+  };
+  const handleToggle = (arg: string) => {
     setIsSectionWebChat(true);
     setIsOpenModal(false);
+    setSeletedComponent(arg);
   };
   return (
     <StyledWrapperAddChannel>
@@ -51,7 +56,10 @@ export const AddChannel: FC<IPropsAddChannel> = ({
           <div>
             <div>
               {dataChannel.map((item) => (
-                <button key={item.id} type="button">
+                <button
+                  onClick={() => handleToggle(item.name)}
+                  key={item.id}
+                  type="button">
                   <SVGIcon iconFile={`/icons/${item.svg}.svg`} />
                   <Text>{item.name}</Text>
                 </button>

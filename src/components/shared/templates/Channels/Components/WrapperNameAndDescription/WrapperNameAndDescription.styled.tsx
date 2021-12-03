@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const StyledWrapperModal = styled.div`
-  width: 260px;
-  height: 220px;
+  width: 16.2rem;
+  height: 13.7rem;
   margin: auto;
-  padding: 18px 12px 0 12px;
-  margin-top: 10px;
+  padding: 1.12rem 0.75rem 0 0.75rem;
+  margin-top: 0.6rem;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   border-radius: 10px;
   & > span {
@@ -20,7 +20,7 @@ export const StyledWrapperModal = styled.div`
     line-height: 14px;
   }
   & > div {
-    margin-top: 12px;
-    margin-bottom: 16px;
+    margin-top: 0.75rem;
+    margin-bottom: 1rem;
   }
 `;

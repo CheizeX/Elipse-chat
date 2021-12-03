@@ -9,18 +9,18 @@ const mySelector = (
 
 export const StyledSearchForChats = styled.div`
   max-height: 551px;
-  overflow: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
   & > :nth-child(2) {
-    margin-top: 40px;
+    overflow: scroll;
+    max-height: 551px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 
 export const StyledTitle = styled.div`
   display: flex;
-  position: fixed;
+  position: relative;
   min-height: 40px;
   align-items: center;
   width: 680px;

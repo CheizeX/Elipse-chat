@@ -29,6 +29,7 @@ import optionsToFilterChats from './slices/live-chat/options-to-filter';
 import reportsQueryState from './slices/reports/reports-management';
 import reportsAgentsQueryState from './slices/reports/reports-data-agents';
 import chatContainerReviewState from './slices/dashboard/dashboard-review';
+import monitorCountAgentsAvailableState from './slices/monitor/count-agent';
 
 const liveChat = combineReducers({
   chatsPendings,
@@ -64,6 +65,7 @@ const monitor = combineReducers({
   monitorAgentsNotAvailableState,
   monitorAgentsAvailableState,
   monitorAllUserState,
+  monitorCountAgentsAvailableState,
   infoByAgentState,
 });
 

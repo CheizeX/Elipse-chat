@@ -4,10 +4,10 @@ import { myColorSelector } from './ColorPaletteWrap.shared';
 
 export const StyledColorPaletteWrap = styled.div`
   width: 16.2rem;
-  height: 18rem;
+  height: fit-content;
   margin: auto;
-  padding: 8px 12px 0 12px;
-  margin-top: 5px;
+  padding: 0.5rem 0.75rem 0 0.75rem;
+  margin-top: 0.6rem;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   border-radius: 10px;
   & > span {
@@ -17,11 +17,13 @@ export const StyledColorPaletteWrap = styled.div`
     background-color: ${({ theme }) => theme.Colors.grays[10]};
     border-radius: 10px;
     width: 100%;
-    margin: 6px 0 16px 4px;
-    height: 10rem;
+    // margin: 6px 0 16px 4px;
+    // height: 10rem;
+    margin: 0.3rem 0 1rem 0.25rem;
+    min-height: 14rem;
   }
   & > button {
-    margin: auto;
+    margin: 2.25rem auto;
   }
 `;
 export const StyledTagColor = styled.svg<IPropsColorWrap>`
@@ -35,7 +37,7 @@ export const StyledCustomColor = styled.div`
   & > :first-child {
     margin: auto;
     height: 10.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 0.6rem;
   }
   & > :nth-child(2) {
     display: flex;
@@ -50,7 +52,7 @@ export const StyledCustomColor = styled.div`
     }
     & > div {
       display: flex;
-      padding: 6px;
+      padding: 0.3rem;
       background: ${({ theme }) => theme.Colors.grays[9]};
       border-radius: 20px;
       width: 8.6rem;
@@ -72,6 +74,7 @@ export const StyledCustomColor = styled.div`
     margin-top: 0.8rem;
     & > button {
       width: 100px;
+      margin-bottom: 1rem;
     }
   }
 `;
@@ -89,7 +92,7 @@ export const StyledWrapperColor = styled.div<IPropsColorWrap>`
     myColorSelector(name === '8', theme.Colors.grays[4], null) ||
     myColorSelector(name === '9', color, theme.Colors.grays[10])};
   border-radius: 3px;
-  margin: 8px 8px 8px 0;
+  margin: 0.5rem 0.5rem 0.5rem 0;
   display: inline-block;
   & :hover {
     cursor: pointer;

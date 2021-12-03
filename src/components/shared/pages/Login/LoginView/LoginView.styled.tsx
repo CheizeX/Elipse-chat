@@ -1,5 +1,20 @@
 import styled from 'styled-components';
 
+export const StyledLoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  & article {
+    & div {
+      & > :nth-child(2) {
+        height: 200px;
+      }
+    }
+  }
+`;
+
 export const StyledLoginView = styled.div`
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   border-radius: 20px;

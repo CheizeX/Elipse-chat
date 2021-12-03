@@ -459,9 +459,11 @@ export const ChatsViewSelectedToConfirm: FC<
                   </button>
                 ))}
             </StyledPredefinidedTexts>
-            <button type="button" onClick={handleDropZoneDisplayed}>
-              <SVGIcon iconFile="/icons/clipper.svg" />
-            </button>
+            {chatToTalkWithUser?.channel === 'Webchat' ? null : (
+              <button type="button" onClick={handleDropZoneDisplayed}>
+                <SVGIcon iconFile="/icons/clipper.svg" />
+              </button>
+            )}
             {/* <button type="button" onClick={handleSowEmojisButtton}>
               <SVGIcon iconFile="/icons/emojis.svg" />
             </button> */}

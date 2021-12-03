@@ -8,12 +8,12 @@ const mySelector = (
 ) => (condition ? then : otherwise);
 
 export const StyledNavBarLive = styled.nav<INavBarLiveProps>`
-  background: url('/images/Navbar_Background.svg');
+  background: url('/images/Navbar_Background.svg') no-repeat;
   background-blend-mode: lighten;
   background-color: ${({ theme }) => theme.Colors.purples[1]};
   background-size: 1360px;
   background-position-y: -15px;
-  background-position-x: -24px;
+  background-position-x: 120px;
   border-radius: 0 0 24px 24px;
   padding: 20px 38px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
@@ -45,16 +45,11 @@ export const StyledNavBarLive = styled.nav<INavBarLiveProps>`
   }
 `;
 export const Logo = styled.div`
-  & > div {
-    width: 32px;
-    top: -4px;
-    & > div {
-      padding: 10px 0px 10px 0px;
-      & > svg {
-        width: 26px;
-        height: 24px;
-      }
-    }
+  & img {
+    width: 150px;
+    padding: 10px 0px 10px 0px;
+    margin: 0;
+    transform: translate(-40px, -30px);
   }
 `;
 

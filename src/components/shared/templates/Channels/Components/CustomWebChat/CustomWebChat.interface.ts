@@ -3,6 +3,7 @@ export interface ICustomWebChat {
   description: string;
   color: string;
   avatar: string;
+  customizeMyAvatar?: boolean;
 }
 
 export interface IPropsCustom {

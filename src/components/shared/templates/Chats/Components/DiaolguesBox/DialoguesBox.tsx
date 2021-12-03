@@ -43,10 +43,13 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
 
   const handleOpenAttachments = (message: Message) => {
     window.open(
-      `https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
-        10,
-        message.content.length,
-      )}`,
+      // `https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+      //   10,
+      //   message.content.length,
+      // )}`,
+      `${
+        process.env.NEXT_PUBLIC_REST_API_URL
+      }/whatsapp360/file/${message.content.substr(10, message.content.length)}`,
     );
   };
 
@@ -91,7 +94,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              src={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 10,
                                 message.content.length,
                               )}`}
@@ -111,7 +117,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    src={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }whatsapp360/file/${message.content.substr(
                                       10,
                                       message.content.length,
                                     )}`}
@@ -144,7 +153,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              src={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 10,
                                 message.content.length,
                               )}`}
@@ -164,7 +176,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    src={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }/whatsapp360/file/${message.content.substr(
                                       10,
                                       message.content.length,
                                     )}`}
@@ -197,7 +212,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              src={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 10,
                                 message.content.length,
                               )}`}
@@ -217,7 +235,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    src={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }/whatsapp360/file/${message.content.substr(
                                       10,
                                       message.content.length,
                                     )}`}
@@ -245,7 +266,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <iframe
-                              src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              src={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 10,
                                 message.content.length,
                               )}`}
@@ -254,7 +278,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               style={{
                                 overflow: 'hidden',
                               }}
-                              title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              title={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 10,
                                 message.content.length,
                               )}`}
@@ -272,13 +299,19 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 <article>
                                   <iframe
                                     // use frame-ancestors to allow iframe access to parent window
-                                    src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    src={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }/whatsapp360/file/${message.content.substr(
                                       10,
                                       message.content.length,
                                     )}`}
                                     width="100%"
                                     height="100%"
-                                    title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    title={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }/whatsapp360/file/${message.content.substr(
                                       10,
                                       message.content.length,
                                     )}`}
@@ -318,7 +351,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <iframe
-                              src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              src={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 8,
                                 message.content.length,
                               )}`}
@@ -327,7 +363,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               style={{
                                 overflow: 'hidden',
                               }}
-                              title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              title={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 8,
                                 message.content.length,
                               )}`}
@@ -344,13 +383,19 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <iframe
-                                    src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    src={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }/whatsapp360/file/${message.content.substr(
                                       8,
                                       message.content.length,
                                     )}`}
                                     width="100%"
                                     height="100%"
-                                    title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    title={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }whatsapp360/file/${message.content.substr(
                                       8,
                                       message.content.length,
                                     )}`}
@@ -375,7 +420,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              src={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 8,
                                 message.content.length,
                               )}`}
@@ -395,7 +443,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    src={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }/whatsapp360/file/${message.content.substr(
                                       8,
                                       message.content.length,
                                     )}`}
@@ -423,7 +474,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              src={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 8,
                                 message.content.length,
                               )}`}
@@ -443,7 +497,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    src={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }/whatsapp360/file/${message.content.substr(
                                       8,
                                       message.content.length,
                                     )}`}
@@ -471,7 +528,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                              src={`${
+                                process.env.NEXT_PUBLIC_REST_API_URL
+                              }/whatsapp360/file/${message.content.substr(
                                 8,
                                 message.content.length,
                               )}`}
@@ -491,7 +551,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
+                                    src={`${
+                                      process.env.NEXT_PUBLIC_REST_API_URL
+                                    }/whatsapp360/file/${message.content.substr(
                                       8,
                                       message.content.length,
                                     )}`}

@@ -6,6 +6,7 @@ export interface IMonitorSecondSection {
   dateAgent?: User[];
   allAgent?: User[];
   chats?: Chat[];
+  countAgent: number;
   stateByAgent: number[];
   byAgentAvailable: string[];
   handleChange: () => void | Promise<void>;

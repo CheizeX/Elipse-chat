@@ -18,6 +18,7 @@ import {
   StyleErrors,
   StyledSecondInput,
   StyledLinkTo,
+  StyledLoaderContainer,
 } from './LoginView.styled';
 import { Text } from '../../../atoms/Text/Text';
 import { ContainerInput } from '../../../molecules/Input/ContainerInput';
@@ -67,17 +68,11 @@ export const LoginView: FC<ViewLoginProps> = ({
   onSubmit: onSubmitExternal,
 }) => {
   const { push } = useRouter();
-  // const socket: any = useContext(websocketContext);
 
   const [accessToken] = useLocalStorage('AccessToken', '');
-
-  // Decodifico el token para obtener los datos del usuario
   const { decodedToken }: any = useJwt(accessToken);
 
   const dispatch = useAppDispatch();
-  // const { userDataInState } = useAppSelector(
-  //   (state) => state.userAuthCredentials,
-  // );
 
   const [visible, setVisible] = useState(false);
   const toasts = useToastContext();
@@ -134,10 +129,12 @@ export const LoginView: FC<ViewLoginProps> = ({
       {({ errors, touched, isValid, isSubmitting }) => {
         return (
           <>
-            {isSubmitting ? (
-              <LoginViewsWrapper>
-                <Loader />
-              </LoginViewsWrapper>
+            {isSubmitting || decodedToken ? (
+              <StyledLoaderContainer>
+                <LoginViewsWrapper>
+                  <Loader />
+                </LoginViewsWrapper>
+              </StyledLoaderContainer>
             ) : (
               <LoginViewsWrapper>
                 <StyledLoginView>

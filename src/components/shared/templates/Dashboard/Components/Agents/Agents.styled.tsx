@@ -137,8 +137,8 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
     align-items: center;
     margin: 12px 25px;
     & > img {
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
 
       border-radius: 50%;
       object-fit: cover;
