@@ -7,7 +7,7 @@ import { StyledTrialFormLayout } from './TrialForm.styled';
 import {
   TrialRegisterInterface,
   TrialRegisterItems,
-} from '../../../../../../pages/trial-register/trial-register.shared';
+} from '../../../../../../helpers/trial-register.shared';
 import {
   ButtonMolecule,
   ButtonState,
@@ -73,7 +73,7 @@ export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
       pagepath={pagepath}>
-      {({ isSubmitting, values }) => {
+      {({ isSubmitting }) => {
         return (
           <>
             <StyledTrialFormLayout pagepath={pagepath} color={color}>
@@ -85,7 +85,6 @@ export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
               />
               <main className="cards-container">
                 <article className="info-card">
-                  {values}
                   <h1>
                     Plan
                     <span style={{ color: `${color}` }}>
