@@ -1,10 +1,14 @@
 import styled, { css } from 'styled-components';
 import { IChatFilterProps, FilterChannelsProps } from './ChatFilter.interface';
 
+export const StyledChatFilterWrapper = styled.div`
+  position: relative;
+`;
+
 export const StyledChatFilter = styled.div<IChatFilterProps>`
   position: absolute;
   right: -27px;
-  top: 3px;
+  top: -10px;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   width: 343px;
   height: fit-content;
@@ -18,16 +22,21 @@ export const StyledChatFilter = styled.div<IChatFilterProps>`
 `;
 
 export const StyledChatFilterHeader = styled.div`
+  color: ${({ theme }) => theme.Colors.grays[3]};
   width: 340px;
   height: 44px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[8]};
-  padding-top: 13px;
+  align-items: center;
+  border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
   margin-bottom: 16px;
   & > button {
     position: relative;
-    top: -3px;
+    top: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     & > div {
       width: 34px;
       height: 17px;
@@ -47,6 +56,8 @@ export const StyledChatFilterHeader = styled.div`
   }
   & > span {
     margin-left: 23px;
+    color: ${({ theme }) => theme.Colors.grays[1]};
+    font-size: 16px;
   }
 `;
 
@@ -59,9 +70,10 @@ export const StyledChatFilterBody = styled.div`
     font-size: ${({ theme }) => theme.fontSize[12]};
     font-weight: ${({ theme }) => theme.fontWeight[600]};
     line-height: ${({ theme }) => theme.fontSize[14]};
-  }
-  & > div {
     height: fit-content;
+    & > button {
+      height: 35px;
+    }
   }
 `;
 
@@ -105,9 +117,10 @@ export const StyledChatFilterFooter = styled.div`
   justify-content: space-around;
   align-items: center;
   margin: 0;
-  border-top: 1px solid ${({ theme }) => theme.Colors.grays[8]};
-  & > button {
+  border-top: 1px solid ${({ theme }) => theme.Colors.grays[9]};
+  & button {
     width: 120px;
+    max-height: 40px;
   }
 `;
 

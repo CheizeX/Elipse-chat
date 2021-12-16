@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { FC } from 'react';
 import { Tabs } from '../../../../organisms/Tabs/Tabs';
 import { PendingsChatItem } from '../PendingsChatItem/PendingsChatItem';
@@ -5,11 +6,13 @@ import { ChatsListHeader } from '../ChatsListHeader/ChatsListHeader';
 import { InConversationChatItem } from '../InConversationChatItem/InConversationChatItem';
 import {
   StyledChatsList,
-  StyledIndicator,
   StyledPendingsRender,
   StyledPendings,
   StyledInConversation,
   StyledInConversationRender,
+  StyledIndicatorOnConversation,
+  StyledIndicatorPendings,
+  StyledIndicatorPaused,
 } from './ChatsList.styles';
 import {
   TabProps,
@@ -17,6 +20,7 @@ import {
   SortUsers,
   DropZoneDisplayedProps,
   ChatInputDialogueProps,
+  ShowOnlyPaused,
 } from '../../ChatsSection/ChatsSection.interface';
 import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import {
@@ -31,7 +35,8 @@ export const ChatsList: FC<
     DropZoneDisplayedProps &
     ChatInputDialogueProps &
     FilterChannelsProps &
-    FilterChannel
+    FilterChannel &
+    ShowOnlyPaused
 > = ({
   setUserSelected,
   userSelected,
@@ -45,6 +50,8 @@ export const ChatsList: FC<
   handleCleanChannels,
   checkedTags,
   setCheckedTags,
+  setShowOnlyPausedChats,
+  showOnlyPausedChats,
 }) => {
   const { chatsOnConversation } = useAppSelector(
     (state) => state.liveChat.chatsOnConversation,
@@ -55,12 +62,19 @@ export const ChatsList: FC<
 
   return (
     <StyledChatsList>
-      {chatsOnConversation?.length > 0 && <StyledIndicator />}
+      {chatsOnConversation?.length > 0 && <StyledIndicatorOnConversation />}
+      {chatsPendings?.length > 0 && <StyledIndicatorPendings />}
+      {chatsOnConversation?.length > 0 &&
+        chatsOnConversation.some((chat) => chat.isPaused) && (
+          <StyledIndicatorPaused>| |</StyledIndicatorPaused>
+        )}
       {activeByDefaultTab === 1 && (
         <Tabs largeTabs activeByDefault={1}>
           <StyledPendings title="Pendientes">
             <StyledPendingsRender>
               <ChatsListHeader
+                showOnlyPausedChats={showOnlyPausedChats}
+                setShowOnlyPausedChats={setShowOnlyPausedChats}
                 checkedTags={checkedTags}
                 setCheckedTags={setCheckedTags}
                 handleCleanChannels={handleCleanChannels}
@@ -82,6 +96,8 @@ export const ChatsList: FC<
           <StyledInConversation title="En conversación">
             <StyledInConversationRender>
               <ChatsListHeader
+                showOnlyPausedChats={showOnlyPausedChats}
+                setShowOnlyPausedChats={setShowOnlyPausedChats}
                 checkedTags={checkedTags}
                 setCheckedTags={setCheckedTags}
                 handleCleanChannels={handleCleanChannels}
@@ -90,6 +106,8 @@ export const ChatsList: FC<
                 sortedChats={sortedChats || false}
               />
               <InConversationChatItem
+                showOnlyPausedChats={showOnlyPausedChats}
+                setShowOnlyPausedChats={setShowOnlyPausedChats}
                 setUserSelected={setUserSelected}
                 userSelected={userSelected || ''}
                 setSortedChats={setSortedChats}
@@ -107,6 +125,8 @@ export const ChatsList: FC<
           <StyledPendings title="Pendientes">
             <StyledPendingsRender>
               <ChatsListHeader
+                showOnlyPausedChats={showOnlyPausedChats}
+                setShowOnlyPausedChats={setShowOnlyPausedChats}
                 checkedTags={checkedTags}
                 setCheckedTags={setCheckedTags}
                 handleCleanChannels={handleCleanChannels}
@@ -128,6 +148,8 @@ export const ChatsList: FC<
           <StyledInConversation title="En conversación">
             <StyledInConversationRender>
               <ChatsListHeader
+                showOnlyPausedChats={showOnlyPausedChats}
+                setShowOnlyPausedChats={setShowOnlyPausedChats}
                 checkedTags={checkedTags}
                 setCheckedTags={setCheckedTags}
                 handleCleanChannels={handleCleanChannels}
@@ -136,6 +158,8 @@ export const ChatsList: FC<
                 sortedChats={sortedChats || false}
               />
               <InConversationChatItem
+                showOnlyPausedChats={showOnlyPausedChats}
+                setShowOnlyPausedChats={setShowOnlyPausedChats}
                 setUserSelected={setUserSelected}
                 userSelected={userSelected || ''}
                 setSortedChats={setSortedChats}

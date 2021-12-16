@@ -52,6 +52,8 @@ export const EndChat: FC<IEndChatProps> = ({ setLiveChatModal }) => {
 
   const [reviewConversation, setReviewConversation] = useState('');
   const [openEndChat, setOpenEndChat] = useState<boolean>(false);
+  const [realInputValue, setRealInputValue] = useState('');
+
   const initialValues = {
     finishedStatus: '',
     feedback: '',
@@ -64,10 +66,9 @@ export const EndChat: FC<IEndChatProps> = ({ setLiveChatModal }) => {
     },
   ) => {
     try {
-      if (values?.finishedStatus) {
+      if (realInputValue) {
         await endChat(chatSelectedToSendId, {
-          finishedStatus:
-            values.finishedStatus.toUpperCase() as ChatFinishedStatus,
+          finishedStatus: realInputValue as ChatFinishedStatus,
           feedback: values?.feedback || '',
         });
         submitProps?.setSubmitting(false);
@@ -88,6 +89,7 @@ export const EndChat: FC<IEndChatProps> = ({ setLiveChatModal }) => {
       setLiveChatModal(false);
       setOpenEndChat(false);
       setReviewConversation('');
+      setRealInputValue('');
     } catch (error) {
       showAlert?.addToast({
         alert: Toast.ERROR,
@@ -97,15 +99,21 @@ export const EndChat: FC<IEndChatProps> = ({ setLiveChatModal }) => {
       submitProps?.resetForm();
     }
   };
+
   const handleClickClose = () => {
     setLiveChatModal(false);
   };
   const handleOpenToConfirmation = () => {
     setOpenEndChat(true);
   };
+  const handleInputsClicks = (val: string, val2: string) => {
+    setRealInputValue(val);
+    setReviewConversation(val2);
+  };
+
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ submitForm, values }) => {
+      {({ submitForm }) => {
         return (
           <StyledEndChat openEndChat={openEndChat}>
             <Form>
@@ -122,15 +130,17 @@ export const EndChat: FC<IEndChatProps> = ({ setLiveChatModal }) => {
                     type="radio"
                     id="finishedStatus"
                     name="finishedStatus"
-                    value="SATISFACTORY"
-                    onClick={() => setReviewConversation('SATISFACTORIO')}
+                    onClick={() =>
+                      handleInputsClicks('SATISFACTORY', 'SATISFACTORIO')
+                    }
                   />
                   <Field
                     type="radio"
                     id="finishedStatus"
                     name="finishedStatus"
-                    value="UNSATISFACTORY"
-                    onClick={() => setReviewConversation('INSATISFACTORIO')}
+                    onClick={() =>
+                      handleInputsClicks('UNSATISFACTORY', 'INSATISFACTORIO')
+                    }
                   />
                 </StyledFuntionalRadio>
                 <WrapperVisualRadio>
@@ -143,7 +153,13 @@ export const EndChat: FC<IEndChatProps> = ({ setLiveChatModal }) => {
                       <div />
                     </StyledRadioGray>
                   )}
-                  <span>Satisfactorio</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleInputsClicks('SATISFACTORY', 'SATISFACTORIO')
+                    }>
+                    Satisfactorio
+                  </button>
                   {reviewConversation === 'INSATISFACTORIO' ? (
                     <StyledRadioPurple>
                       <div />
@@ -153,7 +169,13 @@ export const EndChat: FC<IEndChatProps> = ({ setLiveChatModal }) => {
                       <div />
                     </StyledRadioGray>
                   )}
-                  <span>Insatisfactorio</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleInputsClicks('UNSATISFACTORY', 'INSATISFACTORIO')
+                    }>
+                    Insatisfactorio
+                  </button>
                 </WrapperVisualRadio>
                 <Text color="black">Comentario (Opcional)</Text>
                 <Field
@@ -175,7 +197,7 @@ export const EndChat: FC<IEndChatProps> = ({ setLiveChatModal }) => {
                   size={Size.MEDIUM}
                   onClick={() => handleOpenToConfirmation()}
                   state={
-                    values?.finishedStatus.length < 1
+                    realInputValue.length < 1
                       ? ButtonState.DISABLED
                       : ButtonState.NORMAL
                   }

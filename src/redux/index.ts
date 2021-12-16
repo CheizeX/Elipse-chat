@@ -30,6 +30,7 @@ import reportsQueryState from './slices/reports/reports-management';
 import reportsAgentsQueryState from './slices/reports/reports-data-agents';
 import chatContainerReviewState from './slices/dashboard/dashboard-review';
 import monitorCountAgentsAvailableState from './slices/monitor/count-agent';
+import chatToSetOnConversationIdToState from './slices/live-chat/chatset-on-conversation';
 
 const liveChat = combineReducers({
   chatsPendings,
@@ -37,6 +38,7 @@ const liveChat = combineReducers({
   chatSelectedToSendId,
   chatSelectedToTransferById,
   userSelectedToTransferById,
+  chatToSetOnConversationIdToState,
 });
 
 const users = combineReducers({

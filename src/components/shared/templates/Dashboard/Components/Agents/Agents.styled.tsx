@@ -125,7 +125,7 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
   height: 56px;
   display: flex;
   justify-content: space-between;
-  padding-right: 2.5rem;
+  padding-right: 0.6rem;
   align-items: center;
   background-color: ${({ theme, index }) =>
     index && index % 2 !== 0 ? theme.Colors.grays[10] : theme.Colors.grays[9]};
@@ -162,13 +162,13 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
       }
     }
 
-    & > :nth-child(3) {
-      width: 18px;
-      height: 13px;
-      margin-left: 14px;
+    & > button {
+      width: 20px;
+      height: 20px;
+      margin-left: 4px;
+      margin-right: 2px;
       & > :hover {
         cursor: pointer;
-
         & * {
           & > svg {
             & > :nth-child(1) {
@@ -203,21 +203,65 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
     line-height: 14px;
   }
   & > :nth-child(2) {
-    background-color: ${({ theme }) => theme.Colors.purples[3]};
-    border-radius: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 25px;
-    & span {
+    justify-content: end;
+    width: 100%;
+    & > div {
+      background-color: ${({ theme }) => theme.Colors.purples[3]};
+      border-radius: 20px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      margin: auto;
-      color: ${({ theme }) => theme.Colors.grays[10]};
-      font-weight: ${({ theme }) => theme.fontWeight[700]};
-      font-size: ${({ theme }) => theme.fontSize[12]};
+      align-items: center;
+      width: 30px;
+      height: 25px;
+      & span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        color: ${({ theme }) => theme.Colors.grays[10]};
+        font-weight: ${({ theme }) => theme.fontWeight[700]};
+        font-size: ${({ theme }) => theme.fontSize[12]};
+      }
+    }
+    & > button {
+      width: 14px;
+      height: 14px;
+      margin-left: 16px;
+      position: relative;
+      top: 3px;
+      & > :hover {
+        cursor: pointer;
+        & * {
+          & > svg {
+            & > :nth-child(1) {
+              & > path {
+                fill: ${({ theme }) => theme.Colors.purples[1]};
+              }
+            }
+          }
+        }
+      }
+      & * {
+        & > svg {
+          width: 14px;
+          height: 14px;
+        }
+      }
+      &:active {
+        opacity: 0.9;
+      }
+      & > div {
+        & * {
+          & > svg {
+            & > :nth-child(1) {
+              & > path {
+                fill: ${({ theme }) => theme.Colors.grays[6]};
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;

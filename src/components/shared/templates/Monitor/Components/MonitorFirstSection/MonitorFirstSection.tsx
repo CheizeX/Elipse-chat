@@ -34,9 +34,8 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
   const onConversationChats = chats?.filter(
     (item) => item.status === 'ON_CONVERSATION',
   );
-  const pendintChat = chats?.filter(
-    (item) => item.status === 'ASSIGNMENT_PENDING',
-  );
+  const pendintChat =
+    chats && chats.filter((item) => item.status === 'ASSIGNMENT_PENDING');
 
   useEffect(() => {
     const intervalToGetActualTime = setInterval(() => {
@@ -120,15 +119,14 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
                         (ele, count) =>
                           (ele.urlAvatar ? (
                             <img
+                              key={count.toString()}
                               src={`${ele.urlAvatar}?token=${accessToken}`}
                               alt={ele.name}
-                              key={count.toString()}
                             />
                           ) : (
-                            <SVGIcon
-                              iconFile="/icons/unknown_user.svg"
-                              key={count.toString()}
-                            />
+                            <div key={count.toString()}>
+                              <SVGIcon iconFile="/icons/unknown_user.svg" />
+                            </div>
                           )) ?? <SVGIcon iconFile="/icons/unknown_user.svg" />,
                       )}
                     {!assignedAgent

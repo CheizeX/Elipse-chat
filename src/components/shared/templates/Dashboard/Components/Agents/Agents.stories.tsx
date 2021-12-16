@@ -5,13 +5,15 @@ import { Agents } from './Agents';
 storiesOf('Ailalia/Organisms/Dashboard/Agents', module).add('Default', () => {
   return (
     <Agents
-      setIsDisableReview={() => null}
+      setSelectedComponent={() => null}
       setClose={() => null}
       setDatePicker={() => null}
       startDate={null}
       endDate={null}
       setStartDate={() => null}
       setEndDate={() => null}
+      componentReview={false}
+      setComponentReview={() => null}
     />
   );
 });

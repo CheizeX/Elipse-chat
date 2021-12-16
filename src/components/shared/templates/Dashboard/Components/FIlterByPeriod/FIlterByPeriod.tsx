@@ -22,6 +22,8 @@ import {
 } from '../../../../../../redux/slices/dashboard/dashboard-chats-filter';
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
+import { readReviewChats } from '../../../../../../api/chat';
+import { setReviewChatsFinished } from '../../../../../../redux/slices/dashboard/dashboard-review';
 
 export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
   setDatePicker,
@@ -32,11 +34,10 @@ export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
   setStartDate,
   endDate,
   setEndDate,
+  selectedComponent,
 }) => {
   const toasts = useToastContext();
-
   const dispatch = useAppDispatch();
-
   const onChange = ({
     startDate: newStartDate,
     endDate: newEndDate,
@@ -48,19 +49,40 @@ export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
     setEndDate(newEndDate);
   };
 
-  const handleFiltrarButton = () => {
+  const handleFiltrarButton = async () => {
     if (startDate && endDate) {
-      dispatch(
-        getChatsByPeriod(
-          `${startDate?.toISOString()}/${endDate?.toISOString()}`,
-        ),
-      );
-      dispatch(
-        setNameOfSelectedDateToFilter(
-          `Desde el ( ${startDate?.toLocaleDateString()} ) hasta el ( ${endDate?.toLocaleDateString()} )`,
-        ),
-      );
-      setClose(true);
+      if (selectedComponent === 'AGENT') {
+        dispatch(
+          getChatsByPeriod(
+            `${startDate?.toISOString()}/${endDate?.toISOString()}`,
+          ),
+        );
+        dispatch(
+          setNameOfSelectedDateToFilter(
+            `Desde el ( ${startDate?.toLocaleDateString()} ) hasta el ( ${endDate?.toLocaleDateString()} )`,
+          ),
+        );
+        setClose(true);
+      } else {
+        try {
+          const currentDts = await readReviewChats(
+            startDate?.toISOString(),
+            endDate?.toISOString(),
+          );
+          if (currentDts.success === false) {
+            dispatch(setReviewChatsFinished([]));
+          } else {
+            dispatch(setReviewChatsFinished(currentDts));
+          }
+          setClose(true);
+        } catch (err) {
+          toasts?.addToast({
+            alert: Toast.ERROR,
+            title: 'ERROR',
+            message: `${err}`,
+          });
+        }
+      }
     } else {
       toasts?.addToast({
         alert: Toast.WARNING,

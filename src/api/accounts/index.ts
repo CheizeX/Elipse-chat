@@ -17,12 +17,10 @@ export const changePasswordRequest = async (
   oldPass: string,
   newPass: string,
 ) => {
-  const data = await authApi.patch('/changePassword', {
+  return authApi.patch('/changePassword', {
     oldPass,
     newPass,
   });
-  console.log(data);
-  return data;
 };
 
 export const requestChangePasswordLink = async (email: string) => {

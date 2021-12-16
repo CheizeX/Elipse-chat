@@ -51,7 +51,6 @@ export const MonitorSection: FC = () => {
   const { allUser } = useAppSelector(
     (state) => state.monitor.monitorAllUserState,
   );
-
   const { countAgent } = useAppSelector(
     (state) => state.monitor.monitorCountAgentsAvailableState,
   );

@@ -26,6 +26,7 @@ export const datepickerContextDefaultValue = {
   onDateFocus: () => {},
   onDateHover: () => {},
   onDateSelect: () => {},
+  onResetDate: () => {},
 };
 
 export const datepickerContext = createContext<DatepickerContextProps>(

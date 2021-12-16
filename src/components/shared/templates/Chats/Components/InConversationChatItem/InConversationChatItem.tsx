@@ -17,6 +17,7 @@ import {
   SortingProps,
   DropZoneDisplayedProps,
   ChatInputDialogueProps,
+  ShowOnlyPaused,
 } from '../../ChatsSection/ChatsSection.interface';
 import {
   StyledInConversationChatItem,
@@ -40,8 +41,15 @@ export const InConversationChatItem: FC<
     SortingProps &
     TabProps &
     DropZoneDisplayedProps &
-    ChatInputDialogueProps
-> = ({ setUserSelected, userSelected, setActiveByDefaultTab, sortedChats }) => {
+    ChatInputDialogueProps &
+    ShowOnlyPaused
+> = ({
+  setUserSelected,
+  userSelected,
+  setActiveByDefaultTab,
+  sortedChats,
+  showOnlyPausedChats,
+}) => {
   const dispatch = useAppDispatch();
 
   const { chatsOnConversation } = useAppSelector(
@@ -52,8 +60,6 @@ export const InConversationChatItem: FC<
   );
 
   const [timeLapse, setTimeLapse] = React.useState(Date.now());
-  // const [fatherActiveTab, setFatherActiveTab] =
-  //   React.useState<string>('Pendientes');
 
   const handleSendMessageToUser = async (arg: string) => {
     setUserSelected(arg);
@@ -73,21 +79,6 @@ export const InConversationChatItem: FC<
     dispatch(setSortedByFirstDate());
   }
 
-  // const { activeTabInState } = useAppSelector((state) => state.activeTab);
-  // const { tagsToFilter, channelsToFilter } = useAppSelector(
-  //   (state) => state.optionsToFilterChats,
-  // );
-
-  // React.useEffect(() => {
-  //   if (activeTabInState === 'Pendientes') {
-  //     setFatherActiveTab('Pendientes');
-  //   }
-  //   if (activeTabInState === 'En conversación') {
-  //     setFatherActiveTab('En conversación');
-  //   }
-  // }, [activeTabInState]);
-
-  // console.log('PADRE-TAB', fatherActiveTab);
   return (
     <StyledInConversationContainer>
       {chatsOnConversation &&
@@ -111,18 +102,25 @@ export const InConversationChatItem: FC<
                 channelsToFilter.length === 0 &&
                 chatsOnConversation),
           )
+          .filter((user) => (showOnlyPausedChats ? user.isPaused : user))
           .map((chat: Chat) => (
             <StyledInConversationWrapper
               focusedItem={chat.client.clientId === userSelected}
+              pausedItem={chat.isPaused}
               key={chat.createdAt.toString()}
               onClick={() => handleSendMessageToUser(chat.client.clientId)}>
               <StyledInConversationChatItem>
                 <StyledClientAndAgentAvatars>
-                  {chat.client.profilePic ? (
+                  {chat.isPaused && <SVGIcon iconFile="/icons/pause.svg" />}
+
+                  {chat.isPaused === false && chat.client.profilePic && (
                     <img src={chat.client.profilePic} alt={chat.client.name} />
-                  ) : (
+                  )}
+
+                  {chat.isPaused === false && !chat.client.profilePic && (
                     <SVGIcon iconFile="/icons/user.svg" />
                   )}
+
                   {chat.channel === Channels.WHATSAPP && (
                     <SVGIcon iconFile="/icons/whatsapp.svg" />
                   )}

@@ -14,6 +14,8 @@ import { ChatInputDialogueProps, Emojis } from './ChatsSection.interface';
 import { websocketContext } from '../../../../../chat/index';
 import { ChatTransfer } from '../Components/ChatTransfer/ChatTransfer';
 import { EndChat } from '../Components/EndChat/EndChat';
+import { PauseChat } from '../Components/PauseChat/PauseChat';
+import { ReloadChat } from '../Components/ReloadChat/ReloadChat';
 import { ChatsHistory } from '../Components/ChatHistory/ChatHistory';
 import { useToastContext } from '../../../molecules/Toast/useToast';
 import { Toast } from '../../../molecules/Toast/Toast.interface';
@@ -55,6 +57,8 @@ export const ChatsSection: FC<
   const [activeByDefaultTab, setActiveByDefaultTab] = useState<number>(0);
   const [userSelected, setUserSelected] = useState<string>('');
   const [sortedChats, setSortedChats] = useState<boolean>(false);
+  const [showOnlyPausedChats, setShowOnlyPausedChats] =
+    useState<boolean>(false);
   const [liveChatModal, setLiveChatModal] = useState<boolean>(false);
   const [liveChatPage, setLiveChatPage] = useState('');
   const [agentTransfer, setAgentTransfer] = useState('');
@@ -112,6 +116,13 @@ export const ChatsSection: FC<
       dispatch(setChatsOnConversation(data));
     });
   }, []);
+
+  // escucha los chats que cambian a pausado
+  const newPausedConversation = useCallback(async () => {
+    socket?.on('newPausedConversation', (data: Chat[]) => {
+      dispatch(setChatsOnConversation(data));
+    });
+  }, []);
   //-----------------------------------------------------------------------
 
   // trae todos los chats que se encuentran ON_CONVERSATION
@@ -160,6 +171,7 @@ export const ChatsSection: FC<
     getNewPendingChat();
     wsGetPendingChats();
     wsGetTransferedChats();
+    newPausedConversation();
   }, [socket]);
 
   useEffect(() => {
@@ -174,6 +186,8 @@ export const ChatsSection: FC<
   return (
     <StyledChatsSection>
       <ChatsList
+        setShowOnlyPausedChats={setShowOnlyPausedChats}
+        showOnlyPausedChats={showOnlyPausedChats}
         checkedTags={checkedTags}
         setCheckedTags={setCheckedTags}
         handleCleanChannels={handleCleanChannels}
@@ -249,6 +263,20 @@ export const ChatsSection: FC<
           <ChatsHistory
             liveChatModal={liveChatModal}
             setLiveChatModal={setLiveChatModal}
+          />
+        ) : null}
+
+        {liveChatPage && liveChatPage === 'PauseChat' ? (
+          <PauseChat
+            setLiveChatModal={setLiveChatModal}
+            setLiveChatPage={setLiveChatPage}
+          />
+        ) : null}
+
+        {liveChatPage && liveChatPage === 'ReloadChat' ? (
+          <ReloadChat
+            setLiveChatModal={setLiveChatModal}
+            setLiveChatPage={setLiveChatPage}
           />
         ) : null}
       </ModalMolecule>

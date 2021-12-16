@@ -9,12 +9,12 @@ export const StyledContainerWithOutTags = styled.div`
   background-color: ${({ theme }) => theme.Colors.grays[9]};
   border-radius: 10px;
   margin: 0 auto;
-
+  padding: 30px 0;
   & > span {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 30px auto;
+    // margin: 30px auto;
     & > div {
       width: 30px;
       height: 30px;

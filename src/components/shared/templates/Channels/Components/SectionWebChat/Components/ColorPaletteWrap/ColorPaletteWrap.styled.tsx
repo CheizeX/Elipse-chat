@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { IPropsColorWrap } from './ColorPaletteWrap.interface';
-import { myColorSelector } from './ColorPaletteWrap.shared';
 
 export const StyledColorPaletteWrap = styled.div`
   width: 16.2rem;
@@ -21,9 +20,11 @@ export const StyledColorPaletteWrap = styled.div`
     // height: 10rem;
     margin: 0.3rem 0 1rem 0.25rem;
     min-height: 14rem;
-  }
-  & > button {
-    margin: 2.25rem auto;
+    & > button {
+      display: flex;
+      justify-content: center;
+      margin: 2.25rem auto;
+    }
   }
 `;
 export const StyledTagColor = styled.svg<IPropsColorWrap>`
@@ -80,17 +81,11 @@ export const StyledCustomColor = styled.div`
 `;
 
 export const StyledWrapperColor = styled.div<IPropsColorWrap>`
-  background-color: ${({ name, theme, color }) =>
-    myColorSelector(name === '0', theme.Colors.blue[1], null) ||
-    myColorSelector(name === '1', theme.Colors.green[2], null) ||
-    myColorSelector(name === '2', theme.Colors.orange[3], null) ||
-    myColorSelector(name === '3', theme.Colors.blue[2], null) ||
-    myColorSelector(name === '4', theme.Colors.orange[4], null) ||
-    myColorSelector(name === '5', theme.Colors.green[5], null) ||
-    myColorSelector(name === '6', theme.Colors.purples[1], null) ||
-    myColorSelector(name === '7', theme.Colors.purples[5], null) ||
-    myColorSelector(name === '8', theme.Colors.grays[4], null) ||
-    myColorSelector(name === '9', color, theme.Colors.grays[10])};
+  ${({ secondaryColor, primaryColor }) => `background: linear-gradient(
+    115deg,
+    ${primaryColor} 0%,
+    ${secondaryColor} 100%
+  ) `};
   border-radius: 3px;
   margin: 0.5rem 0.5rem 0.5rem 0;
   display: inline-block;

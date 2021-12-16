@@ -1,7 +1,8 @@
 import { FC, useState } from 'react';
-import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
+import { SVGIcon } from '../../../../../../atoms/SVGIcon/SVGIcon';
+import { Text } from '../../../../../../atoms/Text/Text';
 import { Event, ICustomAvatar } from './AvatarContainer.interface';
-import { Text } from '../../../../atoms/Text/Text';
+
 import {
   StyledAvatarContainer,
   StyledSectionPhoto,
@@ -9,34 +10,34 @@ import {
 } from './AvatarContainer.styled';
 
 export const AvatarContainer: FC<ICustomAvatar> = ({
+  customAvatar,
+  customizeMyAvatar,
   setCustomAvatar,
   setIsSection,
   setCustomizeMyAvatar,
-  customAvatar,
-  customizeMyAvatar,
 }) => {
   const dataAvatar = [
     {
       id: '1',
-      name: 'Robot 1.svg',
+      name: 'Robot1.svg',
     },
-    { id: '2', name: 'Robot 2.svg' },
-    { id: '3', name: 'Robot 3.svg' },
+    { id: '2', name: 'Robot2.svg' },
+    { id: '3', name: 'Robot3.svg' },
     {
       id: '4',
       name: 'Mujer.svg',
     },
     {
       id: '5',
-      name: 'Mujer 2.svg',
+      name: 'Mujer2.svg',
     },
-    { id: '6', name: 'Mujer 3.svg' },
-    { id: '7', name: 'Hombre 1.svg' },
-    { id: '8', name: 'Hombre 2.svg' },
-    { id: '9', name: 'Hombre 3.svg' },
-    { id: '10', name: 'Mascota 1.svg' },
-    { id: '11', name: 'Mascota 2.svg' },
-    { id: '12', name: 'Mascota 3.svg' },
+    { id: '6', name: 'Mujer3.svg' },
+    { id: '7', name: 'Hombre1.svg' },
+    { id: '8', name: 'Hombre2.svg' },
+    { id: '9', name: 'Hombre3.svg' },
+    { id: '10', name: 'Mascota1.svg' },
+    { id: '11', name: 'Mascota2.svg' },
+    { id: '12', name: 'Mascota3.svg' },
   ];
   const [active, setActive] = useState<string>('');
   const handleToggle = (id: string, name: string) => {

@@ -6,6 +6,7 @@ export const Reports: FC = () => {
   return (
     <BackofficeLayout
       setCollapseArrow={() => null}
+      setSelectedComponent={() => null}
       startDate={null}
       setCheckedTags={() => null}
       checkedTags={[]}

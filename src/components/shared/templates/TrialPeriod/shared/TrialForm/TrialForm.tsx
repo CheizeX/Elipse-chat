@@ -55,12 +55,12 @@ export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
     },
     { setSubmitting, setErrors }: { setSubmitting: any; setErrors: any },
   ) => {
-    console.log(values);
     setSubmitting(true);
     try {
       await delay(1000);
       setSubmitting(false);
     } catch (error) {
+      console.log(values);
       setSubmitting(false);
       setErrors({
         email: 'Error al enviar el formulario',
@@ -73,7 +73,7 @@ export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
       pagepath={pagepath}>
-      {({ isSubmitting }) => {
+      {({ isSubmitting, values }) => {
         return (
           <>
             <StyledTrialFormLayout pagepath={pagepath} color={color}>
@@ -85,6 +85,7 @@ export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
               />
               <main className="cards-container">
                 <article className="info-card">
+                  {values}
                   <h1>
                     Plan
                     <span style={{ color: `${color}` }}>

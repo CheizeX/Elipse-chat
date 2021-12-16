@@ -59,11 +59,11 @@ export const ChatTransfer: FC<IChatTransfer> = ({
         message: `${error}`,
       });
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     getAgentAvailable();
-  }, [usersData]);
+  }, []);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchAgent(event.target.value);

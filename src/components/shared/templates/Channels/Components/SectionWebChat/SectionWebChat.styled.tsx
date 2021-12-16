@@ -6,7 +6,7 @@ export const StyledWebChat = styled.div`
   height: 33rem;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   border-radius: 10px;
-  padding: 20px 0 18px 0;
+  padding: 1.25rem 0 1.125rem 0;
 `;
 
 export const StyledHeaderSectionWebChat = styled.div`

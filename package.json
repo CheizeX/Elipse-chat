@@ -10,7 +10,8 @@
     "lint:fix": "eslint src --fix",
     "test": "jest",
     "storybook": "start-storybook -p 6006 -s ./public",
-    "build-storybook": "build-storybook -s ./public"
+    "build-storybook": "build-storybook -s ./public",
+    "dev-https": "local-ssl-proxy --source 8301 --target 8300"
   },
   "husky": {
     "hooks": {
@@ -38,6 +39,7 @@
     "axios": "^0.21.1",
     "consola": "^2.15.3",
     "d3": "5.x",
+    "firebase": "^9.6.0",
     "formik": "^2.2.9",
     "next": "latest",
     "react": "^17.0.2",

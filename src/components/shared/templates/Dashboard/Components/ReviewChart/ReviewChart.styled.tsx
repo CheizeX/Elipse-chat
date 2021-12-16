@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IPropsComponentReview } from './ReviewChart.interface';
 
 export const StyledReviewChart = styled.section`
   width: 548px;
@@ -19,7 +20,7 @@ export const StyledLabel = styled.div`
     line-height: 17px;
   }
 `;
-export const StyledReviewChatsHeader = styled.div`
+export const StyledReviewChatsHeader = styled.div<IPropsComponentReview>`
   width: 100%;
   height: 75px;
   display: flex;
@@ -40,6 +41,17 @@ export const StyledReviewChatsHeader = styled.div`
   & > button {
     margin-right: 23px;
     cursor: pointer;
+    & > div {
+      & > div {
+        & * {
+          & > svg {
+            & > path {
+              fill: ${({ theme }) => theme.Colors.grays[6]};
+            }
+          }
+        }
+      }
+    }
     &:disabled {
       cursor: not-allowed;
     }
@@ -92,6 +104,7 @@ export const StyledReviewChatsHeader = styled.div`
   & > div {
     z-index: 1;
     & > :nth-child(1) {
+      display: ${({ close }) => (close && close === true ? 'none' : null)};
     }
   }
 `;

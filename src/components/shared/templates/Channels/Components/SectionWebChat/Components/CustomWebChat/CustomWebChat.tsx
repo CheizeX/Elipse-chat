@@ -7,20 +7,25 @@ import {
   StyledBodyWebChat,
 } from './CustomWebAvatar.styled';
 import { ICustomWebChat } from './CustomWebChat.interface';
-import { Text } from '../../../../atoms/Text/Text';
-import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
+import { Text } from '../../../../../../atoms/Text/Text';
+import { SVGIcon } from '../../../../../../atoms/SVGIcon/SVGIcon';
 
 export const CustomWebChat: FC<ICustomWebChat> = ({
   title,
-  color,
+  primaryColor,
+  secondaryColor,
   description,
   avatar,
   customizeMyAvatar,
+  customIsColor,
 }) => {
   return (
     <StyledCustomWebChat>
       <div>
-        <WrapperWebChat color={color}>
+        <WrapperWebChat
+          primaryColor={primaryColor}
+          customIsColor={customIsColor}
+          secondaryColor={secondaryColor}>
           <div>
             <SVGIcon iconFile="/icons/chevron-square-down.svg" />
           </div>
@@ -37,7 +42,10 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
               <Text>{description}</Text>
             </div>
           </StyledHeaderCustomWebChat>
-          <StyledBodyWebChat color={color}>
+          <StyledBodyWebChat
+            customIsColor={customIsColor}
+            primaryColor={primaryColor}
+            secondaryColor={secondaryColor}>
             <div>
               {!customizeMyAvatar ? (
                 <SVGIcon iconFile={`/avatars/${avatar}`} />

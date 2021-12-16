@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import {
   ButtonMolecule,
@@ -42,6 +43,11 @@ export const ChangePasswordRequest: FC<ChangePasswordRequestProps> = ({
   onSubmit: onSubmitExternal,
 }) => {
   const toasts = useToastContext();
+  const { push } = useRouter();
+
+  const handlePrev = () => {
+    push('/');
+  };
 
   const onSubmit = async (
     _values?: Partial<Values>,
@@ -80,8 +86,10 @@ export const ChangePasswordRequest: FC<ChangePasswordRequestProps> = ({
           <LoginViewsWrapper>
             <StyledChangePasswordRequestWrapper>
               <StyledHeader>
-                <SVGIcon iconFile="/icons/collapse-left.svg" />
-                <Text>Volver</Text>
+                <button type="button" onClick={handlePrev}>
+                  <SVGIcon iconFile="/icons/collapse-left.svg" />
+                  <Text>Volver</Text>
+                </button>
               </StyledHeader>
               <StyledInformation>
                 <Text>Solicitar cambio de contraseña</Text>

@@ -6,6 +6,8 @@ storiesOf('Ailalia/Templates/Chats/Components', module).add(
   () => {
     return (
       <InConversationChatItem
+        showOnlyPausedChats={false}
+        setShowOnlyPausedChats={() => {}}
         setChatInputDialogue={() => {}}
         setUserSelected={() => null}
         setSortedChats={() => null}

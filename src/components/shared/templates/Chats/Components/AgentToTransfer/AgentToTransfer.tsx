@@ -7,7 +7,6 @@ import {
   StyledContainerTagAgents,
 } from './AgentToTransfer.styled';
 import { IAgentToTransferProps } from './AgentToTransfer.interface';
-
 import { ContainerWithOutTags } from '../../../../molecules/ContainerWithOutTags/ContainerWithOutTags';
 
 export const AgentToTransfer: FC<IAgentToTransferProps> = ({
@@ -51,8 +50,10 @@ export const AgentToTransfer: FC<IAgentToTransferProps> = ({
         {tag && tag.length < 1 ? (
           <ContainerWithOutTags firstName={name} />
         ) : (
-          tag?.map((element) => (
-            <StyledContainerTagAgents color={element.color}>
+          tag?.map((element, index) => (
+            <StyledContainerTagAgents
+              key={index.toString()}
+              color={element.color}>
               {element.name}
             </StyledContainerTagAgents>
           ))

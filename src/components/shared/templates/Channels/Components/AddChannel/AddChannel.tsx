@@ -23,8 +23,8 @@ const dataChannel = [
   },
   {
     id: 3,
-    name: 'Instagram',
-    svg: 'Instagram',
+    name: 'Messenger',
+    svg: 'Messenger',
   },
 ];
 

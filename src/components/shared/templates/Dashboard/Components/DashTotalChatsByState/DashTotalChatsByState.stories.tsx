@@ -6,5 +6,5 @@ storiesOf(
   'Ailalia/Organisms/Dashboard/Molecules/TotalChatsByState',
   module,
 ).add('TotalChatsByState', () => {
-  return <DashTotalChatsByState setClose={() => null} />;
+  return <DashTotalChatsByState />;
 });

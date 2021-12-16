@@ -21,6 +21,11 @@ export interface SortingProps {
   sortedChats?: boolean;
 }
 
+export interface ShowOnlyPaused {
+  showOnlyPausedChats: boolean;
+  setShowOnlyPausedChats: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export interface TabProps {
   setActiveByDefaultTab: React.Dispatch<SetStateAction<number>>;
   activeByDefaultTab?: number;
@@ -38,6 +43,7 @@ export interface Objeto {
 }
 export interface StyledPendingWrapperProps {
   focusedItem?: boolean;
+  pausedItem?: boolean;
 }
 
 export interface ILiveChatModalProps {

@@ -1,13 +1,37 @@
 import styled from 'styled-components';
 import { IChatFilterProps } from '../ChatsFilter/ChatFilter/ChatFilter.interface';
+import { ShowOnlyPaused } from '../../ChatsSection/ChatsSection.interface';
 
-export const StyledChatsListHeader = styled.div<IChatFilterProps>`
+export const StyledChatsListHeader = styled.div<
+  IChatFilterProps & ShowOnlyPaused
+>`
   width: 288px;
   height: 20px;
   margin: 14px auto 6px auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  & > :nth-child(2) {
+    background-color: ${({ theme }) => theme.Colors.grays[10]};
+    height: 20px;
+    fill: ${({ theme, showOnlyPausedChats }) =>
+      showOnlyPausedChats ? theme.Colors.green[1] : theme.Colors.grays[6]};
+    margin-bottom: 5px;
+    & :hover {
+      cursor: pointer;
+      & * {
+        fill: ${({ theme, showOnlyPausedChats }) =>
+          showOnlyPausedChats ? theme.Colors.grays[6] : theme.Colors.grays[4]};
+      }
+    }
+    & :active {
+      cursor: pointer;
+      & * {
+        fill: ${({ theme, showOnlyPausedChats }) =>
+          showOnlyPausedChats ? theme.Colors.grays[4] : theme.Colors.grays[6]};
+      }
+    }
+  }
   & > span {
     width: 65px;
     height: 100%;
@@ -49,13 +73,12 @@ export const StyledChatsListHeader = styled.div<IChatFilterProps>`
         }
       }
     }
-    & > button {
+    & button {
       justify-content: center;
       justify-content: space-space-around;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
-
       & :hover {
         cursor: pointer;
         & * {
@@ -73,7 +96,7 @@ export const StyledChatsListHeader = styled.div<IChatFilterProps>`
     & > :first-child {
       display: flex;
       justify-content: center;
-      margin-right: 10px;
+      margin-left: 10px;
       & > :first-child {
         margin-left: 5px;
       }
@@ -88,6 +111,8 @@ export const StyledChatsListHeaderLeft = styled.div`
   width: 288px;
   height: 20px;
   display: flex;
+  width: 290px;
+  margin-bottom: 3px;
   & > :first-child {
     font-size: ${({ theme }) => theme.fontSize[12]};
     font-weight: ${({ theme }) => theme.fontWeight[600]};

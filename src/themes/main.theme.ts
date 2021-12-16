@@ -1,7 +1,8 @@
 import { DefaultTheme } from 'styled-components';
 
 export const mainTheme: DefaultTheme = {
-  font: `'Montserrat', sans-serif`,
+  // font: `'Montserrat', sans-serif`,
+  font: `'Poppins', sans-serif`,
   Colors: {
     grays: {
       1: '#2A2A2A', // TITLES | HEADERS | INPUT LABELS | INPUT TEXT | POPOVER AND MODAL QUESTIONS TEXT | DATES | AGENT NAMES

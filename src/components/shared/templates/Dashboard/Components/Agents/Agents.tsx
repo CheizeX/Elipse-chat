@@ -21,10 +21,10 @@ import { readingUsers } from '../../../../../../api/users';
 import { UserStatus } from '../../../../../../models/users/status';
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
-import { readReviewChats } from '../../../../../../api/chat';
+// import { readReviewChats } from '../../../../../../api/chat';
 import {
   setReviewByAgent,
-  setReviewChatsFinished,
+  //  setReviewChatsFinished,
 } from '../../../../../../redux/slices/dashboard/dashboard-review';
 import { UserRole } from '../../../../../../models/users/role';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
@@ -39,7 +39,9 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
   setStartDate,
   endDate,
   setEndDate,
-  setIsDisableReview,
+  selectedComponent,
+  setSelectedComponent,
+  setComponentReview,
 }) => {
   const showAlert = useToastContext();
   const dispatch = useAppDispatch();
@@ -58,26 +60,13 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
   );
 
   const handleClick = () => {
+    setSelectedComponent('AGENT');
     setClose(false);
   };
 
-  const handleToggle = async (arg: string, name: string) => {
-    try {
-      const currentDts = await readReviewChats(arg);
-      if (currentDts.success === false) {
-        dispatch(setReviewChatsFinished([]));
-      } else {
-        dispatch(setReviewChatsFinished(currentDts));
-      }
-      dispatch(setReviewByAgent(name));
-      setIsDisableReview(false);
-    } catch (err) {
-      showAlert?.addToast({
-        alert: Toast.ERROR,
-        title: 'ERROR',
-        message: `${err}`,
-      });
-    }
+  const handleToggle = (id: string) => {
+    dispatch(setReviewByAgent(id));
+    setComponentReview(true);
   };
 
   const dataApi = useCallback(async () => {
@@ -137,6 +126,8 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
               datePicker={datePicker}
               setClose={setClose}
               close={close}
+              selectedComponent={selectedComponent}
+              setSelectedComponent={setSelectedComponent}
             />
           )}
           {datePicker === 2 && (
@@ -149,6 +140,8 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
               datePicker={datePicker}
               setClose={setClose}
               close={close}
+              selectedComponent={selectedComponent}
+              setSelectedComponent={setSelectedComponent}
             />
           )}
         </Dropdown>
@@ -166,7 +159,7 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
                   {user.urlAvatar && user.urlAvatar !== '' ? (
                     <img
                       src={`${user.urlAvatar}?token=${accessToken}`}
-                      alt={user.name}
+                      alt={user.name.slice(0, 7)}
                     />
                   ) : (
                     <SVGIcon iconFile="/icons/unknown_user.svg" />
@@ -179,31 +172,34 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
                         user.name.slice(1, user.name.length).toLowerCase(),
                       )}
                   </span>
+                </div>
+                <div>
+                  <div>
+                    <span>
+                      {chatsByPeriod?.filter(
+                        (chat: Chat) =>
+                          chat.status === ChatStatus.FINISHED &&
+                          chat.assignedAgent &&
+                          chat.assignedAgent._id === user._id,
+                      ).length ?? 0}
+                    </span>
+                  </div>
                   <button
-                    onClick={() =>
-                      handleToggle(
-                        user._id,
-                        user.name
-                          .slice(0, 1)
-                          .toUpperCase()
-                          .concat(
-                            user.name.slice(1, user.name.length).toLowerCase(),
-                          ),
-                      )
-                    }
+                    onClick={() => handleToggle(user._id)}
+                    // onClick={() =>
+                    //   handleToggle(
+                    //     user._id,
+                    //     user.name
+                    //       .slice(0, 1)
+                    //       .toUpperCase()
+                    //       .concat(
+                    //         user.name.slice(1, user.name.length).toLowerCase(),
+                    //       ),
+                    //   )
+                    // }
                     type="button">
                     <SVGIcon iconFile="/icons/bars-graphic.svg" />
                   </button>
-                </div>
-                <div>
-                  <span>
-                    {chatsByPeriod?.filter(
-                      (chat: Chat) =>
-                        chat.status === ChatStatus.FINISHED &&
-                        chat.assignedAgent &&
-                        chat.assignedAgent._id === user._id,
-                    ).length ?? 0}
-                  </span>
                 </div>
               </StyledAgent>
             ))) ??

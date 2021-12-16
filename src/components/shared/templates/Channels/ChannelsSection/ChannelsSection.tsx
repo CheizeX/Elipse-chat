@@ -1,13 +1,12 @@
 import { FC, useState } from 'react';
 import { ChannelsListHeader } from '../Components/ChannelsListHeader/ChannelsListHeader';
-import {
-  StyledChannelSection,
-  StyledComponent,
-} from './ChannelsSection.styled';
+import { StyledChannelSection } from './ChannelsSection.styled';
 import { ChannelsEmpty } from '../Components/ChannelsEmpty/ChannelsEmpty';
 import { ModalMolecule } from '../../../molecules/Modal/Modal';
 import { AddChannel } from '../Components/AddChannel/AddChannel';
 import { SectionWebChat } from '../Components/SectionWebChat/SectionWebChat';
+import { SectionWhatsAppComponent } from '../Components/SectionWhatsapp/SectionWhatsapp';
+import { SectionFacebookComponent } from '../Components/SectionFacebook/SectionFacebook';
 
 export const ChannelsSection: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -26,14 +25,13 @@ export const ChannelsSection: FC = () => {
       <ModalMolecule isModal={isSectionWebChat}>
         {seletedComponent === 'Web Chat' ? (
           <SectionWebChat setIsSectionWebChat={setIsSectionWebChat} />
-        ) : (
-          <StyledComponent>
-            {' '}
-            <button type="button" onClick={() => setIsSectionWebChat(false)}>
-              Esta pagina esta en construcción CERRAR X
-            </button>
-          </StyledComponent>
-        )}
+        ) : null}
+        {seletedComponent === 'Whatsapp' ? (
+          <SectionWhatsAppComponent setIsSectionWebChat={setIsSectionWebChat} />
+        ) : null}
+        {seletedComponent === 'Messenger' ? (
+          <SectionFacebookComponent setIsSectionWebChat={setIsSectionWebChat} />
+        ) : null}
       </ModalMolecule>
       <ChannelsEmpty setIsOpenModal={setIsOpenModal} />
     </StyledChannelSection>

@@ -11,8 +11,12 @@ export interface IPropsAgents {
   setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
   endDate: Date | null;
   setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  selectedComponent?: string;
+  setSelectedComponent?: React.Dispatch<React.SetStateAction<string>>;
 }
 export interface IContainerReview {
-  isDisableReview?: boolean;
-  setIsDisableReview: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedComponent?: string;
+  setSelectedComponent: React.Dispatch<React.SetStateAction<string>>;
+  setComponentReview: React.Dispatch<React.SetStateAction<boolean>>;
+  componentReview: boolean;
 }

@@ -18,12 +18,23 @@ import { setReviewChatsFinished } from '../../../../../../redux/slices/dashboard
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
 import { IPropsReview } from './ReviewChart.interface';
+import { Dropdown } from '../../../../atoms/Dropdown/Dropdown';
+import { ContainerFilterReview } from '../ContainerFilterReview/ContainerFilterReview';
+import { FIlterByPeriod } from '../FIlterByPeriod/FIlterByPeriod';
 
 export const ReviewChart: FC<IPropsReview> = ({
-  isDisableReview,
-  setIsDisableReview,
+  selectedComponent,
+  chartDatePicker,
+  setChartDatePicker,
+  setSelectedComponent,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+  setClose,
+  close,
 }) => {
-  const { reviewChats, reviewByAgent } = useAppSelector(
+  const { reviewChats } = useAppSelector(
     (state) => state.review.chatContainerReviewState,
   );
 
@@ -32,13 +43,12 @@ export const ReviewChart: FC<IPropsReview> = ({
 
   const readReview = async () => {
     try {
-      const currentDts = await readReviewChats();
+      const currentDts = await readReviewChats('0', 'currentWeek');
       if (currentDts.success === false) {
         dispatch(setReviewChatsFinished([]));
       } else {
         dispatch(setReviewChatsFinished(currentDts));
       }
-      setIsDisableReview(true);
     } catch (err) {
       showAlert?.addToast({
         alert: Toast.ERROR,
@@ -46,10 +56,6 @@ export const ReviewChart: FC<IPropsReview> = ({
         message: `${err}`,
       });
     }
-  };
-
-  const handleResetAll = () => {
-    readReview();
   };
   useEffect(() => {
     readReview();
@@ -71,24 +77,46 @@ export const ReviewChart: FC<IPropsReview> = ({
       Insatisfactorio: item.unsatisfactory,
     };
   });
+  const handleClose = () => {
+    setSelectedComponent('REVIEW');
+    setClose(false);
+  };
 
   return (
     <StyledReviewChart>
-      <StyledReviewChatsHeader>
-        <Text>
-          {!isDisableReview
-            ? `Chats finalizados de ${reviewByAgent}`
-            : 'Chats finalizados por semana'}
-        </Text>
-        <button
-          type="button"
-          onClick={handleResetAll}
-          disabled={isDisableReview}>
-          <BadgeMolecule
-            leftIcon={() => <SVGIcon iconFile="/icons/bars-graphic.svg" />}>
-            <Text>Todos</Text>
-          </BadgeMolecule>
-        </button>
+      <StyledReviewChatsHeader close={close}>
+        <Text>Chats Satisfactorios e Insatisfactorios</Text>
+        <Dropdown
+          onClick={handleClose}
+          triggerElement={() => (
+            <BadgeMolecule
+              leftIcon={() => <SVGIcon iconFile="/icons/candelar_alt.svg" />}>
+              <Text>Semana</Text>
+            </BadgeMolecule>
+          )}>
+          {chartDatePicker === 0 ? (
+            <ContainerFilterReview
+              setClose={setClose}
+              close={close}
+              setChartDatePicker={setChartDatePicker}
+              chartDatePicker={chartDatePicker}
+            />
+          ) : null}
+          {chartDatePicker === 1 ? (
+            <FIlterByPeriod
+              setDatePicker={setChartDatePicker}
+              datePicker={chartDatePicker}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              setClose={setClose}
+              close={close}
+              selectedComponent={selectedComponent}
+              setSelectedComponent={setSelectedComponent}
+            />
+          ) : null}
+        </Dropdown>
       </StyledReviewChatsHeader>
       <StyledChart>
         <ResponsiveBar
@@ -185,9 +213,6 @@ export const ReviewChart: FC<IPropsReview> = ({
           ]}
           role="application"
           ariaLabel="Nivo bar chart demo"
-          // barAriaLabel={function (e) {
-          //   return `${e.id}: ${e.formattedValue} in country: ${e.indexValue}`;
-          // }}
         />
       </StyledChart>
     </StyledReviewChart>

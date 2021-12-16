@@ -19,6 +19,7 @@ import { ReportsSection } from '../../templates/Reports/ReportsSection/ReportsSe
 import useLocalStorage from '../../../../hooks/use-local-storage';
 import { Loader } from '../../atoms/Loader/Loader';
 import { ChannelsSection } from '../../templates/Channels/ChannelsSection/ChannelsSection';
+import { SubscriptionSection } from '../../templates/SubscriptionPlans/SubscriptionSection/SubscriptionSection';
 
 const StyledContainer = styled.main`
   display: flex;
@@ -107,6 +108,7 @@ export const BackofficeLayout: FC<
             {selectedSection === 'Usuarios' && <AddedUsersSection />}
             {selectedSection === 'Reportes' && <ReportsSection />}
             {selectedSection === 'Canales' && <ChannelsSection />}
+            {selectedSection === 'Suscripciones' && <SubscriptionSection />}
           </BackofficeSection>
         </StyledContainer>
       ) : (

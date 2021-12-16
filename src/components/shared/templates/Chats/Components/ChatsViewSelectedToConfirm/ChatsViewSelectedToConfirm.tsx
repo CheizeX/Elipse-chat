@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { Text } from '../../../../atoms/Text/Text';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { ButtonMolecule } from '../../../../atoms/Button/Button';
@@ -25,6 +25,7 @@ import {
   StyledChatsViewSelectedToConfirm,
   StyledHeaderChatsViewSelectedToConfirm,
   StyledPredefinidedTexts,
+  StyledFooterPausedButton,
 } from './ChatsViewSelectedToConfirm.styles';
 import { UploadFiles } from '../UploadFiles/UploadFiles';
 import { UploadableFile } from '../UploadFiles/UploadFiles.interface';
@@ -42,6 +43,7 @@ import {
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
 import { setChatsToSendId } from '../../../../../../redux/slices/live-chat/chat-selected-to-send-id';
 import { setChatToTransferById } from '../../../../../../redux/slices/live-chat/chat-selected-to-transfer-by-id';
+import { setChatToSetOnConversationInStateId } from '../../../../../../redux/slices/live-chat/chatset-on-conversation';
 
 export const ChatsViewSelectedToConfirm: FC<
   SelectedUserProps &
@@ -110,9 +112,8 @@ export const ChatsViewSelectedToConfirm: FC<
           accessToken,
         },
       );
-
       setActiveByDefaultTab(1);
-      setUserSelected(userSelected || '');
+      setUserSelected(userSelected as any);
     } catch (error) {
       showAlert?.addToast({
         alert: Toast.ERROR,
@@ -257,12 +258,16 @@ export const ChatsViewSelectedToConfirm: FC<
     }
   };
 
-  const handleFinishConversation = () => {
-    setLiveChatModal(true);
-    setLiveChatPage('EndChat');
-    dispatch(setChatsToSendId(chatToTalkWithUserId || ''));
-    setUserSelected('');
-  };
+  const handlePauseConversation = useCallback(
+    async (arg: string) => {
+      setLiveChatModal(true);
+      setLiveChatPage(arg);
+      dispatch(
+        setChatToSetOnConversationInStateId(chatToTalkWithUser?._id || ''),
+      );
+    },
+    [chatToTalkWithUser?._id, dispatch, setLiveChatModal, setLiveChatPage],
+  );
 
   const handleTransferConversation = (modal: string, open: boolean) => {
     if (chatToTalkWithUserId) {
@@ -270,6 +275,13 @@ export const ChatsViewSelectedToConfirm: FC<
       setLiveChatModal(open);
       dispatch(setChatToTransferById(chatToTalkWithUserId || ''));
     }
+  };
+
+  const handleFinishConversation = () => {
+    setLiveChatModal(true);
+    setLiveChatPage('EndChat');
+    dispatch(setChatsToSendId(chatToTalkWithUserId || ''));
+    setUserSelected('');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -298,6 +310,7 @@ export const ChatsViewSelectedToConfirm: FC<
   // const handleFindDialogueInChat = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setFindDialogueInChat(e.target.value);
   // };
+  useEffect(() => {}, [chatToTalkWithUser]);
 
   return (
     <StyledChatsViewSelectedToConfirm>
@@ -317,7 +330,6 @@ export const ChatsViewSelectedToConfirm: FC<
           ) : (
             <SVGIcon iconFile="/icons/user.svg" />
           )}
-
           <span>
             <Text>Cliente</Text>
             {chatsOnConversation?.find(
@@ -345,69 +357,70 @@ export const ChatsViewSelectedToConfirm: FC<
             {/* <SVGIcon iconFile="/icons/list_icons.svg" /> */}
           </button>
         </div>
-        {chatsOnConversation &&
-          chatsOnConversation.find(
-            (user) => user.client.clientId === userSelected?.toString(),
-          ) && (
-            <span>
-              {/* este span es para que no se rompa cuando le saco el buscar mensaje */}
-              <span />
-
-              {/* <ContainerInput
+        {chatsOnConversation?.find(
+          (user) =>
+            user.client.clientId === userSelected?.toString() && !user.isPaused,
+        ) && (
+          <span>
+            {/* este span es para que no se rompa cuando le saco el buscar mensaje */}
+            <span />
+            {/* <ContainerInput
                 placeHolder="Buscar mensaje..."
                 onChange={handleFindDialogueInChat}
                 setFocus={() => null}
                 LeftIcon={() => <SVGIcon iconFile="/icons/search-solid.svg" />}
               /> */}
-              <ButtonMolecule
-                text="Transferir"
-                onClick={() => handleTransferConversation('ChatTransfer', true)}
-              />
-              <ButtonMolecule
-                text="Finalizar"
-                onClick={handleFinishConversation}
-              />
-            </span>
-          )}
+            <ButtonMolecule
+              text="Pausar"
+              onClick={() => handlePauseConversation('PauseChat')}
+            />
+            <ButtonMolecule
+              text="Transferir"
+              onClick={() => handleTransferConversation('ChatTransfer', true)}
+            />
+            <ButtonMolecule
+              text="Finalizar"
+              onClick={handleFinishConversation}
+            />
+          </span>
+        )}
       </StyledHeaderChatsViewSelectedToConfirm>
-      {chatsOnConversation &&
-        chatsOnConversation?.find(
-          (user) => user.client.clientId === userSelected?.toString(),
-        ) && (
-          <StyledChatsViewConversation>
-            <DialoguesBox
-              userSelected={userSelected}
+      {chatsOnConversation?.find(
+        (user) => user.client.clientId === userSelected?.toString(),
+      ) && (
+        <StyledChatsViewConversation>
+          <DialoguesBox
+            userSelected={userSelected}
+            setUserSelected={setUserSelected}
+          />
+          {dropZoneDisplayed ? (
+            <UploadFiles
+              id={id}
+              file={file}
+              errors={errors}
+              setDropZoneDisplayed={setDropZoneDisplayed}
+              dropZoneDisplayed={dropZoneDisplayed}
               setUserSelected={setUserSelected}
-            />
-            {dropZoneDisplayed ? (
-              <UploadFiles
-                id={id}
-                file={file}
-                errors={errors}
-                setDropZoneDisplayed={setDropZoneDisplayed}
-                dropZoneDisplayed={dropZoneDisplayed}
-                setUserSelected={setUserSelected}
-                userSelected={userSelected}
-              />
-            ) : null}
-          </StyledChatsViewConversation>
-        )}
-      {chatsPendings &&
-        chatsPendings?.find(
-          (user) =>
-            user.client.clientId.toString() === userSelected?.toString(),
-        ) && (
-          <StyledChatsViewConversation>
-            <DialoguesBox
               userSelected={userSelected}
-              setUserSelected={setUserSelected}
             />
-          </StyledChatsViewConversation>
-        )}
-      {chatsPendings &&
-      chatsPendings?.find(
+          ) : null}
+        </StyledChatsViewConversation>
+      )}
+
+      {chatsPendings?.find(
         (user) => user.client.clientId.toString() === userSelected?.toString(),
-      ) ? (
+      ) && (
+        <StyledChatsViewConversation>
+          <DialoguesBox
+            userSelected={userSelected}
+            setUserSelected={setUserSelected}
+          />
+        </StyledChatsViewConversation>
+      )}
+
+      {chatsPendings?.find(
+        (user) => user.client.clientId.toString() === userSelected?.toString(),
+      ) && (
         <StyledFooterButtonsSelectedToConfirm>
           <ButtonMolecule
             text="Iniciar conversación"
@@ -418,7 +431,13 @@ export const ChatsViewSelectedToConfirm: FC<
             emojisDisplayed={emojisDisplayed}
           /> */}
         </StyledFooterButtonsSelectedToConfirm>
-      ) : (
+      )}
+
+      {chatsOnConversation?.find(
+        (user) =>
+          user.client.clientId.toString() === userSelected?.toString() &&
+          user.isPaused === false,
+      ) && (
         <StyledFooterToChat
           setEmojisDisplayed={setEmojisDisplayed}
           emojisDisplayed={emojisDisplayed}
@@ -495,6 +514,32 @@ export const ChatsViewSelectedToConfirm: FC<
           />
         </StyledFooterToChat>
       )}
+      {chatsOnConversation &&
+        chatsOnConversation?.find(
+          (user) =>
+            user.client.clientId.toString() === userSelected?.toString() &&
+            user.isPaused === true,
+        ) && (
+          <StyledFooterToChat
+            setEmojisDisplayed={setEmojisDisplayed}
+            emojisDisplayed={emojisDisplayed}
+            showPredefinedTexts={showPredefinedTexts}
+            setShowPredefinedTexts={setShowPredefinedTexts}>
+            <span
+              style={{
+                width: '100%',
+                display: 'felx',
+                justifyContent: 'center',
+                height: '100%',
+              }}>
+              <StyledFooterPausedButton
+                type="button"
+                onClick={() => handlePauseConversation('ReloadChat')}>
+                Reanudar conversación
+              </StyledFooterPausedButton>
+            </span>
+          </StyledFooterToChat>
+        )}
     </StyledChatsViewSelectedToConfirm>
   );
 };

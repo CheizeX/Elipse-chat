@@ -13,6 +13,7 @@ storiesOf('Ailalia/Organisms/Dashboard/Components', module).add(
         endDate={null}
         setStartDate={() => null}
         setEndDate={() => null}
+        setSelectedComponent={() => null}
       />
     );
   },

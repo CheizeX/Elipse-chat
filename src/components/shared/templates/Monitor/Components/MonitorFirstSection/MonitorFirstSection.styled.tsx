@@ -145,7 +145,8 @@ export const StyledAgentSection = styled.div<IContainerProps>`
     }
   }
   & > :nth-child(3) {
-    justify-content: center;
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     & > div {
       width: 32px;

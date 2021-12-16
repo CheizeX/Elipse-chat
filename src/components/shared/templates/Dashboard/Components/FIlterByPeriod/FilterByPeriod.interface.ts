@@ -3,4 +3,5 @@ export interface IPropsByPeriod {
   datePicker?: number;
   setClose: React.Dispatch<React.SetStateAction<boolean>>;
   close?: boolean;
+  selectedComponent?: string;
 }

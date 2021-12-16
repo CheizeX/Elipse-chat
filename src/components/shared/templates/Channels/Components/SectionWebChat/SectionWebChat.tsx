@@ -14,10 +14,10 @@ import {
 import { Text } from '../../../../atoms/Text/Text';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { IPropsWebChat } from './SectionWebChat.interface';
-import { WrapperNameAndDescription } from '../WrapperNameAndDescription/WrapperNameAndDescription';
-import { ColorPaletteWrap } from '../ColorPaletteWrap/ColorPaletteWrap';
-import { AvatarContainer } from '../AvatarContainer/AvatarContainer';
-import { CustomWebChat } from '../CustomWebChat/CustomWebChat';
+import { CustomWebChat } from './Components/CustomWebChat/CustomWebChat';
+import { AvatarContainer } from './Components/AvatarContainer/AvatarContainer';
+import { WrapperNameAndDescription } from './Components/WrapperNameAndDescription/WrapperNameAndDescription';
+import { ColorPaletteWrap } from './Components/ColorPaletteWrap/ColorPaletteWrap';
 
 const data = [
   {
@@ -40,12 +40,14 @@ const data = [
 
 export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
   const [isSection, setIsSection] = useState<number>(1);
-  const [customColor, setCustomColor] = useState<string>('#8520D0');
+  const [primaryColor, setPrimaryColor] = useState<string>('#8520D0');
+  const [secondaryColor, setSecundaryColor] = useState<string>('#8769FF');
   const [customTitle, setCustomTitle] = useState<string>('Elipse Chat');
   const [customDescription, setCustomDescription] =
     useState<string>('Asistente Virtual');
-  const [customAvatar, setCustomAvatar] = useState<string>('Robot 1.svg');
+  const [customAvatar, setCustomAvatar] = useState<string>('Robot1.svg');
   const [customizeMyAvatar, setCustomizeMyAvatar] = useState<boolean>(false);
+  const [customIsColor, setCustomIsColor] = useState<boolean>(false);
 
   const handleToggle = () => {
     setIsSection(isSection + 1);
@@ -92,9 +94,13 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
           ) : null}
           {isSection === 2 ? (
             <ColorPaletteWrap
-              setCustomColor={setCustomColor}
               handleToggle={handleToggle}
-              color={customColor}
+              primaryColor={primaryColor}
+              secondaryColor={secondaryColor}
+              setSecundaryColor={setSecundaryColor}
+              setPrimaryColor={setPrimaryColor}
+              customIsColor={customIsColor}
+              setCustomIsColor={setCustomIsColor}
             />
           ) : null}
           {isSection === 3 || isSection === 4 ? (
@@ -114,10 +120,12 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
           <div>
             <CustomWebChat
               avatar={customAvatar}
-              color={customColor}
               title={customTitle}
               description={customDescription}
               customizeMyAvatar={customizeMyAvatar}
+              primaryColor={primaryColor}
+              secondaryColor={secondaryColor}
+              customIsColor={customIsColor}
             />
           </div>
         </div>

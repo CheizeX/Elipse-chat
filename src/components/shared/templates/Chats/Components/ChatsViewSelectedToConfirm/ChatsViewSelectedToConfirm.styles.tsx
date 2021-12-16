@@ -30,7 +30,6 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
     min-width: 220px;
     max-width: max-content;
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
     & button {
       cursor: pointer;
@@ -40,7 +39,6 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
       border-radius: 50%;
       display: flex;
       align-items: center;
-      /* width: fit-content; */
       height: 40px;
       margin-right: 10px;
       text-align: left;
@@ -93,7 +91,7 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
     width: fit-content;
     display: flex;
     align-items: center;
-    & > :first-child {
+    & > :nth-child(1) {
       & > :first-child {
         display: none;
       }
@@ -118,6 +116,16 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
       }
     }
     & > :nth-child(2) {
+      background-color: ${({ theme }) => theme.Colors.green[1]};
+      width: 80px;
+      :hover {
+        background-color: ${({ theme }) => theme.Colors.green[2]};
+      }
+      :active {
+        background-color: ${({ theme }) => theme.Colors.green[1]};
+      }
+    }
+    & > :nth-child(3) {
       background-color: ${({ theme }) => theme.Colors.grays[5]};
       width: 103px;
       :hover {
@@ -127,7 +135,7 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
         background-color: ${({ theme }) => theme.Colors.grays[5]};
       }
     }
-    & > :nth-child(3) {
+    & > :nth-child(4) {
       width: 98px;
       width: 98px;
       margin: 0 8px;
@@ -257,6 +265,19 @@ export const StyledFooterToChat = styled.div<
       }
     }
   }
+  & > :nth-child(3) {
+    & > div {
+      & > div {
+        & > div {
+          & > svg {
+            height: 22px;
+            width: 22px;
+            padding-top: 4px;
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const StyledPredefinidedTexts = styled.div<PredefinidedTextsInterface>`
@@ -316,5 +337,19 @@ export const StyledPredefinidedTexts = styled.div<PredefinidedTextsInterface>`
         }
       }
     }
+  }
+`;
+
+export const StyledFooterPausedButton = styled.button`
+  min-width: 230px;
+  border-radius: 24px;
+  background-color: ${({ theme }) => theme.Colors.green[1]};
+  min-height: 35px;
+  font-size: 12px;
+  color: ${({ theme }) => theme.Colors.grays[9]};
+  font-weight: 500;
+  &:hover {
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.Colors.green[2]};
   }
 `;

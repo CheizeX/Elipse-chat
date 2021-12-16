@@ -10,6 +10,7 @@ export const StyledBackgroundLogin = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   & > span {
     z-index: 0;
     & * {

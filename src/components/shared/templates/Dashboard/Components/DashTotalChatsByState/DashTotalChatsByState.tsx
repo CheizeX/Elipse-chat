@@ -43,10 +43,6 @@ const StyledModalHeader = styled(StyledHeaderAgent)`
   margin: 0;
   padding: 0;
   padding-left: 24px;
-  & > div {
-    z-index: 1;
-    display: ${({ close }) => (close && close === true ? 'none' : null)};
-  }
 `;
 
 const StyledModalBody = styled.div`
@@ -73,7 +69,7 @@ const StyledDetails = styled.div`
   }
 `;
 
-export const DashTotalChatsByState: FC<ITotalChatsByState> = ({ close }) => {
+export const DashTotalChatsByState: FC = () => {
   const socket: any = React.useContext(websocketContext);
   const dispatch = useAppDispatch();
   const { todayChats } = useAppSelector(
@@ -113,7 +109,7 @@ export const DashTotalChatsByState: FC<ITotalChatsByState> = ({ close }) => {
 
   return (
     <StyledTotalChatsByState>
-      <StyledModalHeader close={close}>
+      <StyledModalHeader>
         <Text>Total chats por estado</Text>
         {/* <Dropdown
           onClick={() => setClose(false)}

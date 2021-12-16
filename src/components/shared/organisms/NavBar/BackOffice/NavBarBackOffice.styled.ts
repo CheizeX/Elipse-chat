@@ -96,8 +96,8 @@ export const StyledAvatar = styled.div`
   /* border: 4px solid #8769ff;
   border-radius: 50%; */
   & > img {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
     /* max-width: 2.1rem;
     max-height: 2.1rem; */

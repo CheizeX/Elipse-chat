@@ -89,8 +89,11 @@ export const WrapperVisualRadio = styled.div`
   font-size: ${({ theme }) => theme.fontSize[12]};
   color: ${({ theme }) => theme.Colors.grays[3]};
   font-weight: ${({ theme }) => theme.fontWeight[400]};
-  & > span {
+  & button {
     margin: 0 26px 0 6px;
+    cursor: pointer;
+    width: fit-content;
+    z-index: 2;
   }
 `;
 export const StyledFuntionalRadio = styled.div`
@@ -101,11 +104,13 @@ export const StyledFuntionalRadio = styled.div`
   & input {
     width: 24px;
     height: 24px;
+    border: 1px solid ${({ theme }) => theme.Colors.grays[1]};
+    cursor: pointer;
   }
   & > :first-child {
     transform: translate(8px, 1px);
   }
   & > :last-child {
-    transform: translate(106px, 1px);
+    transform: translate(107px, 1px);
   }
 `;

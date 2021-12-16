@@ -47,6 +47,10 @@ export const adminSection: BackofficeSection[] = [
   //   name: 'Configuración',
   //   icon: '/icons/sidebar_disponibilidad.svg',
   // },
+  {
+    name: 'Suscripciones',
+    icon: '/icons/subscription.svg',
+  },
 ];
 
 export const fullVersionSections: BackofficeSection[] = [];

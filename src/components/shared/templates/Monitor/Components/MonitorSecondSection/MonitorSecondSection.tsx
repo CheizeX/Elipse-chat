@@ -33,7 +33,6 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
   handleStateAgents,
 }) => {
   const [accessToken] = useLocalStorage('AccessToken', '');
-  // const profilePicture = `${userDataInState?.urlAvatar}?token=${accessToken}`;
 
   return (
     <StyledWrapperSectionMonitor>
@@ -59,7 +58,7 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
           icon="/icons/user_Accept.svg"
         />
         <ChatsCardMonitor
-          name="En Pause"
+          name="En Pausa"
           number={agentNotAvailable && agentNotAvailable.length}
           position="BATHROOM"
           icon="/icons/user_watch.svg"
@@ -76,7 +75,10 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
           <div key={_id}>
             <div>
               {urlAvatar && urlAvatar !== '' ? (
-                <img src={`${urlAvatar}?token=${accessToken}`} alt={name} />
+                <img
+                  src={`${urlAvatar}?token=${accessToken}`}
+                  alt={name.slice(0, 7)}
+                />
               ) : (
                 // <StyledMyAccountAvatar src="/icons/user.svg" />
                 <SVGIcon iconFile="/icons/unknown_user.svg" />

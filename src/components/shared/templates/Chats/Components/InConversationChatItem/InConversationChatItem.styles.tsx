@@ -51,6 +51,52 @@ export const StyledInConversationWrapper = styled.div<StyledPendingWrapperProps>
   &:active {
     background-color: ${({ theme }) => theme.Colors.purples[2]};
   }
+
+  ${({ pausedItem }) =>
+    pausedItem &&
+    css<StyledPendingWrapperProps>`
+      background-color: ${({ theme }) => theme.Colors.green[1]};
+      outline: 2px solid ${({ theme }) => theme.Colors.grays[10]};
+      color: ${({ theme }) => theme.Colors.grays[10]};
+      & > button {
+        & > :first-child {
+          & > :first-child {
+            & > div {
+              & > div {
+                & > svg {
+                  /* outline: 2px solid ${({ theme }) =>
+                    theme.Colors.grays[10]}; */
+                  background-color: ${({ theme }) => theme.Colors.grays[3]};
+                  & path {
+                    color: ${({ theme }) => theme.Colors.grays[10]};
+                    fill: ${({ theme }) => theme.Colors.grays[10]};
+                  }
+                }
+              }
+            }
+          }
+        }
+        & > :nth-child(2) {
+          & > span {
+            color: ${({ theme }) => theme.Colors.grays[9]};
+          }
+        }
+        & > :nth-child(3) {
+          & > div {
+            & > span {
+              color: ${({ theme }) => theme.Colors.grays[9]};
+            }
+            & path {
+              fill: ${({ theme }) => theme.Colors.grays[9]};
+            }
+          }
+        }
+      }
+      &:active {
+        background-color: ${({ theme }) => theme.Colors.purples[1]};
+      }
+    `}
+
   ${({ focusedItem }) =>
     focusedItem &&
     css<StyledPendingWrapperProps>`

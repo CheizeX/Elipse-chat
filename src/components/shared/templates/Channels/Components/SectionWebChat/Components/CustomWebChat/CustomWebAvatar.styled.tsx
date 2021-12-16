@@ -1,11 +1,22 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { IPropsCustom } from './CustomWebChat.interface';
 
 export const StyledCustomWebChat = styled.div``;
 export const WrapperWebChat = styled.div<IPropsCustom>`
   width: 16rem;
   height: 21.9rem;
-  background-color: ${({ color }) => color};
+  background-color: ${({ primaryColor }) => primaryColor};
+
+  ${({ customIsColor, primaryColor, secondaryColor }) =>
+    !customIsColor &&
+    css<IPropsCustom>`
+      background: linear-gradient(
+        135deg,
+        ${primaryColor} 0%,
+        ${secondaryColor} 100%
+      );
+    `}
+
   border-radius: 10px;
   margin: auto;
   & > :nth-child(1) {
@@ -139,7 +150,16 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
     }
     & > :nth-child(2) {
       width: 180px;
-      background-color: ${({ color }) => color};
+      background-color: ${({ primaryColor }) => primaryColor};
+      ${({ customIsColor, primaryColor, secondaryColor }) =>
+        !customIsColor &&
+        css<IPropsCustom>`
+          background: linear-gradient(
+            135deg,
+            ${primaryColor} 0%,
+            ${secondaryColor} 100%
+          );
+        `}
       border-start-end-radius: 10px;
       border-end-end-radius: 10px;
       border-end-start-radius: 10px;
@@ -204,15 +224,24 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
         line-height: 12px;
       }
     }
-    & > div {
+    & > :nth-child(2) {
       width: 28px;
       height: 28px;
-      background-color: ${({ color }) => color};
+      background-color: ${({ primaryColor }) => primaryColor};
+      ${({ customIsColor, primaryColor, secondaryColor }) =>
+        !customIsColor &&
+        css<IPropsCustom>`
+          background: linear-gradient(
+            115deg,
+            ${primaryColor} 0%,
+            ${secondaryColor} 100%
+          );
+        `}
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0 0 0 6px;
+      margin: 0 0 0 10px;
       & > div {
         top: 6px;
         left: 1px;

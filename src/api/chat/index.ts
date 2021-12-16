@@ -47,8 +47,15 @@ export const readChatsToday = async (date: string) => {
   );
 };
 
-export const readReviewChats = async (filter = 'all') => {
+export const readReviewChats = async (
+  startDate: string,
+  endDate: string,
+  filter = 'all',
+) => {
   return baseRestApi.get<Chat>(
-    `/chats/statistics/finishedChats?filter=${filter}`,
+    `/chats/statistics/finishedChats/${startDate}/${endDate}?filter=${filter}`,
   );
 };
+
+// currentMonth
+// lastMonth

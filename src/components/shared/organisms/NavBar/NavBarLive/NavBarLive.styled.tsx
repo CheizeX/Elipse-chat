@@ -8,12 +8,12 @@ const mySelector = (
 ) => (condition ? then : otherwise);
 
 export const StyledNavBarLive = styled.nav<INavBarLiveProps>`
-  background: url('/images/Navbar_Background.svg') no-repeat;
+  background: url('/images/Navbar_Background.svg');
   background-blend-mode: lighten;
   background-color: ${({ theme }) => theme.Colors.purples[1]};
-  background-size: 1360px;
-  background-position-y: -15px;
-  background-position-x: 120px;
+  background-size: 100vw;
+  background-position-y: -30px;
+  background-position-x: -60px;
   border-radius: 0 0 24px 24px;
   padding: 20px 38px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);

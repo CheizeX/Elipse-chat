@@ -10,7 +10,7 @@ export const StyledAvatarContainer = styled.div`
     background-color: ${({ theme }) => theme.Colors.grays[10]};
     position: relative;
     border-radius: 10px;
-    width: 262px;
+    width: 16.3rem;
     margin: auto;
     display: flex;
     justify-content: start;
@@ -56,7 +56,6 @@ export const WrapperAvatar = styled.button<IAvatarProps>`
     }
   }
 `;
-
 export const StyledSectionPhoto = styled.div`
   & > div {
     margin: 10px auto;
@@ -70,7 +69,6 @@ export const StyledSectionPhoto = styled.div`
     align-items: center;
     padding: 8px 10px;
     position: relative;
-
     & > span {
       color: ${({ theme }) => theme.Colors.purples[3]};
       font-weight: ${({ theme }) => theme.fontWeight[500]};
@@ -78,7 +76,6 @@ export const StyledSectionPhoto = styled.div`
       line-height: 14px;
       margin-left: 8px;
     }
-
     & > input {
       width: 100%;
       height: 100%;
@@ -89,7 +86,6 @@ export const StyledSectionPhoto = styled.div`
       top: -20px;
       position: absolute;
     }
-
     & > :nth-child(2) {
       & * {
         & > svg {
@@ -101,7 +97,6 @@ export const StyledSectionPhoto = styled.div`
         }
       }
     }
-
     & > :nth-child(3) {
       top: 8px;
       left: -4px;

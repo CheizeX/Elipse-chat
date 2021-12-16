@@ -12,6 +12,7 @@ storiesOf('Ailalia/Organisms/Dashboard/DashboardSection', module).add(
         setEndDate={() => null}
         setClose={() => null}
         setDatePicker={() => null}
+        setSelectedComponent={() => null}
       />
     );
   },

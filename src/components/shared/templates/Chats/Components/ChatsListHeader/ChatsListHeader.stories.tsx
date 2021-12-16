@@ -6,6 +6,8 @@ storiesOf('Ailalia/Templates/Chats/Components', module).add(
   () => {
     return (
       <ChatsListHeader
+        showOnlyPausedChats={false}
+        setShowOnlyPausedChats={() => {}}
         checkedTags={[1, 2]}
         setCheckedTags={() => {}}
         channel={[1, 2]}

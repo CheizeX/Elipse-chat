@@ -68,7 +68,6 @@ export const StyledImageAndButtonContainer = styled.div`
   width: fit-content;
   margin: 0 auto;
   transition: all 0.3s ease-in-out;
-
   & > :last-child {
     position: absolute;
     top: -5px;
@@ -100,6 +99,7 @@ export const StyledMyAccountAvatar = styled.img`
   border-radius: 50%;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease-in-out;
+  object-fit: cover;
 `;
 
 export const StyledMyAccountInputsContainer = styled.div`

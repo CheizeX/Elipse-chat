@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { StyledWrapperModal } from './WrapperNameAndDescription.styled';
-import { Text } from '../../../../atoms/Text/Text';
-import { ContainerInput } from '../../../../molecules/Input/ContainerInput';
+import { Text } from '../../../../../../atoms/Text/Text';
+import { ContainerInput } from '../../../../../../molecules/Input/ContainerInput';
 import { IPropsDescription } from './WrapperNameAndDescription.interface';
 
 export const WrapperNameAndDescription: FC<IPropsDescription> = ({

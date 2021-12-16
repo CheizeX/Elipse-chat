@@ -60,29 +60,31 @@ export const StyledChangePasswordRequestWrapper = styled.div`
 `;
 
 export const StyledHeader = styled.div`
-  align-items: flex-start;
-  display: flex;
-  fill: ${({ theme }) => theme.Colors.purples[1]};
-  flex-direction: row;
-  height: 20px;
-  justify-content: flex-start;
-  width: 340px;
-  & span {
-    color: ${({ theme }) => theme.Colors.purples[1]};
-    font-size: ${({ theme }) => theme.fontSize[14]};
-    margin-left: 7px;
-  }
-  & svg {
-    height: 17px;
-    margin-top: 1px;
-    transition: all.2s;
-    width: 20px;
-    & * {
-      fill: ${({ theme }) => theme.Colors.purples[1]};
+  & > button {
+    align-items: flex-start;
+    display: flex;
+    fill: ${({ theme }) => theme.Colors.purples[1]};
+    flex-direction: row;
+    height: 20px;
+    justify-content: flex-start;
+    width: 340px;
+    & span {
+      color: ${({ theme }) => theme.Colors.purples[1]};
+      font-size: ${({ theme }) => theme.fontSize[14]};
+      margin-left: 7px;
     }
-    & :hover {
-      cursor: pointer;
-      transform: translateX(-1px);
+    & svg {
+      height: 17px;
+      margin-top: 1px;
+      transition: all.2s;
+      width: 20px;
+      & * {
+        fill: ${({ theme }) => theme.Colors.purples[1]};
+      }
+      & :hover {
+        cursor: pointer;
+        transform: translateX(-1px);
+      }
     }
   }
 `;

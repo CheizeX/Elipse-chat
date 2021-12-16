@@ -64,6 +64,7 @@ export type Chat = {
   messages: Message[];
   client: Client;
   isTransfer: boolean;
+  isPaused: boolean;
 
   createdAt: Date;
   updatedAt: Date;

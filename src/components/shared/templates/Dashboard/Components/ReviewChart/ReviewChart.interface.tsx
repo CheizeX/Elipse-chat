@@ -1,4 +1,16 @@
 export interface IPropsReview {
-  isDisableReview?: boolean;
-  setIsDisableReview: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedComponent?: string;
+  setSelectedComponent: React.Dispatch<React.SetStateAction<string>>;
+  chartDatePicker: number;
+  setChartDatePicker: React.Dispatch<React.SetStateAction<number>>;
+  startDate: Date | null;
+  setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  endDate: Date | null;
+  setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  setClose: React.Dispatch<React.SetStateAction<boolean>>;
+  close: boolean;
+}
+
+export interface IPropsComponentReview {
+  close: boolean;
 }
