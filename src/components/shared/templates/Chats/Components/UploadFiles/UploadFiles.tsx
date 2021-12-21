@@ -104,6 +104,12 @@ export const UploadFiles: FC<
           formData,
         );
       }
+      if (chatToTalkWithUser?.channel === 'Webchat') {
+        await baseRestApi.postMultipart(
+          `/webchat/sendFiles/${chatToTalkWithUserId}?from=AGENT`,
+          formData,
+        );
+      }
       setUploading(false);
     } catch (error) {
       showAlert?.addToast({

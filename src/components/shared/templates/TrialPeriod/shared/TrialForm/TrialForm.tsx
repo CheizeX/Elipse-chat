@@ -7,7 +7,7 @@ import { StyledTrialFormLayout } from './TrialForm.styled';
 import {
   TrialRegisterInterface,
   TrialRegisterItems,
-} from '../../../../../../helpers/trial-register.shared';
+} from '../../../../../../pages/trial-register/trial-register.shared';
 import {
   ButtonMolecule,
   ButtonState,

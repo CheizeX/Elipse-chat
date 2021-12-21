@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TrialRegisterInterface } from '../../../../../../helpers/trial-register.shared';
+import { TrialRegisterInterface } from '../../../../../../pages/trial-register/trial-register.shared';
 
 export const StyledTrialFormLayout = styled.div<TrialRegisterInterface>`
   display: flex;

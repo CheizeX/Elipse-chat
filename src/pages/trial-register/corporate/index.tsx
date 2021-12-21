@@ -5,7 +5,7 @@ import { TrialForm } from '../../../components/shared/templates/TrialPeriod/shar
 const TrialCorporatePage: NextPage = () => {
   const { asPath } = useRouter();
 
-  const path = asPath?.split('/')[2];
+  const path = asPath.split('/')[2];
   const color = '#4BCA59';
 
   return (

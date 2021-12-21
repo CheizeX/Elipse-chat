@@ -42,14 +42,14 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   }, [dialogueBoxRef]);
 
   const handleOpenAttachments = (message: Message) => {
+    console.log(message.content, 'CONTENT');
     window.open(
-      // `https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
-      //   10,
-      //   message.content.length,
-      // )}`,
       `${
         process.env.NEXT_PUBLIC_REST_API_URL
-      }/whatsapp360/file/${message.content.substr(10, message.content.length)}`,
+      }/whatsapp360/file/${message.content.substring(
+        14,
+        message.content.length,
+      )}`,
     );
   };
 
@@ -76,7 +76,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                   <div>
                     <Text>
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === ('png' || 'jpg') && (
@@ -94,11 +94,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                10,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -117,11 +116,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }whatsapp360/file/${message.content.substr(
-                                      10,
+                                    }whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                     width="100px"
@@ -135,7 +133,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'jpg' && (
@@ -153,11 +151,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                10,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -176,11 +173,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }/whatsapp360/file/${message.content.substr(
-                                      10,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                     width="100px"
@@ -194,7 +190,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 4,
                           message.content.length,
                         ) === 'jpeg' && (
@@ -212,11 +208,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                10,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -235,11 +230,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }/whatsapp360/file/${message.content.substr(
-                                      10,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                     width="100px"
@@ -253,7 +247,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'pdf' && (
@@ -266,11 +260,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <iframe
-                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                10,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -278,11 +271,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               style={{
                                 overflow: 'hidden',
                               }}
-                              // title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               title={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                10,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                             />
@@ -298,21 +290,18 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <iframe
-                                    // use frame-ancestors to allow iframe access to parent window
-                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }/whatsapp360/file/${message.content.substr(
-                                      10,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                     width="100%"
                                     height="100%"
-                                    // title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     title={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }/whatsapp360/file/${message.content.substr(
-                                      10,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                   />
@@ -338,7 +327,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                   <div>
                     <Text>
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'pdf' && (
@@ -351,11 +340,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <iframe
-                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                8,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -363,11 +351,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               style={{
                                 overflow: 'hidden',
                               }}
-                              // title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               title={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                8,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                             />
@@ -383,20 +370,18 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <iframe
-                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }/whatsapp360/file/${message.content.substr(
-                                      8,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                     width="100%"
                                     height="100%"
-                                    // title={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     title={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }whatsapp360/file/${message.content.substr(
-                                      8,
+                                    }whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                   />
@@ -407,7 +392,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'png' && (
@@ -420,11 +405,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                8,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -443,11 +427,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }/whatsapp360/file/${message.content.substr(
-                                      8,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                     width="900px"
@@ -461,7 +444,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'jpg' && (
@@ -474,11 +457,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                8,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -497,11 +479,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }/whatsapp360/file/${message.content.substr(
-                                      8,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                     width="900px"
@@ -515,7 +496,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 4,
                           message.content.length,
                         ) === 'jpeg' && (
@@ -528,11 +509,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               </button>
                             </div>
                             <img
-                              // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
-                              }/whatsapp360/file/${message.content.substr(
-                                8,
+                              }/whatsapp360/file/${message.content.substring(
+                                14,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -551,11 +531,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <img
-                                    // src={`https://rest-ailalia.ngrok.io/v1/api/whatsapp360/file/${message.content.substr(
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }/whatsapp360/file/${message.content.substr(
-                                      8,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
                                     )}`}
                                     width="900px"
@@ -618,7 +597,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                     <div>
                       <Text>
                         {message.contentType === 'ATTACHMENT' &&
-                          message.content.substr(
+                          message.content.substring(
                             message.content.length - 3,
                             message.content.length,
                           ) === 'png' && (
@@ -627,7 +606,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                             </button>
                           )}
                         {message.contentType === 'ATTACHMENT' &&
-                          message.content.substr(
+                          message.content.substring(
                             message.content.length - 3,
                             message.content.length,
                           ) === 'pdf' && (
@@ -636,7 +615,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                             </button>
                           )}
                         {message.contentType === 'ATTACHMENT' &&
-                          message.content.substr(
+                          message.content.substring(
                             message.content.length - 3,
                             message.content.length,
                           ) === 'jpg' && (
@@ -645,7 +624,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                             </button>
                           )}
                         {message.contentType === 'ATTACHMENT' &&
-                          message.content.substr(
+                          message.content.substring(
                             message.content.length - 4,
                             message.content.length,
                           ) === 'jpeg' && (

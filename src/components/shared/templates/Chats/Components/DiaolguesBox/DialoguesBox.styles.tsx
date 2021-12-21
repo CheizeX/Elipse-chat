@@ -63,7 +63,7 @@ export const StyledUserDialogue = styled.div`
         right: 0;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: bottom;
         border-radius: 10px;
         box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.199);
         overflow: scroll;
@@ -75,7 +75,7 @@ export const StyledUserDialogue = styled.div`
         }
         & > img {
           position: absolute;
-          top: 0px;
+          top: 20px;
           width: 90%;
           height: max-content;
           object-fit: contain;

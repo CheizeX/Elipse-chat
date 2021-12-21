@@ -4,7 +4,7 @@ import { FC } from 'react';
 import {
   TrialRegisterItems,
   TrialRegisterPersonalizedItems,
-} from '../../../../../helpers/trial-register.shared';
+} from '../../../../../pages/trial-register/trial-register.shared';
 import { ButtonMolecule } from '../../../atoms/Button/Button';
 import { SVGIcon } from '../../../atoms/SVGIcon/SVGIcon';
 import planes from './SubscriptionSection.shared';
