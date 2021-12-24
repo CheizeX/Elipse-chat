@@ -110,7 +110,6 @@ export const LoginView: FC<ViewLoginProps> = ({
     try {
       if (onSubmitExternal && _values?.email && _values.password) {
         await onSubmitExternal(_values.email, _values.password);
-
         submitProps?.resetForm();
       }
     } catch (error) {

@@ -21,11 +21,7 @@ import { readingUsers } from '../../../../../../api/users';
 import { UserStatus } from '../../../../../../models/users/status';
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
-// import { readReviewChats } from '../../../../../../api/chat';
-import {
-  setReviewByAgent,
-  //  setReviewChatsFinished,
-} from '../../../../../../redux/slices/dashboard/dashboard-review';
+import { setReviewByAgent } from '../../../../../../redux/slices/dashboard/dashboard-review';
 import { UserRole } from '../../../../../../models/users/role';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
 import { User } from '../../../../../../models/users/user';
@@ -54,11 +50,23 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
   const { dateName } = useAppSelector(
     (state) => state.dashboardFilterChatsByDate,
   );
-
+  // const { reviewByAgent } = useAppSelector(
+  //   (state) => state.review.chatContainerReviewState,
+  // );
   const containerAgent = usersData.filter(
     (item) => item.role === UserRole.AGENT,
   );
+  // const infoByAgent = usersData?.find((item) => item._id === reviewByAgent);
+  // const result = chatsByPeriod?.filter(
+  //   (item) => item.assignedAgent?._id === infoByAgent?._id,
+  // );
+  // const datosUnsatisfatory = result.filter(
+  //   (elem) => elem.finishedStatus === ChatFinishedStatus.SATISFACTORY,
+  // );
 
+  // const datosSatisfactory = result.filter(
+  //   (item) => item.finishedStatus === ChatFinishedStatus.UNSATISFACTORY,
+  // );
   const handleClick = () => {
     setSelectedComponent('AGENT');
     setClose(false);
@@ -185,18 +193,11 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
                     </span>
                   </div>
                   <button
-                    onClick={() => handleToggle(user._id)}
-                    // onClick={() =>
-                    //   handleToggle(
-                    //     user._id,
-                    //     user.name
-                    //       .slice(0, 1)
-                    //       .toUpperCase()
-                    //       .concat(
-                    //         user.name.slice(1, user.name.length).toLowerCase(),
-                    //       ),
-                    //   )
+                    // disabled={
+                    //   datosUnsatisfatory.length < 1 &&
+                    //   datosSatisfactory.length < 1
                     // }
+                    onClick={() => handleToggle(user._id)}
                     type="button">
                     <SVGIcon iconFile="/icons/bars-graphic.svg" />
                   </button>

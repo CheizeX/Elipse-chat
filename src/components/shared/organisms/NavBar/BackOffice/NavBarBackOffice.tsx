@@ -54,6 +54,7 @@ export const BackOffice: FC<IBackOfficeProps> = ({ text }) => {
       setIsComponentVisible(false);
       dispatch(setUserDataInState({} as DecodedToken));
     } catch (error) {
+      // localStorage.removeItem('AccessToken');
       showAlert?.addToast({
         alert: Toast.ERROR,
         title: 'ERROR',

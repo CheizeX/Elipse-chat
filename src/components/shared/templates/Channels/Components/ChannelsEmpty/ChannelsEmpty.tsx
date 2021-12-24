@@ -17,9 +17,8 @@ export const ChannelsEmpty: FC<IPropsChannelEmpty> = ({ setIsOpenModal }) => {
             <SVGIcon iconFile="/icons/Messenger.svg" />
             <SVGIcon iconFile="/icons/webChat.svg" />
           </div>
-          <div>
-            <SVGIcon iconFile="/icons/sidebar-1.svg" />
-          </div>
+          <SVGIcon iconFile="/icons/sidebar-1.svg" />
+          <div />
         </div>
         <div>
           <Text>¡No has añadido ningun canal!</Text>

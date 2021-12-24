@@ -40,8 +40,8 @@ const data = [
 
 export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
   const [isSection, setIsSection] = useState<number>(1);
-  const [primaryColor, setPrimaryColor] = useState<string>('#8520D0');
-  const [secondaryColor, setSecundaryColor] = useState<string>('#8769FF');
+  const [primaryColor, setPrimaryColor] = useState<string>('#6e28bf');
+  const [secondaryColor, setSecundaryColor] = useState<string>('#65edfa');
   const [customTitle, setCustomTitle] = useState<string>('Elipse Chat');
   const [customDescription, setCustomDescription] =
     useState<string>('Asistente Virtual');

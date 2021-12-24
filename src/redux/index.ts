@@ -31,6 +31,8 @@ import reportsAgentsQueryState from './slices/reports/reports-data-agents';
 import chatContainerReviewState from './slices/dashboard/dashboard-review';
 import monitorCountAgentsAvailableState from './slices/monitor/count-agent';
 import chatToSetOnConversationIdToState from './slices/live-chat/chatset-on-conversation';
+import chatContainerAuthFacebookState from './slices/channels/auth-facebook';
+import chatIntegrationQRState from './slices/channels/integration-with-qr';
 
 const liveChat = combineReducers({
   chatsPendings,
@@ -78,6 +80,10 @@ const reports = combineReducers({
 const review = combineReducers({
   chatContainerReviewState,
 });
+const channel = combineReducers({
+  chatContainerAuthFacebookState,
+  chatIntegrationQRState,
+});
 
 export const store = configureStore({
   reducer: {
@@ -96,6 +102,7 @@ export const store = configureStore({
     review,
     activeTab,
     optionsToFilterChats,
+    channel,
   },
 });
 

@@ -1,22 +1,28 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { ConfirmationQR } from './Comnponents/ConfirmationQR/ConfirmationQR';
 
 import {
   ButtonMolecule,
+  ButtonState,
   ButtonVariant,
   Size,
 } from '../../../../atoms/Button/Button';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
-import { LinkToMolecule } from '../../../../molecules/LinkTo/LinkTo';
+
+import { ViewQR } from './Comnponents/ViewQR/ViewQR';
 import { IPropsChannelAdd } from './SectionWhatsApp.interface';
 import {
   StyledAddWhatsApp,
-  StyledLink,
   StyledHeaderChannelAdd,
   StyledBodyAddChannel,
   StyledFooterAddChannel,
-  StyledQR,
 } from './SectionWhatsApp.styled';
+import { getInstanceQR } from '../../../../../../api/channels';
+import { Toast } from '../../../../molecules/Toast/Toast.interface';
+import { useToastContext } from '../../../../molecules/Toast/useToast';
+import { setIntegrationQRWhatsApp } from '../../../../../../redux/slices/channels/integration-with-qr';
+import { useAppDispatch } from '../../../../../../redux/hook/hooks';
 
 const dataWhatsApp = [
   {
@@ -25,11 +31,11 @@ const dataWhatsApp = [
   },
   {
     num: 2,
-    message: 'Vincula tu número de teléfono móvil',
+    message: 'Continuar con el proceso',
   },
   {
     num: 3,
-    message: 'Asigna tus agentes',
+    message: 'Vincula tu número de teléfono móvil',
   },
   {
     num: 4,
@@ -40,6 +46,37 @@ const dataWhatsApp = [
 export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
   setIsSectionWebChat,
 }) => {
+  const [selectByComponent, setSelectByComponent] = useState<number>(1);
+  const [isChecked, setIsChecked] = useState(false);
+  const showAlert = useToastContext();
+  const dispatch = useAppDispatch();
+
+  const handlePrev = () => {
+    setSelectByComponent(selectByComponent - 1);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const result = await getInstanceQR();
+      if (result.success === false) {
+        showAlert?.addToast({
+          alert: Toast.ERROR,
+          title: 'ERROR',
+          message:
+            'Ops algo salio mal intentelo nuevamente o comuníquese con su proveedor de servicios.',
+        });
+      } else {
+        setSelectByComponent(selectByComponent + 1);
+        dispatch(setIntegrationQRWhatsApp(result));
+      }
+    } catch (err) {
+      showAlert?.addToast({
+        alert: Toast.ERROR,
+        title: 'ERROR',
+        message: `${err}`,
+      });
+    }
+  };
   return (
     <StyledAddWhatsApp>
       <StyledHeaderChannelAdd>
@@ -48,7 +85,7 @@ export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
           <SVGIcon iconFile="/icons/times.svg" />
         </button>
       </StyledHeaderChannelAdd>
-      <StyledBodyAddChannel>
+      <StyledBodyAddChannel selectByComponent={selectByComponent}>
         <div>
           <div>
             {dataWhatsApp.map((item) => (
@@ -63,33 +100,10 @@ export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
           </div>
         </div>
         <div>
-          <div>
-            <div>
-              <Text>
-                Escanea este código QR desde tu aplicación de Whatsapp.
-              </Text>
-              <Text>
-                Al escanear este código QR estás aceptando nuestros terminos y
-                condiciones.
-              </Text>
-            </div>
-            <StyledQR>
-              {/* <img
-                src="https://api.chat-api.com/instance376860/qr_code?token=qwm88u1n60clkvu9"
-                alt="qr"
-              /> */}
-            </StyledQR>
-            <div>
-              <StyledLink>
-                <div>
-                  <p>Asegúrate de seguir</p>
-                  <LinkToMolecule color="#2477ff" text="esta guia" />
-                  <p>para asegurar</p>
-                </div>
-                <p>una correcta integración de whatsapp.</p>
-              </StyledLink>
-            </div>
-          </div>
+          {selectByComponent === 1 ? (
+            <ConfirmationQR isChecked={isChecked} setIsChecked={setIsChecked} />
+          ) : null}
+          {selectByComponent === 2 ? <ViewQR /> : null}
         </div>
       </StyledBodyAddChannel>
       <StyledFooterAddChannel>
@@ -97,8 +111,17 @@ export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
           text="Anterior"
           variant={ButtonVariant.OUTLINED}
           size={Size.MEDIUM}
+          onClick={handlePrev}
+          state={
+            selectByComponent <= 1 ? ButtonState.DISABLED : ButtonState.NORMAL
+          }
         />
-        <ButtonMolecule text="Siguiente" size={Size.MEDIUM} />
+        <ButtonMolecule
+          text="Siguiente"
+          size={Size.MEDIUM}
+          onClick={handleSubmit}
+          state={!isChecked ? ButtonState.DISABLED : ButtonState.NORMAL}
+        />
       </StyledFooterAddChannel>
     </StyledAddWhatsApp>
   );

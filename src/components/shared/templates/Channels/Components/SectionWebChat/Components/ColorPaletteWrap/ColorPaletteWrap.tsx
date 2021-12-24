@@ -57,7 +57,7 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
     {
       name: '6',
       color: '#6e28bf',
-      secondColor: '#8769FF',
+      secondColor: ' #65edfa',
     },
     {
       name: '7',

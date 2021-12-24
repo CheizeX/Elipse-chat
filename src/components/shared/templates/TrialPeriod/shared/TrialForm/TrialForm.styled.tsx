@@ -1,169 +1,107 @@
 import styled from 'styled-components';
-import { TrialRegisterInterface } from '../../../../../../pages/trial-register/trial-register.shared';
+import { SubscriptionSectionInterface } from '../../../SubscriptionPlans/SubscriptionSection/SubscriptionSection.shared';
 
-export const StyledTrialFormLayout = styled.div<TrialRegisterInterface>`
+export const StyledTrialFormLayout = styled.div<SubscriptionSectionInterface>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   background: ${({ theme }) => theme.Colors.purples[1]};
   overflow: hidden;
-  .cards-container {
-    z-index: 2;
+  padding-bottom: 20px;
+  & > img {
+    align-self: center;
+    position: relative;
+    top: 10px;
+  }
+  & > div {
+    overflow: hidden;
+    position: fixed;
+    min-width: 100%;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+  }
+`;
+
+export const StyledTrialFormContainer = styled.main`
+  position: relative;
+  top: 30px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.452);
+  border-radius: 1.5rem;
+  min-width: 320px;
+  max-width: 600px;
+  width: fit-content;
+  background-color: ${({ theme }) => theme.Colors.grays[10]};
+  margin: 0 20px 50px 20px;
+
+  & h1 {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: ${({ theme }) => theme.Colors.purples[2]};
+    font-weight: 500;
+    padding: 1rem;
+    text-align: center;
+    width: 90%;
+    border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
+  }
+  & form {
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.452);
+    justify-content: center;
+    flex-wrap: wrap;
+    min-width: 320px;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    background-color: ${({ theme }) => theme.Colors.grays[10]};
+    transition: all 0.3s ease-in-out;
     border-radius: 1.5rem;
-    .info-card {
+    & > input {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      min-width: 300px;
-      max-width: 350px;
-      height: 100%;
-      border-top-left-radius: 1.5rem;
-      border-bottom-left-radius: 1.5rem;
-      background-color: ${({ theme }) => theme.Colors.grays[10]};
-      transition: all 0.3s ease-in-out;
-      & h1 {
-        padding-top: 1.3rem;
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        color: ${({ theme }) => theme.Colors.grays[5]};
-        & span {
-          padding-left: 0.5rem;
-          font-size: 1.7rem;
-          font-weight: 700;
-        }
+      width: 80%;
+      height: 40px;
+      padding: 0.5rem;
+      border-radius: 1.5rem;
+      background-color: ${({ theme }) => theme.Colors.grays[9]};
+      transition: all 0.1s ease-in-out;
+      border: none;
+      padding: 1rem;
+      color: ${({ theme }) => theme.Colors.grays[3]};
+      margin: 0 auto;
+      &:focus {
+        outline: 2px solid ${({ theme }) => theme.Colors.purples[1]};
       }
-      & > div {
-        border-top: 1px solid ${({ theme }) => theme.Colors.grays[9]};
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        & > div {
-          margin: 0.5rem 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          ${({ pagepath }) =>
-            pagepath && pagepath === 'start' ? 'width: 220px;' : 'width: 90%;'}
-          min-height: 30px;
-          & * {
-            ${({ color }) =>
-              `fill: ${color};
-          }`}
-          }
-          & div {
-            ${({ pagepath }) =>
-              pagepath && pagepath === 'start'
-                ? `padding: 0;
-                margin-right: 0.3rem;`
-                : `padding: 0 0.4rem;
-                margin-right: 0.7rem;`}
-            ${({ pagepath }) =>
-              pagepath && pagepath === 'start'
-                ? 'height: 40px'
-                : 'height: 35px'};
-            display: flex;
-            align-items: center;
-            & div {
-              & div {
-                & svg {
-                  box-shadow: 0 3px 10px 2px
-                    ${({ theme }) => theme.Colors.grays[2]};
-                  border-radius: 50%;
-                  outline: 4px solid white;
-                  border: 1px solid white;
-                  height: 25px;
-                  width: 25px;
-                }
-              }
-            }
-          }
-          & span {
-            width: 100%;
-            font-weight: 400;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            color: ${({ theme }) => theme.Colors.grays[2]};
-            & > span {
-              color: ${({ theme }) => theme.Colors.grays[1]};
-              font-weight: 600;
-            }
-          }
-        }
+      &::placeholder {
+        color: ${({ theme }) => theme.Colors.grays[7]};
+        padding-left: 0.3rem;
       }
     }
-    & form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 320px;
-      max-width: 400px;
-      height: 100%;
-      padding: 2rem;
-      border-top-right-radius: 1.5rem;
-      border-bottom-right-radius: 1.5rem;
-      background-color: ${({ theme }) => theme.Colors.grays[10]};
-      transition: all 0.3s ease-in-out;
-      border-left: 1px solid ${({ theme }) => theme.Colors.grays[9]};
-      & h1 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-        color: ${({ theme }) => theme.Colors.grays[3]};
-        font-weight: 400;
-        margin-bottom: 1.5rem;
-        & span {
-          padding-left: 0.4rem;
-          font-size: 1.5rem;
-        }
-      }
-      & input {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 40px;
-        padding: 0.5rem;
-        border-radius: 1.5rem;
-        background-color: ${({ theme }) => theme.Colors.grays[9]};
-        transition: all 0.1s ease-in-out;
-        border: none;
-        padding: 1rem;
-        color: ${({ theme }) => theme.Colors.grays[3]};
-        &:focus {
-          outline: 2px solid ${({ theme }) => theme.Colors.purples[1]};
-        }
-        &::placeholder {
-          color: ${({ theme }) => theme.Colors.grays[7]};
-          padding-left: 0.3rem;
-        }
-      }
-      & > div {
-        margin: 0.3rem 0;
-        height: 20px;
-        color: ${({ theme }) => theme.Colors.orange[1]};
-        text-align: left;
-        width: 90%;
-        font-size: 11px;
-      }
-      & button {
-        width: 100%;
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-        margin-top: 1rem;
-      }
+    & > div {
+      margin: 0.3rem 0;
+      height: 20px;
+      color: ${({ theme }) => theme.Colors.purples[3]};
+      text-align: left;
+      width: 75%;
+      font-size: 11px;
+    }
+    & button {
+      width: 80%;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      margin-top: 1rem;
+      min-height: 50px;
     }
   }
   & > div {
@@ -192,6 +130,68 @@ export const StyledTrialFormLayout = styled.div<TrialRegisterInterface>`
           top: 0;
           min-width: 100vw;
           height: 100vh;
+        }
+      }
+    }
+  }
+`;
+
+export const StyledInfoCard = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
+  background-color: ${({ theme }) => theme.Colors.grays[10]};
+  transition: all 0.3s ease-in-out;
+  & > div {
+    padding-top: 20px;
+    border-top: 1px solid ${({ theme }) => theme.Colors.grays[9]};
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    & > div {
+      & > div {
+        margin: 0.5rem auto;
+        /* border: 1px solid ${({ theme }) => theme.Colors.grays[9]}; */
+        display: flex;
+        align-items: center;
+        min-height: 40px;
+        width: 100%;
+        width: 250px;
+        min-width: 150px;
+        display: flex;
+        color: ${({ theme }) => theme.Colors.grays[3]};
+        font-weight: 400;
+        font-size: 1rem;
+        font-weight: 500;
+        padding-left: 1rem;
+        & div {
+          margin-right: 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          & div {
+            & div {
+              & svg {
+                border-radius: 50%;
+                border: 1px solid white;
+                height: 25px;
+                width: 25px;
+                background-color: ${({ theme }) => theme.Colors.grays[10]};
+                & path {
+                  fill: ${({ theme }) => theme.Colors.purples[2]};
+                }
+              }
+            }
+          }
         }
       }
     }

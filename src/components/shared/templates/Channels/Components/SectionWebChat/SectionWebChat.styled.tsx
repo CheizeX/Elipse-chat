@@ -3,7 +3,7 @@ import { IContainerWebChat } from './SectionWebChat.interface';
 
 export const StyledWebChat = styled.div`
   width: 59rem;
-  height: 33rem;
+  height: 34rem;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   border-radius: 10px;
   padding: 1.25rem 0 1.125rem 0;
@@ -43,7 +43,7 @@ export const StyledHeaderSectionWebChat = styled.div`
 `;
 
 export const StyledBodyWebChat = styled.div<IContainerWebChat>`
-  height: 24.5rem;
+  height: 26rem;
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
   display: flex;
@@ -147,7 +147,7 @@ export const StyledBodyWebChat = styled.div<IContainerWebChat>`
     padding: 0 8px;
     & > div {
       width: 19rem;
-      margin: 20px auto;
+      // margin: 20px auto;
       border-radius: 10px;
     }
   }

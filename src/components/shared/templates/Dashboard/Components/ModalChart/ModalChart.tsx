@@ -14,7 +14,10 @@ import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
 import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
 import { ContainerWithOutTags } from '../../../../molecules/ContainerWithOutTags/ContainerWithOutTags';
-// import { readReviewChats } from '../../'
+import {
+  ChatFinishedStatus,
+  ChatStatus,
+} from '../../../../../../models/chat/chat';
 
 export const ModalChart: FC<IPropsChart> = ({ setComponentReview }) => {
   const [accessToken] = useLocalStorage('AccessToken', '');
@@ -22,26 +25,46 @@ export const ModalChart: FC<IPropsChart> = ({ setComponentReview }) => {
   const { reviewByAgent } = useAppSelector(
     (state) => state.review.chatContainerReviewState,
   );
-  // const { chatsByPeriod } = useAppSelector(
-  //   (state) => state.dashboardFilterChatsByDate,
-  // );
+  const { chatsByPeriod } = useAppSelector(
+    (state) => state.dashboardFilterChatsByDate,
+  );
 
+  const { dateName } = useAppSelector(
+    (state) => state.dashboardFilterChatsByDate,
+  );
+  console.log(usersData);
   const infoByAgent = usersData?.find((item) => item._id === reviewByAgent);
+  console.log(infoByAgent, 'numero');
+  console.log(reviewByAgent, 'review');
+  const result = chatsByPeriod?.filter(
+    (item) => item.assignedAgent?._id === infoByAgent?._id,
+  );
+  const datosOnConversation = result.filter(
+    (item) => item.status === ChatStatus.ON_CONVERSATION,
+  );
+  const datosIsTransfer = result.filter((item) => item.isTransfer === true);
+  const datosUnsatisfatory = result.filter(
+    (elem) => elem.finishedStatus === ChatFinishedStatus.SATISFACTORY,
+  );
+
+  const datosSatisfactory = result.filter(
+    (item) => item.finishedStatus === ChatFinishedStatus.UNSATISFACTORY,
+  );
   const data = [
     {
       id: 'Satisfactorios',
       label: 'Satisfactorios',
-      value: 22,
+      value: datosUnsatisfatory.length,
       color: '#F78F28',
     },
     {
       id: 'Insatisfactorios',
       label: 'Insatisfactorios',
-      value: 20,
-      // label: `${((onConversation / 14) * 100).toFixed()}%`,
+      value: datosSatisfactory.length,
       color: '#24C3A7',
     },
   ];
+
   return (
     <StyledComponentChart>
       <StyledHeaderComponentChart>
@@ -75,14 +98,14 @@ export const ModalChart: FC<IPropsChart> = ({ setComponentReview }) => {
                 rightIcon={() => (
                   <SVGIcon iconFile="/icons/small_message.svg" />
                 )}>
-                3
+                {datosOnConversation.length}
               </BadgeMolecule>
               <BadgeMolecule
                 bgColor="#B2B2B2"
                 rightIcon={() => (
                   <SVGIcon iconFile="/icons/exchange_alt.svg" />
                 )}>
-                4
+                {datosIsTransfer.length}
               </BadgeMolecule>
             </div>
             <Text>Etiquetas</Text>
@@ -102,6 +125,7 @@ export const ModalChart: FC<IPropsChart> = ({ setComponentReview }) => {
           </div>
         </div>
         <div>
+          <Text>{dateName}</Text>
           <ResponsivePie
             data={data}
             margin={{ top: 18, right: 0, bottom: 48, left: 0.5 }}

@@ -40,7 +40,10 @@ export const LinkToMolecule: FC<LinkToMoleculeProps> = ({
 }) => {
   return (
     <StyledLinkToMolecule color={color}>
-      <a href={href && href !== '' ? href : '#'}>
+      <a
+        target="_blank"
+        href={href && href !== '' ? href : '#'}
+        rel="noreferrer">
         <Text>{text}</Text>
       </a>
     </StyledLinkToMolecule>

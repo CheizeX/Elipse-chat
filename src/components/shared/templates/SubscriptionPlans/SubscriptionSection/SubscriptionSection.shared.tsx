@@ -1,9 +1,9 @@
-export interface TrialRegisterInterface {
+export interface SubscriptionSectionInterface {
   pagepath?: string;
   color?: string;
 }
 
-export const TrialRegisterItems = [
+export const SubscriptionSectionItems = [
   {
     id: 0,
     item: 'Agentes',
@@ -29,7 +29,8 @@ export const TrialRegisterItems = [
     item: 'Instagram',
   },
 ];
-export const TrialRegisterPersonalizedItems = [
+
+export const SubscriptionSectionPersonalizedItems = [
   {
     id: 0,
     item: 'Licencias personalizadas',
@@ -68,7 +69,25 @@ export const TrialRegisterPersonalizedItems = [
   },
 ];
 
-const Trial = () => {
-  return 'Show page working ! ';
-};
-export default Trial;
+export const planes = [
+  {
+    name: 'Start',
+    price: '99',
+  },
+  {
+    name: 'Business',
+    price: '199',
+  },
+  {
+    name: 'Corporate',
+    price: '399',
+  },
+  // {
+  //   name: 'Enterprise',
+  //   // price: '499',
+  // },
+];
+// const Subscription = () => {
+//   return 'Show page working ! ';
+// };
+// export default Subscription;

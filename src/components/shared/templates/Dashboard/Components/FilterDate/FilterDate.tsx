@@ -22,9 +22,6 @@ export const FilterDateDashboard: FC<IPropsFilterDate> = ({
       setClose={setClose}>
       <StyledHeaderRageDate>
         <Text>Fitrar por fecha</Text>
-        {/* <button type="button" onClick={() => setClose(true)}>
-          <SVGIcon iconFile="/icons/times.svg" />
-        </button> */}
       </StyledHeaderRageDate>
       <StyledBodyRageDate>
         <FilterButtonDate setDatePicker={setDatePicker} datePicker={datePicker}>

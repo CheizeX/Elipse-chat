@@ -23,7 +23,10 @@ import {
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
 import { readReviewChats } from '../../../../../../api/chat';
-import { setReviewChatsFinished } from '../../../../../../redux/slices/dashboard/dashboard-review';
+import {
+  setReviewChatsFinished,
+  setReviewDatePicker,
+} from '../../../../../../redux/slices/dashboard/dashboard-review';
 
 export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
   setDatePicker,
@@ -72,6 +75,11 @@ export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
           if (currentDts.success === false) {
             dispatch(setReviewChatsFinished([]));
           } else {
+            dispatch(
+              setReviewDatePicker(
+                `Desde el (${startDate?.toLocaleDateString()}) hasta el (${endDate?.toLocaleDateString()})`,
+              ),
+            );
             dispatch(setReviewChatsFinished(currentDts));
           }
           setClose(true);

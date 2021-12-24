@@ -4,9 +4,8 @@ import { IPropsCustom } from './CustomWebChat.interface';
 export const StyledCustomWebChat = styled.div``;
 export const WrapperWebChat = styled.div<IPropsCustom>`
   width: 16rem;
-  height: 21.9rem;
+  height: 23rem;
   background-color: ${({ primaryColor }) => primaryColor};
-
   ${({ customIsColor, primaryColor, secondaryColor }) =>
     !customIsColor &&
     css<IPropsCustom>`
@@ -42,6 +41,9 @@ export const WrapperWebChat = styled.div<IPropsCustom>`
       }
     }
   }
+  & > :nth-child(2) {
+    max-width: 264px;
+  }
   & > span {
     color: ${({ theme }) => theme.Colors.grays[10]};
     font-weight: ${({ theme }) => theme.fontWeight[500]};
@@ -57,6 +59,7 @@ export const WrapperWebChat = styled.div<IPropsCustom>`
 export const StyledHeaderCustomWebChat = styled.div`
   display: flex;
   margin: 0 10px;
+  height: 40px;
   & > span {
     color: ${({ theme }) => theme.Colors.grays[1]};
     font-weight: ${({ theme }) => theme.fontWeight[600]};
@@ -111,9 +114,10 @@ export const StyledAvatar = styled.div`
   }
 `;
 export const StyledBodyWebChat = styled.div<IPropsCustom>`
-  width: 97%;
+  width: 100%;
   margin: auto;
   height: 14rem;
+  margin-top: -10px;
   border-start-end-radius: 3%;
   border-start-start-radius: 3%;
   border-end-end-radius: 12%;
@@ -204,30 +208,41 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
   }
   & > :nth-child(3) {
     height: 96px;
-    padding-left: 4px;
+    //padding-left: 4px;
     display: flex;
     align-items: end;
-    & > :nth-child(1) {
-      height: 30px;
-      width: 196px;
+    & > div {
       display: flex;
+      width: 100%;
+      height: 40px;
       justify-content: start;
-      align-items: center;
-      padding-left: 12px;
-      background-color: ${({ theme }) => theme.Colors.grays[9]};
-      border-radius: 20px;
-      & > span {
-        color: ${({ theme }) => theme.Colors.grays[4]};
-        text-align: center;
-        font-size: ${({ theme }) => theme.fontSize[12]};
-        font-weight: ${({ theme }) => theme.fontWeight[500]};
-        line-height: 12px;
+      align-items: flex-end;
+      border-top: 1px solid ${({ theme }) => theme.Colors.grays[9]};
+      & > div {
+        height: 30px;
+        width: 150px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        border: 1px solid ${({ theme }) => theme.Colors.grays[9]};
+        background-color: ${({ theme }) => theme.Colors.grays[10]};
+        border-radius: 5px;
+        padding-left: 6px;
+        & > span {
+          color: ${({ theme }) => theme.Colors.grays[4]};
+          text-align: center;
+          font-size: ${({ theme }) => theme.fontSize[12]};
+          font-weight: ${({ theme }) => theme.fontWeight[500]};
+          line-height: 12px;
+        }
       }
-    }
-    & > :nth-child(2) {
-      width: 28px;
-      height: 28px;
-      background-color: ${({ primaryColor }) => primaryColor};
+      & > :nth-child(1){
+        border-radius: 5px;
+        transition: 0.5s ease all;
+    transform: rotate3d(0, 0, 1, -90deg);
+      }
+      & > span {
+        background-color: ${({ primaryColor }) => primaryColor};
       ${({ customIsColor, primaryColor, secondaryColor }) =>
         !customIsColor &&
         css<IPropsCustom>`
@@ -237,6 +252,21 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
             ${secondaryColor} 100%
           );
         `}
+        height: 30px;
+        min-width: 30px;
+        margin: 0 10px;
+        padding: 3px;
+      }
+      & > :nth-child(3) {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        // background-color: ${({ primaryColor }) => primaryColor};
+      }
+    }
+    /* & > :nth-child(2) {
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -253,5 +283,5 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
         }
       }
     }
-  }
+  } */
 `;

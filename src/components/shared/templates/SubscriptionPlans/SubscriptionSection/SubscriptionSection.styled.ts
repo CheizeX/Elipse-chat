@@ -31,31 +31,33 @@ export const StyledSubscriptionSectionHeaderInfo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   text-align: center;
   height: 100%;
   width: 100%;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: ${({ theme }) => theme.Colors.grays[3]};
   & > :first-child {
+    flex-direction: column;
     padding: 0 25px;
     height: 100%;
+    width: 86%;
     display: flex;
     align-items: center;
     justify-content: center;
     & > h2 {
-      font-weight: 700;
-      color: ${({ theme }) => theme.Colors.grays[3]};
-      font-size: 28px;
+      padding-left: 7px;
+      font-weight: 500;
+      color: ${({ theme }) => theme.Colors.grays[1]};
+      font-size: 22px;
       text-align: left;
       width: 100%;
       margin: auto;
-      line-height: 1.4;
+      line-height: 1.4rem;
       margin-right: 10px;
     }
     & > span {
-      font-size: 30px;
+      font-size: 14px;
       font-weight: 800;
     }
   }
@@ -66,18 +68,36 @@ export const StyledSubscriptionSectionHeaderInfo = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${({ theme }) => theme.Colors.purples[1]};
+    background-color: ${({ theme }) => theme.Colors.grays[10]};
     border-top-right-radius: 10px;
-    color: ${({ theme }) => theme.Colors.grays[9]};
+    color: ${({ theme }) => theme.Colors.grays[5]};
     font-weight: 700;
+    border-left: 1px solid ${({ theme }) => theme.Colors.grays[9]};
     & p {
       text-align: center;
       width: fit-content;
       font-size: 38px;
-      color: ${({ theme }) => theme.Colors.grays[9]};
+      color: ${({ theme }) => theme.Colors.purples[3]};
       font-weight: 800;
       padding: 3px 0;
     }
+  }
+`;
+
+export const StyledSelectedPlanHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  & > h2 {
+    font-size: 20px;
+    & > span {
+      padding-left: 5px;
+      font-size: 32px;
+      font-weight: 700;
+      color: ${({ theme }) => theme.Colors.purples[3]};
   }
 `;
 
@@ -114,8 +134,8 @@ export const StyledSubscriptionSectionCard = styled.div<SubscriptionSectionProps
   ${({ active, theme }) =>
     active &&
     `
-    color: ${theme.Colors.grays[10]};
-    background-color: ${theme.Colors.purples[1]};
+    /* outline: 2px solid ${theme.Colors.purples[1]}; */
+    box-shadow: 0px 2px 5px 3px  ${theme.Colors.purples[3]};
   `}
   & > div {
     width: 100%;
@@ -137,19 +157,21 @@ export const StyledSubscriptionSectionCard = styled.div<SubscriptionSectionProps
         height: 24px;
       }
       & > svg {
-        border: 2px solid ${({ theme }) => theme.Colors.purples[2]};
+        border: 2px solid ${({ theme }) => theme.Colors.grays[8]};
         width: 20px;
         height: 20px;
-        background-color: ${({ theme }) => theme.Colors.purples[2]};
-        ${({ active, theme }) =>
-          active &&
-          `
-            border: 2px solid ${theme.Colors.grays[10]};
-            background-color: ${theme.Colors.grays[10]};
-            & path {
-              fill: ${theme.Colors.purples[1]};
-            }
-          `}
+        background-color: ${({ theme }) => theme.Colors.grays[8]};
+        border: 2px solid ${({ theme }) => theme.Colors.grays[10]};
+        background-color: ${({ theme }) => theme.Colors.grays[10]};
+        & path {
+          fill: ${({ theme }) => theme.Colors.grays[8]};
+          ${({ active, theme }) =>
+            active &&
+            `
+    fill:  ${theme.Colors.purples[3]};
+    /* box-shadow: 0px 2px 10px 0px  ${theme.Colors.purples[3]}; */
+  `}
+        }
       }
     }
   }
@@ -157,27 +179,6 @@ export const StyledSubscriptionSectionCard = styled.div<SubscriptionSectionProps
     width: 100%;
     margin-top: 5px;
     height: 40px;
-    ${({ active, theme }) =>
-      active &&
-      `
-    background-color: ${theme.Colors.grays[10]};
-  `}
-    & span {
-      ${({ active, theme }) =>
-        active &&
-        `
-    color: ${theme.Colors.purples[1]};
-  `}
-    }
-    & :hover {
-      & span {
-        ${({ active, theme }) =>
-          active &&
-          `
-        color: ${theme.Colors.grays[10]};
-      `}
-      }
-    }
   }
 `;
 export const StyledSubscriptionSectionCardHeader = styled.span<SubscriptionSectionProps>`
@@ -189,6 +190,11 @@ export const StyledSubscriptionSectionCardHeader = styled.span<SubscriptionSecti
   justify-content: space-between;
   align-items: center;
   padding: 0 0px 10px 0px;
+  ${({ active }) =>
+    active &&
+    `
+    justify-content: center;
+  `}
   & h1 {
     display: flex;
     justify-content: space-around;
@@ -196,7 +202,22 @@ export const StyledSubscriptionSectionCardHeader = styled.span<SubscriptionSecti
     height: 100%;
     font-weight: 700;
     font-size: 20px;
-    color: ${({ theme }) => theme.Colors.purples[3]};
+    color: ${({ theme }) => theme.Colors.purples[1]};
+    ${({ active, theme }) =>
+      active &&
+      `
+    font-size: 28px;
+    color: ${theme.Colors.purples[3]};
+    &::before {
+      // the content of the span is the same as the content of the h1
+      font-size: 20px;
+      color: ${theme.Colors.grays[5]};
+      content: 'Mi Plan';
+      font-size: 20px;
+      font-weight: 500;
+      margin-right: 10px;
+    }
+  `}
   }
   & h3 {
     display: flex;
@@ -205,11 +226,6 @@ export const StyledSubscriptionSectionCardHeader = styled.span<SubscriptionSecti
     height: 100%;
     font-weight: 600;
     font-size: 20px;
-    ${({ active, theme }) =>
-      active &&
-      `
-    color: ${theme.Colors.grays[10]};
-  `}
   }
 `;
 
@@ -225,40 +241,18 @@ export const StyledSubscriptionSectionEnterpriseCard = styled.div<SubscriptionSe
   max-width: 633px;
   max-height: 240px;
   align-self: flex-start;
+  height: 255px;
   ${({ active, theme }) =>
     active &&
     `
-    color: ${theme.Colors.grays[10]};
-    background-color: ${theme.Colors.purples[1]};
+    box-shadow: 0px 2px 5px 3px  ${theme.Colors.purples[3]};
   `};
   & button {
     min-height: 40px;
     width: 100%;
-    ${({ active, theme }) =>
-      active &&
-      `
-    background-color: ${theme.Colors.grays[10]};
-  `};
-    & span {
-      ${({ active, theme }) =>
-        active &&
-        `
-    color: ${theme.Colors.purples[1]};
-  `}
-    }
-    & :hover {
-      & span {
-        ${({ active, theme }) =>
-          active &&
-          `
-        color: ${theme.Colors.grays[10]};
-      `}
-      }
-    }
   }
 `;
 export const StyledSubscriptionSectionEnterpriseCardHeader = styled.div<SubscriptionSectionProps>`
-  /* height: 60px; */
   border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
   width: 100%;
   display: flex;
@@ -266,44 +260,44 @@ export const StyledSubscriptionSectionEnterpriseCardHeader = styled.div<Subscrip
   justify-content: space-between;
   align-items: center;
   padding: 20px 0px 10px 0px;
+  ${({ active, theme }) =>
+    active &&
+    `
+
+    justify-content: center;
+    &::before {
+      // the content of the span is the same as the content of the h1
+      font-size: 20px;
+      color: ${theme.Colors.grays[5]};
+      content: 'Mi Plan';
+      font-size: 20px;
+      font-weight: 500;
+      margin-right: 10px;
+    }
+  `}
   & > h1 {
     font-size: 20px;
     font-weight: 700;
     color: ${({ theme }) => theme.Colors.purples[1]};
+    margin-right: 10px;
     ${({ active, theme }) =>
       active &&
       `
-    color: ${theme.Colors.grays[10]};
-  `};
-    margin-right: 10px;
-  }
-  & > h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.Colors.grays[5]};
+      font-size: 28px;
+    color: ${theme.Colors.purples[3]};
+  `}
   }
 `;
 export const StyledSubscriptionSectionEnterpriseCardBody = styled.div<SubscriptionSectionProps>`
-  /* height: 100%; */
   display: flex;
   flex-direction: row;
   align-items: left;
-  /* justify-content: space-between; */
   color: ${({ theme }) => theme.Colors.grays[3]};
-  ${({ active, theme }) =>
-    active &&
-    `
-    color: ${theme.Colors.grays[10]};
-  `};
-
-  /* padding: 10px 0; */
-  /* background-color: ${({ theme }) => theme.Colors.grays[9]}; */
   height: 150px;
   width: 100%;
   margin-bottom: 10px;
   & > :first-child {
     width: 100%;
-    /* border: 1px solid ${({ theme }) => theme.Colors.grays[1]}; */
     height: 97%;
     display: flex;
     justify-content: space-between;
@@ -313,8 +307,6 @@ export const StyledSubscriptionSectionEnterpriseCardBody = styled.div<Subscripti
       justify-content: flex-start;
       align-items: center;
       width: 180px;
-      /* margin-top: 10px;
-      margin-bottom: 10px; */
       padding-top: 5px;
       min-height: 40px;
       fill: black;
@@ -331,22 +323,20 @@ export const StyledSubscriptionSectionEnterpriseCardBody = styled.div<Subscripti
             & > svg {
               width: 20px;
               height: 20px;
-              background-color: ${({ theme }) => theme.Colors.purples[2]};
+              background-color: ${({ theme }) => theme.Colors.grays[8]};
               border-radius: 50%;
-              border: 2px solid ${({ theme }) => theme.Colors.purples[2]};
+              border: 2px solid ${({ theme }) => theme.Colors.grays[8]};
+              border: 2px solid ${({ theme }) => theme.Colors.grays[10]};
+              background-color: ${({ theme }) => theme.Colors.grays[10]};
+              & path {
+                fill: ${({ theme }) => theme.Colors.grays[8]};
               ${({ active, theme }) =>
                 active &&
                 `
             border: 2px solid ${theme.Colors.grays[10]};
-            background-color: ${theme.Colors.grays[10]};
-            & path {
-              fill: ${theme.Colors.purples[1]};
-            }
+            background-color: ${theme.Colors.purples[3]};
+            fill: ${theme.Colors.purples[3]};
           `}
-              & path {
-                /* border: 2px solid red; */
-              }
-            }
           }
         }
       }
@@ -360,7 +350,6 @@ export const StyledSubscriptionSectionWebchat = styled.div<SubscriptionSectionPr
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   border-radius: 10px;
   padding: 0 20px 10px 20px;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.121);
@@ -368,41 +357,17 @@ export const StyledSubscriptionSectionWebchat = styled.div<SubscriptionSectionPr
   ${({ active, theme }) =>
     active &&
     `
-  color: ${theme.Colors.grays[10]};
-  background-color: ${theme.Colors.purples[1]};
+    justify-content: center;
+    box-shadow: 0px 2px 5px 3px  ${theme.Colors.purples[2]};
 `};
-  & > button {
-    min-height: 40px;
-    width: 100%;
-    ${({ active, theme }) =>
-      active &&
-      `
-    background-color: ${theme.Colors.grays[10]};
-  `};
-    & span {
-      ${({ active, theme }) =>
-        active &&
-        `
-    color: ${theme.Colors.purples[1]};
-  `}
-    }
-    & :hover {
-      & span {
-        ${({ active, theme }) =>
-          active &&
-          `
-        color: ${theme.Colors.grays[10]};
-      `}
-      }
-    }
   }
 `;
-export const StyledSubscriptionSectionWebchatHeader = styled.div`
+export const StyledSubscriptionSectionWebchatHeader = styled.div<SubscriptionSectionProps>`
   border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 20px 0px 10px 0px;
   height: 50px;
@@ -410,18 +375,13 @@ export const StyledSubscriptionSectionWebchatHeader = styled.div`
   & > h1 {
     font-size: 20px;
     font-weight: 700;
-    color: ${({ theme }) => theme.Colors.blue[1]};
+    color: ${({ theme }) => theme.Colors.purples[3]};
     margin-right: 10px;
   }
   & > h3 {
-    position: absolute;
-    left: 0;
-    transform: translate(-35px, -23px) rotate(-10deg);
-    color: ${({ theme }) => theme.Colors.purples[1]};
-    font-size: 26px;
-    font-weight: 900;
-    text-shadow: 0px 2px 6px ${({ theme }) => theme.Colors.purples[1]};
-    -webkit-text-stroke: 2px ${({ theme }) => theme.Colors.grays[9]};
+    color: ${({ theme }) => theme.Colors.grays[3]};
+    font-size: 22px;
+    font-weight: 600;
   }
 `;
 export const StyledSubscriptionSectionWebchatBody = styled.div<SubscriptionSectionProps>`
@@ -430,19 +390,11 @@ export const StyledSubscriptionSectionWebchatBody = styled.div<SubscriptionSecti
   align-items: center;
   justify-content: space-evenly;
   color: ${({ theme }) => theme.Colors.grays[3]};
-  height: 150px;
+  height: 100%;
   width: 100%;
-  ${({ active, theme }) =>
-    active &&
-    `
-    color: ${theme.Colors.grays[10]};
-  `};
-  /* margin-bottom: 10px; */
   & > div {
     width: 100%;
-    /* border: 1px solid ${({ theme }) => theme.Colors.grays[1]}; */
     height: 20px;
-    /* margin: 3px 0; */
     display: flex;
     justify-content: left;
     align-items: center;
@@ -459,21 +411,21 @@ export const StyledSubscriptionSectionWebchatBody = styled.div<SubscriptionSecti
           & > svg {
             width: 20px;
             height: 20px;
-            background-color: ${({ theme }) => theme.Colors.purples[2]};
+            background-color: ${({ theme }) => theme.Colors.grays[10]};
             border-radius: 50%;
-            border: 2px solid ${({ theme }) => theme.Colors.purples[2]};
+            border: 2px solid ${({ theme }) => theme.Colors.grays[10]};
+            & path {
+              fill: ${({ theme }) => theme.Colors.grays[8]};
+            }
             ${({ active, theme }) =>
               active &&
               `
             border: 2px solid ${theme.Colors.grays[10]};
             background-color: ${theme.Colors.grays[10]};
             & path {
-              fill: ${theme.Colors.purples[1]};
+              fill: ${theme.Colors.purples[3]};
             }
           `}
-            & path {
-              /* border: 2px solid red; */
-            }
           }
         }
       }

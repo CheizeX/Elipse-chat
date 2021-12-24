@@ -42,6 +42,43 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
               <Text>{description}</Text>
             </div>
           </StyledHeaderCustomWebChat>
+          <div>
+            <svg
+              className="waves waves-animated"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              viewBox="0 24 150 28"
+              preserveAspectRatio="none"
+              shapeRendering="auto">
+              <defs>
+                <path
+                  id="gentle-wave"
+                  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                />
+              </defs>
+              <g className="parallax">
+                <use
+                  xlinkHref="#gentle-wave"
+                  x="24"
+                  y="0"
+                  fill="rgba(255,255,255,0.7)"
+                />
+                <use
+                  xlinkHref="#gentle-wave"
+                  x="24"
+                  y="2"
+                  fill="rgba(255,255,255,0.5)"
+                />
+                <use
+                  xlinkHref="#gentle-wave"
+                  x="24"
+                  y="3"
+                  fill="rgba(255,255,255,0.3)"
+                />
+                <use xlinkHref="#gentle-wave" x="24" y="4" fill="#ffffff" />
+              </g>
+            </svg>
+          </div>
           <StyledBodyWebChat
             customIsColor={customIsColor}
             primaryColor={primaryColor}
@@ -66,10 +103,15 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
             </div>
             <div>
               <div>
-                <Text>Enviar un mensaje...</Text>
-              </div>
-              <div>
-                <SVGIcon iconFile="/icons/paper_plane.svg" />
+                <span>
+                  <SVGIcon iconFile="/icons/send_121135.svg" />
+                </span>
+                <div>
+                  <Text>Enviar un mensaje...</Text>
+                </div>
+                <span>
+                  <SVGIcon iconFile="/icons/send_121135.svg" />
+                </span>
               </div>
             </div>
           </StyledBodyWebChat>

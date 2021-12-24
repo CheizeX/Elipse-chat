@@ -139,7 +139,6 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
     & > img {
       width: 30px;
       height: 30px;
-
       border-radius: 50%;
       object-fit: cover;
     }
@@ -167,6 +166,7 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
       height: 20px;
       margin-left: 4px;
       margin-right: 2px;
+
       & > :hover {
         cursor: pointer;
         & * {
@@ -224,14 +224,20 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
         font-size: ${({ theme }) => theme.fontSize[12]};
       }
     }
+
     & > button {
       width: 14px;
       height: 14px;
       margin-left: 16px;
       position: relative;
       top: 3px;
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
       & > :hover {
         cursor: pointer;
+
         & * {
           & > svg {
             & > :nth-child(1) {

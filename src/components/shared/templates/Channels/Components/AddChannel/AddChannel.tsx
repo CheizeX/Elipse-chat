@@ -26,6 +26,11 @@ const dataChannel = [
     name: 'Messenger',
     svg: 'Messenger',
   },
+  {
+    id: 4,
+    name: 'Instagram',
+    svg: 'Instagram',
+  },
 ];
 
 export const AddChannel: FC<IPropsAddChannel> = ({

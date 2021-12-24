@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { IContainerFacebook } from './SectionFacebook.interface';
 
 export const StyledSectionFacebook = styled.div`
-  width: 33.25rem;
-  min-width: 592px;
+  width: 35rem;
+  min-width: 608px;
   height: 32rem;
   border-radius: 0.625rem;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
@@ -15,6 +16,7 @@ export const StyledSectionFacebookHeader = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
+
   padding-left: 1.6rem;
   border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
 
@@ -42,14 +44,14 @@ export const StyledSectionFacebookHeader = styled.div`
   }
 `;
 
-export const StyledSectionFacebookBody = styled.div`
+export const StyledSectionFacebookBody = styled.div<IContainerFacebook>`
   height: 24rem;
   display: flex;
-  border: 1px solid ${({ theme }) => theme.Colors.grays[9]};
+  border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
   width: 100%;
 
   & > :nth-child(1) {
-    min-width: 14rem;
+    min-width: 15rem;
     background-blend-mode: lighten;
     background-color: ${({ theme }) => theme.Colors.purples[1]};
     background-image: url('/images/Background_Modal.svg');
@@ -62,6 +64,33 @@ export const StyledSectionFacebookBody = styled.div`
       padding: 2rem 0 0 0;
       margin: auto;
       & > div {
+        & :nth-child(1) {
+          opacity: 'none';
+          & > :nth-child(2) {
+            opacity: ${({ selectedComponent }) =>
+              selectedComponent < 2 ? 0.6 : 'none'};
+          }
+        }
+        & :nth-child(2) {
+          & > :nth-child(2) {
+            opacity: ${({ selectedComponent }) =>
+              selectedComponent < 3 ? 0.6 : 'none'};
+          }
+          opacity: ${({ selectedComponent }) =>
+            selectedComponent < 2 ? 0.6 : 'none'};
+        }
+        & :nth-child(3) {
+          opacity: ${({ selectedComponent }) =>
+            selectedComponent < 3 ? 0.6 : 'none'};
+          & > :nth-child(2) {
+            opacity: ${({ selectedComponent }) =>
+              selectedComponent < 4 ? 0.6 : 'none'};
+          }
+        }
+        & :nth-child(4) {
+          opacity: ${({ selectedComponent }) =>
+            selectedComponent < 4 ? 0.6 : 'none'};
+        }
         & > :nth-child(1) {
           display: flex;
           max-width: 12rem;
@@ -106,7 +135,7 @@ export const StyledSectionFacebookBody = styled.div`
           margin: 0 0.625rem;
         }
       }
-      & > :nth-child(2) {
+      & > :nth-child(4) {
         & > :nth-child(2) {
           display: none;
         }
@@ -115,29 +144,6 @@ export const StyledSectionFacebookBody = styled.div`
   }
   & > :nth-child(2) {
     padding: 30px 20px;
-    & > :nth-child(1) {
-      & > :nth-child(1) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-bottom: 12px;
-        & > :nth-child(1) {
-          color: ${({ theme }) => theme.Colors.grays[1]};
-          font-size: ${({ theme }) => theme.fontSize[14]};
-        }
-        & > :nth-child(2) {
-          color: ${({ theme }) => theme.Colors.grays[1]};
-          font-weight: ${({ theme }) => theme.fontWeight[500]};
-          font-size: ${({ theme }) => theme.fontSize[12]};
-          line-height: 14px;
-        }
-      }
-      & > :nth-child(2) {
-        width: 158px;
-        height: 108px;
-        margin: auto;
-      }
-    }
   }
 `;
 export const StyledMessengerFooter = styled.div`
@@ -146,38 +152,4 @@ export const StyledMessengerFooter = styled.div`
   align-items: flex-end;
   padding: 0 0.9375rem;
   justify-content: space-between;
-`;
-
-export const StyledButtonFacebook = styled.button`
-  align-items: center;
-  justify-content: flex-start;
-  width: 80%;
-  height: 2.5rem;
-  border-radius: 0.3125rem;
-  background-color: #1977f2;
-  padding-left: 10px;
-  display: flex;
-  margin: 0 auto;
-  :hover {
-    cursor: pointer;
-  }
-  & > :nth-child(1) {
-    height: 1.875rem;
-    margin-right: 1.25rem;
-    & > div {
-      & * {
-        & > svg {
-          & > path {
-            fill: ${({ theme }) => theme.Colors.grays[10]};
-          }
-        }
-      }
-    }
-  }
-  & > :nth-child(2) {
-    color: ${({ theme }) => theme.Colors.grays[10]};
-    font-weight: ${({ theme }) => theme.fontWeight[500]};
-    font-size: ${({ theme }) => theme.fontSize[14]};
-    line-height: 14px;
-  }
 `;

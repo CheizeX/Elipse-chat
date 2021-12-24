@@ -42,12 +42,11 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   }, [dialogueBoxRef]);
 
   const handleOpenAttachments = (message: Message) => {
-    console.log(message.content, 'CONTENT');
     window.open(
       `${
         process.env.NEXT_PUBLIC_REST_API_URL
       }/whatsapp360/file/${message.content.substring(
-        14,
+        10,
         message.content.length,
       )}`,
     );
@@ -76,7 +75,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                   <div>
                     <Text>
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substring(
+                        message.content.substr(
                           message.content.length - 3,
                           message.content.length,
                         ) === ('png' || 'jpg') && (
@@ -97,7 +96,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                10,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -119,7 +118,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }whatsapp360/file/${message.content.substring(
-                                      14,
+                                      10,
                                       message.content.length,
                                     )}`}
                                     width="100px"
@@ -154,7 +153,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                10,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -176,7 +175,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      14,
+                                      10,
                                       message.content.length,
                                     )}`}
                                     width="100px"
@@ -211,7 +210,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                10,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -233,7 +232,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      14,
+                                      10,
                                       message.content.length,
                                     )}`}
                                     width="100px"
@@ -263,7 +262,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                10,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -274,7 +273,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               title={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                10,
                                 message.content.length,
                               )}`}
                             />
@@ -290,10 +289,11 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <iframe
+                                    // use frame-ancestors to allow iframe access to parent window
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      14,
+                                      10,
                                       message.content.length,
                                     )}`}
                                     width="100%"
@@ -301,7 +301,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     title={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      14,
+                                      10,
                                       message.content.length,
                                     )}`}
                                   />
@@ -327,7 +327,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                   <div>
                     <Text>
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substring(
+                        message.content.substr(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'pdf' && (
@@ -343,7 +343,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                8,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -354,7 +354,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               title={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                8,
                                 message.content.length,
                               )}`}
                             />
@@ -373,7 +373,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      14,
+                                      8,
                                       message.content.length,
                                     )}`}
                                     width="100%"
@@ -381,7 +381,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     title={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }whatsapp360/file/${message.content.substring(
-                                      14,
+                                      8,
                                       message.content.length,
                                     )}`}
                                   />
@@ -392,7 +392,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substring(
+                        message.content.substr(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'png' && (
@@ -408,7 +408,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                8,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -430,7 +430,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      14,
+                                      8,
                                       message.content.length,
                                     )}`}
                                     width="900px"
@@ -460,7 +460,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                8,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -482,7 +482,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      14,
+                                      8,
                                       message.content.length,
                                     )}`}
                                     width="900px"
@@ -496,7 +496,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substring(
+                        message.content.substr(
                           message.content.length - 4,
                           message.content.length,
                         ) === 'jpeg' && (
@@ -512,7 +512,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                14,
+                                8,
                                 message.content.length,
                               )}`}
                               width="100px"
@@ -534,7 +534,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      14,
+                                      8,
                                       message.content.length,
                                     )}`}
                                     width="900px"

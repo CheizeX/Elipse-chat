@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { IContainerWhatsApp } from './SectionWhatsApp.interface';
 
 export const StyledAddWhatsApp = styled.div`
-  width: 33.25rem;
-  min-width: 592px;
+  width: 35rem;
+  min-width: 608px;
   height: 32rem;
   border-radius: 0.625rem;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
@@ -41,10 +42,11 @@ export const StyledHeaderChannelAdd = styled.div`
   }
 `;
 
-export const StyledBodyAddChannel = styled.div`
+export const StyledBodyAddChannel = styled.div<IContainerWhatsApp>`
   height: 24rem;
   display: flex;
   width: 100%;
+  border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
   & > :nth-child(1) {
     width: 15rem;
     background-blend-mode: lighten;
@@ -59,6 +61,33 @@ export const StyledBodyAddChannel = styled.div`
       padding: 2rem 0 0 0;
       margin: auto;
       & > div {
+        & :nth-child(1) {
+          opacity: 'none';
+          & > :nth-child(2) {
+            opacity: ${({ selectByComponent }) =>
+              selectByComponent < 2 ? 0.6 : 'none'};
+          }
+        }
+        & :nth-child(2) {
+          & > :nth-child(2) {
+            opacity: ${({ selectByComponent }) =>
+              selectByComponent < 3 ? 0.6 : 'none'};
+          }
+          opacity: ${({ selectByComponent }) =>
+            selectByComponent < 2 ? 0.6 : 'none'};
+        }
+        & :nth-child(3) {
+          opacity: ${({ selectByComponent }) =>
+            selectByComponent < 3 ? 0.6 : 'none'};
+          & > :nth-child(2) {
+            opacity: ${({ selectByComponent }) =>
+              selectByComponent < 4 ? 0.6 : 'none'};
+          }
+        }
+        & :nth-child(4) {
+          opacity: ${({ selectByComponent }) =>
+            selectByComponent < 4 ? 0.6 : 'none'};
+        }
         & > :nth-child(1) {
           display: flex;
           max-width: 12rem;
@@ -102,6 +131,8 @@ export const StyledBodyAddChannel = styled.div`
           background: ${({ theme }) => theme.Colors.grays[10]};
           margin: 0 0.625rem;
         }
+        & > :nth-child(3) {
+        }
       }
       & > :nth-child(4) {
         & > :nth-child(2) {
@@ -111,86 +142,7 @@ export const StyledBodyAddChannel = styled.div`
     }
   }
   & > :nth-child(2) {
-    width: 304px;
-    height: 352px;
     margin: auto;
-    border-radius: 0.625rem;
-    & > :nth-child(1) {
-      height: fit-content;
-      & > :nth-child(1) {
-        margin: 0 0.5rem 0.625rem 0.5rem;
-        & > :nth-child(1) {
-          height: 30px;
-          color: ${({ theme }) => theme.Colors.grays[3]};
-          font-weight: ${({ theme }) => theme.fontWeight[600]};
-          font-size: ${({ theme }) => theme.fontSize[12]};
-          line-height: 0.875rem;
-          text-align: start;
-          display: flex;
-          justify-content: flex-start;
-          width: 100%;
-          margin-bottom: 0.625rem;
-        }
-        & > :nth-child(2) {
-          height: 1.875rem;
-          color: ${({ theme }) => theme.Colors.grays[3]};
-          font-weight: ${({ theme }) => theme.fontWeight[500]};
-          font-size: ${({ theme }) => theme.fontSize[12]};
-          line-height: 0.875rem;
-          text-align: start;
-          display: flex;
-          justify-content: flex-start;
-          width: 100%;
-        }
-      }
-      & > :nth-child(2) {
-        width: 304px;
-        height: 232px;
-        border-radius: 0.625rem;
-        background-color: ${({ theme }) => theme.Colors.grays[9]};
-        margin-bottom: 10px;
-      }
-      & > :nth-child(3) {
-        margin: 0 0.5rem;
-        & > span {
-          height: 1.875rem;
-          color: ${({ theme }) => theme.Colors.grays[3]};
-          font-weight: ${({ theme }) => theme.fontWeight[400]};
-          font-size: ${({ theme }) => theme.fontSize[12]};
-          line-height: 14px;
-          text-align: start;
-          display: flex;
-          justify-content: flex-start;
-          width: 100%;
-        }
-      }
-    }
-  }
-`;
-
-export const StyledLink = styled.p`
-  color: ${({ theme }) => theme.Colors.grays[3]};
-  font-weight: ${({ theme }) => theme.fontWeight[400]};
-  font-size: ${({ theme }) => theme.fontSize[12]};
-  line-height: 0.875rem;
-  display: flex;
-  flex-direction: column;
-  text-align: initial;
-  & > div {
-    display: flex;
-    height: 1rem;
-  }
-  & span {
-    color: ${({ theme }) => theme.Colors.blue[1]};
-    font-weight: ${({ theme }) => theme.fontWeight[400]};
-    font-size: ${({ theme }) => theme.fontSize[12]};
-    line-height: 0.875rem;
-    margin: 0 0.125rem;
-    & > a {
-      & > :hover {
-        /* background-color: ${({ theme }) => theme.Colors.blue[1]}; */
-      }
-    }
   }
 `;
 
@@ -200,11 +152,4 @@ export const StyledFooterAddChannel = styled.div`
   align-items: flex-end;
   padding: 0 0.9375rem;
   justify-content: space-between;
-`;
-
-export const StyledQR = styled.div`
-  & > img {
-    max-width: 330px;
-    max-height: 228px;
-  }
 `;

@@ -54,7 +54,6 @@ export type Message = {
 
 export type Chat = {
   _id: string;
-
   channel: Channels;
   status: ChatStatus;
   assignedAgent: User;
@@ -65,7 +64,6 @@ export type Chat = {
   client: Client;
   isTransfer: boolean;
   isPaused: boolean;
-
   createdAt: Date;
   updatedAt: Date;
 };

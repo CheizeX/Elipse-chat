@@ -3,11 +3,10 @@ import { FC } from 'react';
 import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { delay } from 'rxjs';
-import { StyledTrialFormLayout } from './TrialForm.styled';
 import {
-  TrialRegisterInterface,
-  TrialRegisterItems,
-} from '../../../../../../pages/trial-register/trial-register.shared';
+  StyledTrialFormContainer,
+  StyledTrialFormLayout,
+} from './TrialForm.styled';
 import {
   ButtonMolecule,
   ButtonState,
@@ -42,9 +41,17 @@ const validationSchema = Yup.object({
       'El teléfono es inválido',
     ),
   empresa: Yup.string().required('El nombre de la empresa es requerido'),
+  contraseña: Yup.string()
+    .required('La contraseña es requerida')
+    .min(6, 'La contraseña debe tener al menos 6 caracteres')
+    .max(20),
+  verificarContraseña: Yup.string().oneOf(
+    [Yup.ref('contraseña'), null],
+    'Las contraseñas no coinciden',
+  ),
 });
 
-export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
+export const TrialForm: FC = () => {
   const onSubmit = async (
     values: {
       nombre: string;
@@ -71,52 +78,51 @@ export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
-      pagepath={pagepath}>
+      onSubmit={onSubmit}>
       {({ isSubmitting }) => {
         return (
           <>
-            <StyledTrialFormLayout pagepath={pagepath} color={color}>
+            <StyledTrialFormLayout>
               <SVGIcon iconFile="/images/MaskGroup.svg" />
               <img
                 src="/images/elipse-chat-blanco.png"
                 width="300px"
                 alt="logo"
               />
-              <main className="cards-container">
-                <article className="info-card">
-                  <h1>
-                    Plan
-                    <span style={{ color: `${color}` }}>
-                      {pagepath &&
-                        pagepath.charAt(0).toUpperCase() + pagepath.slice(1)}
-                    </span>
-                  </h1>
+              <StyledTrialFormContainer>
+                <h1>Datos requeridos para acceder al período de evaluación</h1>
+                {/* <StyledInfoCard>
                   <div>
-                    {TrialRegisterItems.map(({ id, item }) => (
-                      <div key={id}>
-                        <SVGIcon iconFile="/icons/success.svg" />
-                        <span>
-                          {id === 0 && pagepath === 'start' && '3 '}
-                          {id === 0 && pagepath === 'business' && '5 '}
-                          {id === 0 && pagepath === 'corporate' && '10 '}
-                          {item}
-                        </span>
+                    <div>
+                      <div>
+                        <div>
+                          <SVGIcon iconFile="/icons/success.svg" />2 Agentes
+                        </div>
                       </div>
-                    ))}
-                    {(pagepath === 'business' || pagepath === 'corporate') && (
+                      <div>
+                        <SVGIcon iconFile="/icons/success.svg" />1 Supervisor
+                      </div>
                       <div>
                         <SVGIcon iconFile="/icons/success.svg" />
-                        <span>
-                          <span>
-                            WhatsApp Business API (costo de sesión a cargo del
-                            cliente)
-                          </span>
-                        </span>
+                        Webchat
                       </div>
-                    )}
+                    </div>
+                    <div>
+                      <div>
+                        <SVGIcon iconFile="/icons/success.svg" />
+                        Facebook Messenger
+                      </div>
+                      <div>
+                        <SVGIcon iconFile="/icons/success.svg" />
+                        Instagram
+                      </div>
+                      <div>
+                        <SVGIcon iconFile="/icons/success.svg" />
+                        Whatsapp
+                      </div>
+                    </div>
                   </div>
-                </article>
+                </StyledInfoCard> */}
                 <Form>
                   {/* <h1>Datos personales:</h1> */}
                   <Field type="text" name="nombre" placeholder="Nombre" />
@@ -147,8 +153,24 @@ export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
                   <div>
                     <ErrorMessage name="empresa" component="div" />
                   </div>
+                  <Field
+                    type="password"
+                    name="contraseña"
+                    placeholder="Contraseña"
+                  />
+                  <div>
+                    <ErrorMessage name="contraseña" component="div" />
+                  </div>
+                  <Field
+                    type="password"
+                    name="verificarContraseña"
+                    placeholder="Verificar contraseña "
+                  />
+                  <div>
+                    <ErrorMessage name="verificarContraseña" component="div" />
+                  </div>
                   <ButtonMolecule
-                    text="Solicitar prueba gratuita"
+                    text="Comenzar con mi prueba gratuita"
                     type="submit"
                     size={Size.MEDIUM}
                     state={
@@ -156,7 +178,7 @@ export const TrialForm: FC<TrialRegisterInterface> = ({ pagepath, color }) => {
                     }
                   />
                 </Form>
-              </main>
+              </StyledTrialFormContainer>
             </StyledTrialFormLayout>
           </>
         );

@@ -145,6 +145,9 @@ export const StyledBodyModalChart = styled.div`
     max-height: 300px;
     width: 310px;
     margin: 12px auto;
+    & > span {
+      color: ${({ theme }) => theme.Colors.grays[1]};
+    }
   }
 `;
 export const StyledFooterModal = styled.div`

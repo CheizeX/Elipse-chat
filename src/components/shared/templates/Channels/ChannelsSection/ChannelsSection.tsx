@@ -7,11 +7,16 @@ import { AddChannel } from '../Components/AddChannel/AddChannel';
 import { SectionWebChat } from '../Components/SectionWebChat/SectionWebChat';
 import { SectionWhatsAppComponent } from '../Components/SectionWhatsapp/SectionWhatsapp';
 import { SectionFacebookComponent } from '../Components/SectionFacebook/SectionFacebook';
+import { ConfirmationAuth } from '../Components/SectionFacebook/Components/ConfirmationAuth/ConfirmationAuth';
+import { SectionComponentInstagram } from '../Components/SectionInstagram/SectionInstagram';
 
 export const ChannelsSection: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isSectionWebChat, setIsSectionWebChat] = useState<boolean>(false);
   const [seletedComponent, setSeletedComponent] = useState<string>('');
+  const [confirmationAccount, setConfirmationAccounth] =
+    useState<boolean>(false);
+
   return (
     <StyledChannelSection>
       <ChannelsListHeader setIsOpenModal={setIsOpenModal} />
@@ -30,8 +35,19 @@ export const ChannelsSection: FC = () => {
           <SectionWhatsAppComponent setIsSectionWebChat={setIsSectionWebChat} />
         ) : null}
         {seletedComponent === 'Messenger' ? (
-          <SectionFacebookComponent setIsSectionWebChat={setIsSectionWebChat} />
+          <SectionFacebookComponent
+            setConfirmationAccounth={setConfirmationAccounth}
+            setIsSectionWebChat={setIsSectionWebChat}
+          />
         ) : null}
+        {seletedComponent === 'Instagram' ? (
+          <SectionComponentInstagram
+            setIsSectionWebChat={setIsSectionWebChat}
+          />
+        ) : null}
+      </ModalMolecule>
+      <ModalMolecule isModal={confirmationAccount}>
+        <ConfirmationAuth setConfirmationAccounth={setConfirmationAccounth} />
       </ModalMolecule>
       <ChannelsEmpty setIsOpenModal={setIsOpenModal} />
     </StyledChannelSection>

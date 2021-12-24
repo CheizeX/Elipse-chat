@@ -13,7 +13,10 @@ import {
   IPropsFilterReviewButton,
 } from './FilterReviewDate.interface';
 import { readReviewChats } from '../../../../../../api/chat';
-import { setReviewChatsFinished } from '../../../../../../redux/slices/dashboard/dashboard-review';
+import {
+  setReviewChatsFinished,
+  setReviewDatePicker,
+} from '../../../../../../redux/slices/dashboard/dashboard-review';
 import { useAppDispatch } from '../../../../../../redux/hook/hooks';
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
@@ -38,13 +41,16 @@ export const FilterReviewDate = ({
         if (id === 0) {
           const currentDts = await readReviewChats('0', 'currentWeek');
           dispatch(setReviewChatsFinished(currentDts));
+          dispatch(setReviewDatePicker('Esta Semana'));
           setClose(true);
         } else if (id === 1) {
           const currentMonth = await readReviewChats('0', 'currentMonth');
+          dispatch(setReviewDatePicker('Este Mes'));
           dispatch(setReviewChatsFinished(currentMonth));
           setClose(true);
         } else if (id === 2) {
           const lastMonth = await readReviewChats('0', 'lastMonth');
+          dispatch(setReviewDatePicker('Mes Anterior'));
           dispatch(setReviewChatsFinished(lastMonth));
           setClose(true);
         } else {

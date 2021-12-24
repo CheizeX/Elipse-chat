@@ -14,7 +14,10 @@ import {
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
 import { readReviewChats } from '../../../../../../api/chat';
-import { setReviewChatsFinished } from '../../../../../../redux/slices/dashboard/dashboard-review';
+import {
+  setReviewChatsFinished,
+  setReviewDatePicker,
+} from '../../../../../../redux/slices/dashboard/dashboard-review';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
 import { IPropsReview } from './ReviewChart.interface';
@@ -34,7 +37,7 @@ export const ReviewChart: FC<IPropsReview> = ({
   setClose,
   close,
 }) => {
-  const { reviewChats } = useAppSelector(
+  const { reviewChats, datePicker } = useAppSelector(
     (state) => state.review.chatContainerReviewState,
   );
 
@@ -47,6 +50,7 @@ export const ReviewChart: FC<IPropsReview> = ({
       if (currentDts.success === false) {
         dispatch(setReviewChatsFinished([]));
       } else {
+        dispatch(setReviewDatePicker('Esta Semana'));
         dispatch(setReviewChatsFinished(currentDts));
       }
     } catch (err) {
@@ -91,7 +95,7 @@ export const ReviewChart: FC<IPropsReview> = ({
           triggerElement={() => (
             <BadgeMolecule
               leftIcon={() => <SVGIcon iconFile="/icons/candelar_alt.svg" />}>
-              <Text>Semana</Text>
+              <Text>{datePicker}</Text>
             </BadgeMolecule>
           )}>
           {chartDatePicker === 0 ? (
@@ -116,104 +120,122 @@ export const ReviewChart: FC<IPropsReview> = ({
               setSelectedComponent={setSelectedComponent}
             />
           ) : null}
+          {chartDatePicker === 2 ? (
+            <FIlterByPeriod
+              setDatePicker={setChartDatePicker}
+              datePicker={chartDatePicker}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              setClose={setClose}
+              close={close}
+              selectedComponent={selectedComponent}
+              setSelectedComponent={setSelectedComponent}
+            />
+          ) : null}
         </Dropdown>
       </StyledReviewChatsHeader>
       <StyledChart>
-        <ResponsiveBar
-          data={dataReview}
-          keys={['Satisfactorio', 'Insatisfactorio']}
-          indexBy="day"
-          margin={{ top: 30, right: 130, bottom: 45, left: 60 }}
-          padding={0.3}
-          groupMode="grouped"
-          valueScale={{ type: 'linear' }}
-          indexScale={{ type: 'band', round: true }}
-          enableGridX
-          enableLabel={false}
-          colors={{ scheme: 'purpleRed_green' }}
-          defs={[
-            {
-              id: '1',
-              type: 'patternDots',
-              background: 'inherit',
-              color: '#38bcb2',
-              size: 4,
-              padding: 1,
-              stagger: true,
-            },
-            {
-              id: '2',
-              type: 'patternLines',
-              background: 'inherit',
-              color: '#eed312',
-              rotation: -45,
-              lineWidth: 6,
-              spacing: 10,
-            },
-          ]}
-          fill={[
-            {
-              match: {
-                id: 'fries',
+        {reviewChats.length < 1 ? (
+          <div>No hay datos</div>
+        ) : (
+          <ResponsiveBar
+            data={dataReview}
+            keys={['Satisfactorio', 'Insatisfactorio']}
+            indexBy="day"
+            margin={{ top: 30, right: 130, bottom: 45, left: 60 }}
+            padding={0.3}
+            groupMode="grouped"
+            valueScale={{ type: 'linear' }}
+            indexScale={{ type: 'band', round: true }}
+            enableGridX
+            enableLabel={false}
+            colors={{ scheme: 'purpleRed_green' }}
+            defs={[
+              {
+                id: '1',
+                type: 'patternDots',
+                background: 'inherit',
+                color: '#38bcb2',
+                size: 4,
+                padding: 1,
+                stagger: true,
               },
-              id: 'dots',
-            },
-            {
-              match: {
-                id: 'sandwich',
+              {
+                id: '2',
+                type: 'patternLines',
+                background: 'inherit',
+                color: '#eed312',
+                rotation: -45,
+                lineWidth: 6,
+                spacing: 10,
               },
-              id: 'lines',
-            },
-          ]}
-          borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '',
-            legendPosition: 'middle',
-            legendOffset: 32,
-          }}
-          axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '',
-            legendPosition: 'middle',
-            legendOffset: -40,
-          }}
-          labelSkipWidth={14}
-          labelSkipHeight={14}
-          labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-          legends={[
-            {
-              dataFrom: 'keys',
-              anchor: 'bottom-right',
-              direction: 'column',
-              justify: false,
-              translateX: 120,
-              translateY: 0,
-              itemsSpacing: 2,
-              itemWidth: 100,
-              itemHeight: 20,
-              itemDirection: 'left-to-right',
-              itemOpacity: 0.85,
-              symbolSize: 20,
-              effects: [
-                {
-                  on: 'hover',
-                  style: {
-                    itemOpacity: 1,
-                  },
+            ]}
+            fill={[
+              {
+                match: {
+                  id: 'fries',
                 },
-              ],
-            },
-          ]}
-          role="application"
-          ariaLabel="Nivo bar chart demo"
-        />
+                id: 'dots',
+              },
+              {
+                match: {
+                  id: 'sandwich',
+                },
+                id: 'lines',
+              },
+            ]}
+            borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: '',
+              legendPosition: 'middle',
+              legendOffset: 32,
+            }}
+            axisLeft={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: '',
+              legendPosition: 'middle',
+              legendOffset: -40,
+            }}
+            labelSkipWidth={14}
+            labelSkipHeight={14}
+            labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+            legends={[
+              {
+                dataFrom: 'keys',
+                anchor: 'bottom-right',
+                direction: 'column',
+                justify: false,
+                translateX: 120,
+                translateY: 0,
+                itemsSpacing: 2,
+                itemWidth: 100,
+                itemHeight: 20,
+                itemDirection: 'left-to-right',
+                itemOpacity: 0.85,
+                symbolSize: 20,
+                effects: [
+                  {
+                    on: 'hover',
+                    style: {
+                      itemOpacity: 1,
+                    },
+                  },
+                ],
+              },
+            ]}
+            role="application"
+            ariaLabel="Nivo bar chart demo"
+          />
+        )}
       </StyledChart>
     </StyledReviewChart>
   );
