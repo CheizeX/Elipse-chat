@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import React, { FC, useCallback, useEffect } from 'react';
 import { Text } from '../../../../atoms/Text/Text';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
@@ -72,9 +73,6 @@ export const ChatsViewSelectedToConfirm: FC<
   setEmojisDisplayed,
   showPredefinedTexts,
   setShowPredefinedTexts,
-  // setFindDialogueInChat,
-
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 }) => {
   const showAlert = useToastContext();
 
@@ -105,20 +103,28 @@ export const ChatsViewSelectedToConfirm: FC<
   const chatToTalkWithUserNumber = chatToTalkWithUser?.client.clientId;
 
   const handleSetUserToOnConversation = async () => {
-    try {
-      await baseRestApi.patch(
-        `/chats/initConversation/${chatToSetInConversationId}`,
-        {
-          accessToken,
-        },
-      );
-      setActiveByDefaultTab(1);
-      setUserSelected(userSelected as any);
-    } catch (error) {
+    if (chatsOnConversation?.length < userDataInState?.maxChatsOnConversation) {
+      try {
+        await baseRestApi.patch(
+          `/chats/initConversation/${chatToSetInConversationId}`,
+          {
+            accessToken,
+          },
+        );
+        setUserSelected(userSelected as any);
+        setActiveByDefaultTab(1);
+      } catch (error) {
+        showAlert?.addToast({
+          alert: Toast.ERROR,
+          title: 'ERROR',
+          message: `INIT-CONVERSATION-ERROR ${error}`,
+        });
+      }
+    } else {
       showAlert?.addToast({
         alert: Toast.ERROR,
-        title: 'ERROR',
-        message: `INIT-CONVERSATION-ERROR ${error}`,
+        title: 'Máximo de chats alcanzado',
+        message: `Solo puedes tener ${userDataInState?.maxChatsOnConversation} chats activos`,
       });
     }
   };
@@ -293,10 +299,6 @@ export const ChatsViewSelectedToConfirm: FC<
     setLiveChatPage(pages);
   };
 
-  // const handleSowEmojisButtton = () => {
-  //   setShowPredefinedTexts(false);
-  //   setEmojisDisplayed(!emojisDisplayed);
-  // };
   const handlePredefinedTexts = () => {
     setEmojisDisplayed(false);
     setShowPredefinedTexts(!showPredefinedTexts);
@@ -307,9 +309,6 @@ export const ChatsViewSelectedToConfirm: FC<
     setShowPredefinedTexts(false);
   };
 
-  // const handleFindDialogueInChat = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFindDialogueInChat(e.target.value);
-  // };
   useEffect(() => {}, [chatToTalkWithUser]);
 
   return (
@@ -364,12 +363,6 @@ export const ChatsViewSelectedToConfirm: FC<
           <span>
             {/* este span es para que no se rompa cuando le saco el buscar mensaje */}
             <span />
-            {/* <ContainerInput
-                placeHolder="Buscar mensaje..."
-                onChange={handleFindDialogueInChat}
-                setFocus={() => null}
-                LeftIcon={() => <SVGIcon iconFile="/icons/search-solid.svg" />}
-              /> */}
             <ButtonMolecule
               text="Pausar"
               onClick={() => handlePauseConversation('PauseChat')}
@@ -426,10 +419,6 @@ export const ChatsViewSelectedToConfirm: FC<
             text="Iniciar conversación"
             onClick={handleSetUserToOnConversation}
           />
-          {/* <EmojisContainer
-            setEmojisDisplayed={setEmojisDisplayed}
-            emojisDisplayed={emojisDisplayed}
-          /> */}
         </StyledFooterButtonsSelectedToConfirm>
       )}
 

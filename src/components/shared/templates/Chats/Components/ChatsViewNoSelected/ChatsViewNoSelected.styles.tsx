@@ -12,14 +12,20 @@ export const StyledChatsView = styled.div`
 `;
 
 export const StyledNotSelectedChats = styled.div`
-  height: 182px;
+  /* height: 182px; */
   text-align: center;
   width: 397px;
   display: flex;
   flex-direction: column;
   align-items: center;
   & > div {
-    height: 90px;
+    height: 100px;
+    width: 100%;
+    margin-bottom: 20px;
+    & svg {
+      width: 100px;
+      height: 130px;
+    }
   }
   & > span {
     font-size: ${({ theme }) => theme.fontSize[18]};

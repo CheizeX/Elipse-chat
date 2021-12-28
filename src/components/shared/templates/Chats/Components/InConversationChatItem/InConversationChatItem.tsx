@@ -136,12 +136,12 @@ export const InConversationChatItem: FC<
                 </StyledClientAndAgentAvatars>
                 <StyledNameAndDialog>
                   <Text>
-                    {chat.client.name.substr(0, 16) ||
-                      chat.client.clientId.substr(0, 16)}
+                    {chat.client.name.substring(0, 16) ||
+                      chat.client.clientId.substring(0, 16)}
                   </Text>
                   <Text>
                     {chat.messages &&
-                      chat.messages[chat.messages.length - 1].content.substr(
+                      chat.messages[chat.messages.length - 1].content.substring(
                         0,
                         14,
                       )}

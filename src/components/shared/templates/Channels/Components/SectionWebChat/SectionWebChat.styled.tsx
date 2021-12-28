@@ -122,8 +122,8 @@ export const StyledBodyWebChat = styled.div<IContainerWebChat>`
   & > :nth-child(2) {
     background-color: ${({ theme }) => theme.Colors.grays[9]};
     border-radius: 10px;
-    width: 19rem;
-    margin: 20px 34px;
+    width: 20rem;
+    margin: 20px auto;
     padding-top: 10px;
     & > div {
       & > span {

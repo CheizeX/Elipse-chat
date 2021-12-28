@@ -173,13 +173,16 @@ export const MonitorSection: FC = () => {
         (item === 3 ? UserStatus.BATHROOM : null),
     );
     const querParms = `${process.env.NEXT_PUBLIC_REST_API_URL}/users?agents=&status=${responseState}`;
+    // const queryStatusParams = responseState;
     try {
-      const response = await baseRestApi.get(querParms);
-      if (response.success === false) {
-        dispatch(setAgentsAvailable([]));
-      } else {
-        const dats = response.filter((elem: User) => elem.role === 'AGENT');
-        dispatch(setAgentsAvailable(dats));
+      if (responseState.length) {
+        const response = await baseRestApi.get(querParms);
+        if (response.success === false) {
+          dispatch(setAgentsAvailable([]));
+        } else {
+          const dats = response.filter((elem: User) => elem.role === 'AGENT');
+          dispatch(setAgentsAvailable(dats));
+        }
       }
     } catch (err) {
       showAlert?.addToast({

@@ -16,6 +16,7 @@ export const WrapperWebChat = styled.div<IPropsCustom>`
       );
     `}
 
+  box-shadow: 0px 0px 7px 0px #0000004a;
   border-radius: 10px;
   margin: auto;
   & > :nth-child(1) {
@@ -44,6 +45,47 @@ export const WrapperWebChat = styled.div<IPropsCustom>`
   & > :nth-child(2) {
     max-width: 264px;
   }
+  & > :nth-child(3) {
+    & > svg {
+      height: 1.5rem;
+      width: 100%;
+      position: relative;
+      bottom: 0;
+      left: 0;
+      //width: 100%;
+      // margin-bottom: -7px;
+      /* height: 1.8rem;
+      max-height: 150px; */
+      .parallax > use {
+        animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+      }
+      .parallax > use:nth-child(1) {
+        animation-delay: -2s;
+        animation-duration: 7s;
+      }
+      .parallax > use:nth-child(2) {
+        animation-delay: -3s;
+        animation-duration: 10s;
+      }
+      .parallax > use:nth-child(3) {
+        animation-delay: -4s;
+        animation-duration: 13s;
+      }
+      .parallax > use:nth-child(4) {
+        animation-delay: -5s;
+        animation-duration: 20s;
+      }
+
+      @keyframes move-forever {
+        0% {
+          transform: translate3d(-90px, 0, 0);
+        }
+        100% {
+          transform: translate3d(85px, 0, 0);
+        }
+      }
+    }
+  }
   & > span {
     color: ${({ theme }) => theme.Colors.grays[10]};
     font-weight: ${({ theme }) => theme.fontWeight[500]};
@@ -60,6 +102,7 @@ export const StyledHeaderCustomWebChat = styled.div`
   display: flex;
   margin: 0 10px;
   height: 40px;
+  margin-bottom: 6px;
   & > span {
     color: ${({ theme }) => theme.Colors.grays[1]};
     font-weight: ${({ theme }) => theme.fontWeight[600]};
@@ -116,10 +159,8 @@ export const StyledAvatar = styled.div`
 export const StyledBodyWebChat = styled.div<IPropsCustom>`
   width: 100%;
   margin: auto;
-  height: 14rem;
+  height: 15.6rem;
   margin-top: -10px;
-  border-start-end-radius: 3%;
-  border-start-start-radius: 3%;
   border-end-end-radius: 12%;
   border-end-start-radius: 2%;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
@@ -136,8 +177,8 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
             width: 1.8rem;
             height: 1.8rem;
             border-radius: 50%;
-            box-shadow: 0px 0px 2px 0px #0000004a;
-            border: 1px solid ${({ theme }) => theme.Colors.grays[10]};
+            box-shadow: ${({ primaryColor }) =>
+              `0 0.0625rem 0.125rem 0.0625rem ${primaryColor}`};
           }
         }
       }
@@ -151,6 +192,8 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
       width: fit-content;
       object-fit: cover;
       margin-right: -25px;
+      box-shadow: ${({ primaryColor }) =>
+        `0 0.0625rem 0.125rem 0.0625rem ${primaryColor}`};
     }
     & > :nth-child(2) {
       width: 180px;
@@ -207,7 +250,7 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
     }
   }
   & > :nth-child(3) {
-    height: 96px;
+    height: 122px;
     //padding-left: 4px;
     display: flex;
     align-items: end;
@@ -239,7 +282,7 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
       & > :nth-child(1){
         border-radius: 5px;
         transition: 0.5s ease all;
-    transform: rotate3d(0, 0, 1, -90deg);
+        transform: rotate3d(0, 0, 1, -90deg);
       }
       & > span {
         background-color: ${({ primaryColor }) => primaryColor};
@@ -255,7 +298,7 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
         height: 30px;
         min-width: 30px;
         margin: 0 10px;
-        padding: 3px;
+        padding: 4px;
       }
       & > :nth-child(3) {
         border-radius: 50%;

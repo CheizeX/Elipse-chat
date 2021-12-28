@@ -144,7 +144,7 @@ export const LoginView: FC<ViewLoginProps> = ({
                   </StyledHeader>
                   <Form>
                     <Text color="black" size="12px" weight="500">
-                      Correo electronico
+                      Correo electrónico
                     </Text>
                     <StyledFirstInput>
                       <Field

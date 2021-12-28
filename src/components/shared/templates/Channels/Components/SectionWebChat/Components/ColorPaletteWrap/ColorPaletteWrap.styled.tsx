@@ -5,7 +5,7 @@ export const StyledColorPaletteWrap = styled.div`
   width: 16.2rem;
   height: fit-content;
   margin: auto;
-  padding: 0.5rem 0.75rem 0 0.75rem;
+  padding: 14px 0;
   margin-top: 0.6rem;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   border-radius: 10px;
@@ -16,14 +16,18 @@ export const StyledColorPaletteWrap = styled.div`
     background-color: ${({ theme }) => theme.Colors.grays[10]};
     border-radius: 10px;
     width: 100%;
-    // margin: 6px 0 16px 4px;
-    // height: 10rem;
-    margin: 0.3rem 0 1rem 0.25rem;
-    min-height: 14rem;
-    & > button {
+    min-height: 15rem;
+    & > :nth-child(2) {
       display: flex;
-      justify-content: center;
-      margin: 2.25rem auto;
+      height: 40px;
+      justify-content: space-between;
+      margin: 0 16px;
+      & > button {
+        display: flex;
+        justify-content: center;
+        width: 100px;
+        // margin: 2.25rem auto;
+      }
     }
   }
 `;
@@ -43,7 +47,9 @@ export const StyledCustomColor = styled.div`
   & > :nth-child(2) {
     display: flex;
     justify-content: center;
+    max-height: 40px;
     align-items: center;
+    padding: 0 16px;
     & > span {
       color: ${({ theme }) => theme.Colors.grays[3]};
       font-weight: ${({ theme }) => theme.fontWeight[600]};
@@ -73,11 +79,15 @@ export const StyledCustomColor = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 0.8rem;
+    padding: 0 16px;
     & > button {
       width: 100px;
       margin-bottom: 1rem;
     }
   }
+`;
+export const StyledByColor = styled.div`
+  margin-bottom: 28px;
 `;
 
 export const StyledWrapperColor = styled.div<IPropsColorWrap>`
@@ -102,3 +112,5 @@ export const StyledWrapperColor = styled.div<IPropsColorWrap>`
       }
     `}
 `;
+
+export const StyledGradient = styled.div``;

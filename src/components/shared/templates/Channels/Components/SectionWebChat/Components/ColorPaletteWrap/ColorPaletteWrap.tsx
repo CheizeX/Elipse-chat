@@ -11,6 +11,7 @@ import {
   StyledWrapperColor,
   StyledTagColor,
   StyledCustomColor,
+  StyledByColor,
 } from './ColorPaletteWrap.styled';
 
 export const ColorPaletteWrap: FC<ICustomColor> = ({
@@ -21,13 +22,15 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
   setPrimaryColor,
   setCustomIsColor,
 }) => {
-  const [isOpenSectionColor, setIsSectionColor] = useState<boolean>(false);
+  // const [isOpenSectionColor, setIsSectionColor] = useState<boolean>(false);
+  const [isOpenSectionColors, setIsSectionColors] = useState<string>('byColor');
+  // byColor, customizeColor, gradient
 
   const ColorPaletteArrays = [
     {
       name: '0',
-      color: '#2a27da',
-      secondColor: '#00ccff',
+      color: '#6e28bf',
+      secondColor: ' #65edfa',
     },
     {
       name: '1',
@@ -56,8 +59,8 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
     },
     {
       name: '6',
-      color: '#6e28bf',
-      secondColor: ' #65edfa',
+      color: '#2a27da',
+      secondColor: '#00ccff',
     },
     {
       name: '7',
@@ -71,6 +74,31 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
     },
     {
       name: '9',
+      color: '#4facfe',
+      secondColor: '#00f2fe',
+    },
+    {
+      name: '10',
+      color: '#8a716d',
+      secondColor: '#e8b794',
+    },
+    {
+      name: '11',
+      color: '#3aa560',
+      secondColor: '#b7e66c',
+    },
+    {
+      name: '12',
+      color: '#ff9a9e',
+      secondColor: '#facbc4',
+    },
+    {
+      name: '13',
+      color: '#98033a',
+      secondColor: '#f74f28',
+    },
+    {
+      name: '14',
       color: customIsColor ? `${primaryColor}` : '#fff',
       secondColor: customIsColor ? `${primaryColor}` : '#fff',
     },
@@ -78,26 +106,32 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
   const handleSelectTagColor = (color1: string, color2: string, id: string) => {
     setPrimaryColor(color1);
     setSecundaryColor(color2);
-    if (id !== '9') {
+    if (id !== '14') {
       setCustomIsColor(false);
     }
   };
   const seletedColor = () => {
-    setIsSectionColor(!isOpenSectionColor);
-    setCustomIsColor(true);
+    setIsSectionColors('customizeColor');
     setPrimaryColor(primaryColor);
   };
+  const seletedGradient = () => {
+    // setIsSectionColors('gradient');
+  };
+  const hadleByColor = () => {
+    setCustomIsColor(true);
+    setIsSectionColors('byColor');
+  };
   const handleClickColor = () => {
-    setIsSectionColor(!isOpenSectionColor);
+    setIsSectionColors('byColor');
     setPrimaryColor(primaryColor);
   };
   return (
     <div>
       <Text>Selecciona un color</Text>
       <StyledColorPaletteWrap>
-        {!isOpenSectionColor ? (
+        {isOpenSectionColors === 'byColor' ? (
           <div>
-            <div>
+            <StyledByColor>
               {ColorPaletteArrays?.map((item) => (
                 <StyledWrapperColor
                   key={item.name}
@@ -122,11 +156,18 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
                   </StyledTagColor>
                 </StyledWrapperColor>
               ))}
+            </StyledByColor>
+            <div>
+              <ButtonMolecule
+                text="Color"
+                onClick={seletedColor}
+                variant={ButtonVariant.OUTLINED}
+              />
+              <ButtonMolecule text="Gradiente" onClick={seletedGradient} />
             </div>
-            <ButtonMolecule text="Personalizar" onClick={seletedColor} />
           </div>
         ) : null}
-        {isOpenSectionColor ? (
+        {isOpenSectionColors === 'customizeColor' ? (
           <StyledCustomColor color={primaryColor}>
             <HexColorPicker color={primaryColor} onChange={setPrimaryColor} />
             <div>
@@ -145,7 +186,7 @@ export const ColorPaletteWrap: FC<ICustomColor> = ({
                 variant={ButtonVariant.OUTLINED}
                 onClick={handleClickColor}
               />
-              <ButtonMolecule text="Confirmar" onClick={seletedColor} />
+              <ButtonMolecule text="Confirmar" onClick={hadleByColor} />
             </div>
           </StyledCustomColor>
         ) : null}

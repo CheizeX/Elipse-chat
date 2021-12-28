@@ -129,6 +129,9 @@ export const ReportsSection: FC = () => {
         url: queryParams,
         method: 'get',
         responseType: 'blob',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('AccessToken')}`,
+        },
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const a = document.createElement('a');

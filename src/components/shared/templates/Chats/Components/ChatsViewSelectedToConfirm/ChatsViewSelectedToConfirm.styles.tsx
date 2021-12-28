@@ -212,7 +212,7 @@ export const StyledFooterToChat = styled.div<
   align-items: center;
   justify-content: space-between;
   & > :first-child {
-    width: 100px;
+    width: 80px;
     height: 21px;
     display: flex;
     justify-content: space-between;
@@ -234,6 +234,7 @@ export const StyledFooterToChat = styled.div<
       }
     }
     & > :nth-child(4) {
+      margin-right: 17px;
       & * {
         ${({ emojisDisplayed }) =>
           emojisDisplayed &&
@@ -253,7 +254,7 @@ export const StyledFooterToChat = styled.div<
     }
   }
   & > :nth-child(2) {
-    margin: 0 8px;
+    margin-right: 8px;
     & button {
       display: none;
     }

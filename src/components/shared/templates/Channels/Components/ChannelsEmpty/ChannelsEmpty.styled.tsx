@@ -9,52 +9,62 @@ export const StyledChannelEmpty = styled.div`
   & > div {
     padding: 8.8rem;
     & > :first-child {
-      width: 9.8rem;
-      height: 7rem;
+      width: 12rem;
+      height: 10rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       margin: auto;
+      & > :nth-child(2) {
+        min-width: 84px;
+        min-height: 84px;
+        & > img {
+          max-width: 84px;
+          max-height: 84px;
+          transform: rotate(90deg);
+        }
+      }
+
       & > :first-child {
         display: flex;
         & > div {
-          width: 1.6rem;
-          height: 1.6rem;
+          width: 2.2rem;
+          height: 2.2rem;
         }
         & * {
           & > svg {
-            width: 1.6rem;
-            height: 1.6rem;
+            width: 2.2rem;
+            height: 2.2rem;
           }
         }
         & > :nth-child(1) {
           display: flex;
-          top: 62px;
-          right: 9px;
+          top: 78px;
+          right: 15px;
         }
         & > :nth-child(2) {
           display: flex;
-          top: 1.1rem;
-          right: 1.3rem;
+          top: 20px;
+          right: 30px;
         }
         & > :nth-child(3) {
           display: flex;
-          top: 0px;
+          top: -14px;
           right: 0px;
         }
         & > :nth-child(4) {
           display: flex;
-          top: 1.25rem;
-          left: 1.3rem;
+          top: 20px;
+          left: 30px;
         }
         & > :nth-child(5) {
           display: flex;
-          top: 3.8rem;
-          left: 0.5rem;
+          top: 78px;
+          left: 15px;
         }
       }
-      & > :nth-child(2) {
+      /* & > :nth-child(2) {
         & > div {
           width: 3.5rem;
           height: 3.5rem;
@@ -69,7 +79,7 @@ export const StyledChannelEmpty = styled.div`
             }
           }
         }
-      }
+      } */
     }
 
     & > :nth-child(2) {
