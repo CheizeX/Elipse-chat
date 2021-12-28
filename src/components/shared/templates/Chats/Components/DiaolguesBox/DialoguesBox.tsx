@@ -41,6 +41,8 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
     dialogueBoxRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [dialogueBoxRef]);
 
+  const tokenQueryParam = `?token=${accessToken}`;
+
   const handleOpenAttachments = (message: Message) => {
     window.open(
       `${
@@ -48,7 +50,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
       }/whatsapp360/file/${message.content.substring(
         10,
         message.content.length,
-      )}`,
+      )}${tokenQueryParam}`,
     );
   };
 
@@ -75,7 +77,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                   <div>
                     <Text>
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === ('png' || 'jpg') && (
@@ -96,9 +98,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                10,
+                                16,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                               width="100px"
                               height="100px"
                               alt="message.content"
@@ -117,10 +119,10 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                   <img
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }whatsapp360/file/${message.content.substring(
-                                      10,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      16,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                     width="100px"
                                     height="100px"
                                     alt="message.content"
@@ -153,9 +155,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                10,
+                                16,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                               width="100px"
                               height="100px"
                               alt="message.content"
@@ -175,9 +177,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      10,
+                                      16,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                     width="100px"
                                     height="100px"
                                     alt="message.content"
@@ -210,9 +212,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                10,
+                                16,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                               width="100px"
                               height="100px"
                               alt="message.content"
@@ -232,9 +234,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      10,
+                                      16,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                     width="100px"
                                     height="100px"
                                     alt="message.content"
@@ -262,9 +264,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                10,
+                                16,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                               width="100px"
                               height="100px"
                               style={{
@@ -273,9 +275,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               title={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                10,
+                                16,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                             />
                             {message._id === idModal ? (
                               <>
@@ -289,21 +291,20 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 </button>
                                 <article>
                                   <iframe
-                                    // use frame-ancestors to allow iframe access to parent window
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      10,
+                                      16,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                     width="100%"
                                     height="100%"
                                     title={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      10,
+                                      16,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                   />
                                 </article>
                               </>
@@ -327,7 +328,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                   <div>
                     <Text>
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'pdf' && (
@@ -343,9 +344,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                8,
+                                14,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                               width="100px"
                               height="100px"
                               style={{
@@ -354,9 +355,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               title={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                8,
+                                14,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                             />
                             {message._id === idModal ? (
                               <>
@@ -373,17 +374,17 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      8,
+                                      14,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                     width="100%"
                                     height="100%"
                                     title={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
-                                    }whatsapp360/file/${message.content.substring(
-                                      8,
+                                    }/whatsapp360/file/${message.content.substring(
+                                      14,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                   />
                                 </article>
                               </>
@@ -392,7 +393,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 3,
                           message.content.length,
                         ) === 'png' && (
@@ -408,9 +409,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                8,
+                                14,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                               width="100px"
                               height="100px"
                               alt="message.content"
@@ -430,9 +431,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      8,
+                                      14,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                     width="900px"
                                     height="500px"
                                     alt="message.content"
@@ -460,9 +461,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                8,
+                                14,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                               width="100px"
                               height="100px"
                               alt="message.content"
@@ -482,9 +483,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      8,
+                                      14,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                     width="900px"
                                     height="500px"
                                     alt="message.content"
@@ -496,7 +497,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         )}
 
                       {message.contentType === 'ATTACHMENT' &&
-                        message.content.substr(
+                        message.content.substring(
                           message.content.length - 4,
                           message.content.length,
                         ) === 'jpeg' && (
@@ -512,9 +513,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                8,
+                                14,
                                 message.content.length,
-                              )}`}
+                              )}${tokenQueryParam}`}
                               width="100px"
                               height="100px"
                               alt="message.content"
@@ -534,9 +535,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      8,
+                                      14,
                                       message.content.length,
-                                    )}`}
+                                    )}${tokenQueryParam}`}
                                     width="900px"
                                     height="500px"
                                     alt="message.content"
