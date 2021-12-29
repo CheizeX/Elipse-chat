@@ -98,7 +98,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                16,
+                                chat.channel !== 'Webchat' ? 16 : 14,
                                 message.content.length,
                               )}${tokenQueryParam}`}
                               width="100px"
@@ -120,7 +120,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      16,
+                                      chat.channel !== 'Webchat' ? 16 : 14,
                                       message.content.length,
                                     )}${tokenQueryParam}`}
                                     width="100px"
@@ -155,7 +155,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                16,
+                                chat.channel !== 'Webchat' ? 16 : 14,
                                 message.content.length,
                               )}${tokenQueryParam}`}
                               width="100px"
@@ -177,7 +177,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      16,
+                                      chat.channel !== 'Webchat' ? 16 : 14,
                                       message.content.length,
                                     )}${tokenQueryParam}`}
                                     width="100px"
@@ -212,7 +212,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                16,
+                                chat.channel !== 'Webchat' ? 16 : 14,
                                 message.content.length,
                               )}${tokenQueryParam}`}
                               width="100px"
@@ -234,7 +234,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      16,
+                                      chat.channel !== 'Webchat' ? 16 : 14,
                                       message.content.length,
                                     )}${tokenQueryParam}`}
                                     width="100px"
@@ -264,7 +264,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               src={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                16,
+                                chat.channel !== 'Webchat' ? 16 : 14,
                                 message.content.length,
                               )}${tokenQueryParam}`}
                               width="100px"
@@ -275,7 +275,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               title={`${
                                 process.env.NEXT_PUBLIC_REST_API_URL
                               }/whatsapp360/file/${message.content.substring(
-                                16,
+                                chat.channel !== 'Webchat' ? 16 : 14,
                                 message.content.length,
                               )}${tokenQueryParam}`}
                             />
@@ -294,7 +294,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     src={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      16,
+                                      chat.channel !== 'Webchat' ? 16 : 14,
                                       message.content.length,
                                     )}${tokenQueryParam}`}
                                     width="100%"
@@ -302,7 +302,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     title={`${
                                       process.env.NEXT_PUBLIC_REST_API_URL
                                     }/whatsapp360/file/${message.content.substring(
-                                      16,
+                                      chat.channel !== 'Webchat' ? 16 : 14,
                                       message.content.length,
                                     )}${tokenQueryParam}`}
                                   />

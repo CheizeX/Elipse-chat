@@ -174,8 +174,8 @@ export const UploadFiles: FC<
                           <span>
                             {file.file.name.length > 15 ? (
                               <Text>
-                                {file.file.name.substr(0, 10)}...
-                                {file.file.name.substr(
+                                {file.file.name.substring(0, 10)}...
+                                {file.file.name.substring(
                                   file.file.name.length - 4,
                                   file.file.name.length,
                                 )}
@@ -204,8 +204,8 @@ export const UploadFiles: FC<
                           <span>
                             {file.file.name.length > 15 ? (
                               <Text>
-                                {file.file.name.substr(0, 10)}...
-                                {file.file.name.substr(
+                                {file.file.name.substring(0, 10)}...
+                                {file.file.name.substring(
                                   file.file.name.length - 4,
                                   file.file.name.length,
                                 )}
