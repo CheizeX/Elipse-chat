@@ -10,7 +10,6 @@ import {
 } from './FilterByAgent.styled';
 import { IFilterAgent } from './FilterByAgent.interface';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
-// eslint-disable-next-line import/no-cycle
 
 export const FilterByAgent: FC<IFilterAgent> = ({
   onChange,

@@ -14,6 +14,7 @@ import {
   setOnConversationTodayChats,
   setTodayAllChats,
   getTodayChats,
+  getChatsByPeriod,
 } from '../../../../../../redux/slices/dashboard/dashboard-chats-filter';
 import { websocketContext } from '../../../../../../chat';
 import { Chat, ChatStatus } from '../../../../../../models/chat/chat';
@@ -67,6 +68,18 @@ const StyledDetails = styled.div`
   & div {
     z-index: 0;
   }
+  & > :nth-child(3) {
+    & > div {
+      & * {
+        & > svg {
+          & > path {
+            fill: ${({ theme }) => theme.Colors.grays[10]};
+            opacity: 0.3;
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const DashTotalChatsByState: FC = () => {
@@ -78,6 +91,7 @@ export const DashTotalChatsByState: FC = () => {
 
   const getNewChatEvent = React.useCallback(async () => {
     await socket?.on('newChatEvent', (data: Chat[]) => {
+      console.log(data);
       dispatch(
         setFinishedTodayChats(
           data.filter((chat: Chat) => chat.status === ChatStatus.FINISHED),
@@ -97,12 +111,14 @@ export const DashTotalChatsByState: FC = () => {
           ),
         ),
       );
+
       dispatch(setTodayAllChats(data));
+      dispatch(getChatsByPeriod('0/today'));
     });
   }, [socket]);
 
   React.useEffect(() => {
-    // dispatch(getChatsByPeriod(new Date().toISOString()));
+    dispatch(getChatsByPeriod('0/today'));
     dispatch(getTodayChats());
     getNewChatEvent();
   }, [dispatch, getNewChatEvent]);
@@ -165,13 +181,32 @@ export const DashTotalChatsByState: FC = () => {
               todayChats.length > 0
                 ? todayChats
                     ?.filter(
-                      (chat) => chat.status === ChatStatus.ON_CONVERSATION,
+                      (chat) =>
+                        chat.status === ChatStatus.ON_CONVERSATION &&
+                        chat.isPaused === false,
                     )
                     .length.toString()
                 : '0'
             }
             position="two"
             icon="/icons/en-conversacion.svg"
+          />
+          <ChatsStateCard
+            key="Chats en Pausa"
+            name="Chats en Pausa"
+            number={
+              todayChats.length > 0
+                ? todayChats
+                    ?.filter(
+                      (chat) =>
+                        chat.status === ChatStatus.ON_CONVERSATION &&
+                        chat.isPaused === true,
+                    )
+                    .length.toString()
+                : '0'
+            }
+            position="four"
+            icon="/icons/pause.svg"
           />
           <ChatsStateCard
             key="finished"

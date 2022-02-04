@@ -21,10 +21,11 @@ const StyledChatsStateCard = styled.div<StyledNumberAndTypeProps>`
   position: relative;
   background-color: ${({ position, theme }) =>
     mySelector(position === 'one', theme.Colors.orange[3], null) ||
-    mySelector(position === 'two', theme.Colors.green[1], null) ||
-    mySelector(position === 'three', theme.Colors.grays[6], null)};
+    mySelector(position === 'two', theme.Colors.blue[1], null) ||
+    mySelector(position === 'three', theme.Colors.grays[6], null) ||
+    mySelector(position === 'four', theme.Colors.green[1], null)};
   height: 90px;
-  min-width: 14rem;
+  min-width: 11.8rem;
   border-radius: 10px;
   display: flex;
   flex-direction: column;

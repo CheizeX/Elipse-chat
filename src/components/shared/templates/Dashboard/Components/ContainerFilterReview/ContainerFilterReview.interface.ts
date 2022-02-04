@@ -1,6 +1,7 @@
 export interface IContainerPropsReview {
-  setClose: React.Dispatch<React.SetStateAction<boolean>>;
-  close?: boolean;
   chartDatePicker: number;
+  setIsActive: React.Dispatch<React.SetStateAction<number>>;
+  isActive: number;
   setChartDatePicker: React.Dispatch<React.SetStateAction<number>>;
+  setIsComponentVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }

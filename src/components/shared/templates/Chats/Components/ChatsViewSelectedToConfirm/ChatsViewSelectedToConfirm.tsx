@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { Text } from '../../../../atoms/Text/Text';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { ButtonMolecule } from '../../../../atoms/Button/Button';
@@ -17,6 +18,7 @@ import {
   Emojis,
   PredefinidedTextsInterface,
   FindDialogueInChatInterface,
+  MessagesViewedOrNot,
 } from '../../ChatsSection/ChatsSection.interface';
 import { DialoguesBox } from '../DiaolguesBox/DialoguesBox';
 import {
@@ -45,6 +47,9 @@ import useLocalStorage from '../../../../../../hooks/use-local-storage';
 import { setChatsToSendId } from '../../../../../../redux/slices/live-chat/chat-selected-to-send-id';
 import { setChatToTransferById } from '../../../../../../redux/slices/live-chat/chat-selected-to-transfer-by-id';
 import { setChatToSetOnConversationInStateId } from '../../../../../../redux/slices/live-chat/chatset-on-conversation';
+import { RootState } from '../../../../../../redux';
+import { readHistoryChat } from '../../../../../../api/chat';
+import { setChatsHistory } from '../../../../../../redux/slices/live-chat/chat-history';
 
 export const ChatsViewSelectedToConfirm: FC<
   SelectedUserProps &
@@ -55,7 +60,8 @@ export const ChatsViewSelectedToConfirm: FC<
     DropZoneDisplayedProps &
     Emojis &
     PredefinidedTextsInterface &
-    FindDialogueInChatInterface
+    FindDialogueInChatInterface &
+    MessagesViewedOrNot
 > = ({
   userSelected,
   setUserSelected,
@@ -73,6 +79,8 @@ export const ChatsViewSelectedToConfirm: FC<
   setEmojisDisplayed,
   showPredefinedTexts,
   setShowPredefinedTexts,
+  // newMessagesInChat,
+  // setNewMessagesInChat,
 }) => {
   const showAlert = useToastContext();
 
@@ -85,6 +93,10 @@ export const ChatsViewSelectedToConfirm: FC<
   );
   const { chatsOnConversation } = useAppSelector(
     (state) => state.liveChat.chatsOnConversation,
+  );
+
+  const { hasHistory, seccionIsPending, idClient, idChannel } = useSelector(
+    (state: RootState) => state.liveChat.chatsHistoryState,
   );
 
   const [sendingMessage, setSendingMessage] = React.useState<boolean>(false);
@@ -102,31 +114,54 @@ export const ChatsViewSelectedToConfirm: FC<
   const chatToTalkWithUserId = chatToTalkWithUser?._id;
   const chatToTalkWithUserNumber = chatToTalkWithUser?.client.clientId;
 
-  const handleSetUserToOnConversation = async () => {
-    if (chatsOnConversation?.length < userDataInState?.maxChatsOnConversation) {
-      try {
-        await baseRestApi.patch(
-          `/chats/initConversation/${chatToSetInConversationId}`,
-          {
-            accessToken,
-          },
+  const setNewDialoguesLengthInLocalStorage = useCallback(() => {
+    if (!localStorage.getItem('newDialoguesLength')) {
+      localStorage.setItem('newDialoguesLength', JSON.stringify({}));
+    }
+    if (localStorage.getItem('newDialoguesLength')) {
+      const newDialoguesLength = JSON.parse(
+        localStorage.getItem('newDialoguesLength') || '{}',
+      );
+      if (!newDialoguesLength[`${userSelected}`]) {
+        // set an object with the userSelected as key and 0 as value
+        newDialoguesLength[`${userSelected}`] = '0';
+
+        localStorage.setItem(
+          'newDialoguesLength',
+          JSON.stringify({ ...newDialoguesLength }),
         );
-        setUserSelected(userSelected as any);
-        setActiveByDefaultTab(1);
-      } catch (error) {
-        showAlert?.addToast({
-          alert: Toast.ERROR,
-          title: 'ERROR',
-          message: `INIT-CONVERSATION-ERROR ${error}`,
-        });
       }
-    } else {
+    }
+  }, [userSelected]);
+
+  const handleSetUserToOnConversation = async () => {
+    // if (chatsOnConversation?.length < userDataInState?.maxChatsOnConversation) {
+    try {
+      await baseRestApi.patch(
+        `/chats/initConversation/${chatToSetInConversationId}`,
+        {
+          accessToken,
+        },
+      );
+      setUserSelected(`${userSelected}` as string);
+      setActiveByDefaultTab(1);
+      setNewDialoguesLengthInLocalStorage();
+    } catch (error) {
       showAlert?.addToast({
         alert: Toast.ERROR,
-        title: 'Máximo de chats alcanzado',
-        message: `Solo puedes tener ${userDataInState?.maxChatsOnConversation} chats activos`,
+        title: 'ERROR',
+        message: `INIT-CONVERSATION-ERROR ${error}`,
       });
     }
+
+    // }
+    // } else {
+    //   showAlert?.addToast({
+    //     alert: Toast.ERROR,
+    //     title: 'Máximo de chats alcanzado',
+    //     message: `Solo puedes tener ${userDataInState?.maxChatsOnConversation} chats activos`,
+    //   });
+    // }
   };
 
   const handleEnterToSendMessage = async (
@@ -287,6 +322,7 @@ export const ChatsViewSelectedToConfirm: FC<
     setLiveChatModal(true);
     setLiveChatPage('EndChat');
     dispatch(setChatsToSendId(chatToTalkWithUserId || ''));
+    // quitar el objeto que coincida con el userSelected de newMessagesInChat
     setUserSelected('');
   };
 
@@ -294,9 +330,23 @@ export const ChatsViewSelectedToConfirm: FC<
     setChatInputDialogue(e.target.value);
   };
 
-  const handleClickHistoryChat = (open: boolean, pages: string) => {
-    setLiveChatModal(open);
-    setLiveChatPage(pages);
+  const handleClickHistoryChat = async (open: boolean, pages: string) => {
+    try {
+      const data = await readHistoryChat(idChannel, idClient, 'chats');
+      if (data.success === false) {
+        dispatch(setChatsHistory([]));
+      } else {
+        dispatch(setChatsHistory(data));
+        setLiveChatModal(open);
+        setLiveChatPage(pages);
+      }
+    } catch (error) {
+      showAlert?.addToast({
+        alert: Toast.ERROR,
+        title: 'ERROR',
+        message: `Opps error de historial ${error}`,
+      });
+    }
   };
 
   const handlePredefinedTexts = () => {
@@ -309,7 +359,9 @@ export const ChatsViewSelectedToConfirm: FC<
     setShowPredefinedTexts(false);
   };
 
-  useEffect(() => {}, [chatToTalkWithUser]);
+  // useEffect(() => {
+  //   setNewDialoguesLengthInLocalStorage();
+  // }, [setNewDialoguesLengthInLocalStorage]);
 
   return (
     <StyledChatsViewSelectedToConfirm>
@@ -338,6 +390,10 @@ export const ChatsViewSelectedToConfirm: FC<
                 {chatsOnConversation?.find(
                   (chat) => chat.client.clientId === userSelected,
                 )?.client.name || userSelected}
+                {' - '}
+                {chatsOnConversation?.find(
+                  (chat) => chat.client.clientId === userSelected,
+                )?.client.clientId || userSelected}
               </Text>
             )}
             {chatsPendings?.find(
@@ -350,11 +406,13 @@ export const ChatsViewSelectedToConfirm: FC<
               </Text>
             )}
           </span>
-          <button
-            type="button"
-            onClick={() => handleClickHistoryChat(true, 'HistoryChat')}>
-            {/* <SVGIcon iconFile="/icons/list_icons.svg" /> */}
-          </button>
+          {hasHistory && !seccionIsPending ? (
+            <button
+              type="button"
+              onClick={() => handleClickHistoryChat(true, 'HistoryChat')}>
+              <SVGIcon iconFile="/icons/list_icons.svg" />
+            </button>
+          ) : null}
         </div>
         {chatsOnConversation?.find(
           (user) =>

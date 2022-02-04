@@ -10,6 +10,6 @@ export interface FilterChannel {
   setCheckedTags: React.Dispatch<React.SetStateAction<number[]>>;
   selectedChannels?: number[];
   setSelectedChannels?: React.Dispatch<React.SetStateAction<number[]>>;
-  handleCleanChannels?: (arg: any) => void;
+  handleCleanChannels?: (arg: string) => void;
   channel?: number[];
 }

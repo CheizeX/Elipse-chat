@@ -6,6 +6,7 @@ storiesOf('Ailalia/Templates/Chats/Components', module).add(
   () => {
     return (
       <InConversationChatItem
+        searchByName=""
         showOnlyPausedChats={false}
         setShowOnlyPausedChats={() => {}}
         setChatInputDialogue={() => {}}
@@ -13,6 +14,11 @@ storiesOf('Ailalia/Templates/Chats/Components', module).add(
         setSortedChats={() => null}
         setActiveByDefaultTab={() => null}
         setDropZoneDisplayed={() => null}
+        newMessagesInChat={{
+          key: '',
+          messageLength: 0,
+        }}
+        setNewMessagesInChat={() => null}
       />
     );
   },

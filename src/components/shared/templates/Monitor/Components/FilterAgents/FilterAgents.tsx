@@ -1,5 +1,4 @@
-import { FC, useState } from 'react';
-import { Dropdown } from '../../../../atoms/Dropdown/Dropdown';
+import { FC } from 'react';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
 import { Tabs } from '../../../../organisms/Tabs/Tabs';
@@ -17,6 +16,7 @@ import {
 } from './FilterAgents.styled';
 import { IFilterAgentsProps, IFilterContainer } from './FilterAgent.interface';
 import { FilterAgentsAvailable } from '../FilterByAgentsAvailable/FilterByAgentsAvailable';
+import useDisplayElementOrNot from '../../../../../../hooks/use-display-element-or-not';
 
 export const FilterAgents: FC<IFilterAgentsProps & IFilterContainer> = ({
   onChange,
@@ -29,84 +29,88 @@ export const FilterAgents: FC<IFilterAgentsProps & IFilterContainer> = ({
   handleClear,
   handleStateAgents,
 }) => {
-  const [filterOnClose, setFilterOnClose] = useState<boolean>(false);
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useDisplayElementOrNot(false);
 
   const handleOnReset = () => {
     const longByAgent = byAgentAvailable.length;
     const longState = stateByAgent.length;
     byAgentAvailable.splice(0, longByAgent);
     stateByAgent.splice(0, longState);
-    setFilterOnClose(true);
+    setIsComponentVisible(false);
     handleClear();
   };
   const handleClickAgent = () => {
-    setFilterOnClose(true);
+    setIsComponentVisible(false);
     handleStateAgents();
   };
   const handleClickState = () => {
-    setFilterOnClose(true);
+    setIsComponentVisible(false);
     handleChange();
   };
   return (
-    <Dropdown
-      onClick={() => setFilterOnClose(false)}
-      triggerElement={() => <SVGIcon iconFile="/icons/filter.svg" />}>
-      <StyledFilterAgents close={filterOnClose}>
-        <StyledFilterAgentsHeader>
-          <Text color="black"> Filtrar agentes por:</Text>
-          <button type="button" onClick={() => setFilterOnClose(true)}>
-            <SVGIcon iconFile="/icons/times.svg" />
-          </button>
-        </StyledFilterAgentsHeader>
-        <StyledFilterAgentsBody>
-          <Tabs largeTabs>
-            <div title="Estado">
-              <div>
-                <FilterAgentsState
-                  stateByAgent={stateByAgent}
-                  filterByState={filterByState}
-                />
+    <>
+      <button type="button" onClick={() => setIsComponentVisible(true)}>
+        <SVGIcon iconFile="/icons/filter.svg" />
+      </button>
+      {isComponentVisible && (
+        <StyledFilterAgents ref={ref}>
+          <StyledFilterAgentsHeader>
+            <Text color="black"> Filtrar agentes por:</Text>
+            <button type="button" onClick={() => setIsComponentVisible(false)}>
+              <SVGIcon iconFile="/icons/times.svg" />
+            </button>
+          </StyledFilterAgentsHeader>
+          <StyledFilterAgentsBody>
+            <Tabs largeTabs>
+              <div title="Estado">
+                <div>
+                  <FilterAgentsState
+                    stateByAgent={stateByAgent}
+                    filterByState={filterByState}
+                  />
+                </div>
+                <StyledFilterAgentsFooter>
+                  <ButtonMolecule
+                    text="Limpiar"
+                    size={Size.MEDIUM}
+                    variant={ButtonVariant.OUTLINED}
+                    onClick={handleOnReset}
+                  />
+                  <ButtonMolecule
+                    text="Filtrar"
+                    size={Size.MEDIUM}
+                    onClick={handleClickState}
+                  />
+                </StyledFilterAgentsFooter>
               </div>
-              <StyledFilterAgentsFooter>
-                <ButtonMolecule
-                  text="Limpiar"
-                  size={Size.MEDIUM}
-                  variant={ButtonVariant.OUTLINED}
-                  onClick={handleOnReset}
-                />
-                <ButtonMolecule
-                  text="Filtrar"
-                  size={Size.MEDIUM}
-                  onClick={handleClickState}
-                />
-              </StyledFilterAgentsFooter>
-            </div>
-            <div title="Agente">
-              <div>
-                <FilterAgentsAvailable
-                  onChange={onChange}
-                  dateAgent={dateAgent ?? []}
-                  handleFilterAgents={filterByAgents}
-                  byAgents={byAgentAvailable}
-                />
+              <div title="Agente">
+                <div>
+                  <FilterAgentsAvailable
+                    onChange={onChange}
+                    dateAgent={dateAgent ?? []}
+                    handleFilterAgents={filterByAgents}
+                    byAgents={byAgentAvailable}
+                  />
+                </div>
+                <StyledFilterAgentsFooter>
+                  <ButtonMolecule
+                    text="Limpiar"
+                    size={Size.MEDIUM}
+                    variant={ButtonVariant.OUTLINED}
+                    onClick={handleOnReset}
+                  />
+                  <ButtonMolecule
+                    text="Filtrar"
+                    size={Size.MEDIUM}
+                    onClick={handleClickAgent}
+                  />
+                </StyledFilterAgentsFooter>
               </div>
-              <StyledFilterAgentsFooter>
-                <ButtonMolecule
-                  text="Limpiar"
-                  size={Size.MEDIUM}
-                  variant={ButtonVariant.OUTLINED}
-                  onClick={handleOnReset}
-                />
-                <ButtonMolecule
-                  text="Filtrar"
-                  size={Size.MEDIUM}
-                  onClick={handleClickAgent}
-                />
-              </StyledFilterAgentsFooter>
-            </div>
-          </Tabs>
-        </StyledFilterAgentsBody>
-      </StyledFilterAgents>
-    </Dropdown>
+            </Tabs>
+          </StyledFilterAgentsBody>
+        </StyledFilterAgents>
+      )}
+    </>
   );
 };

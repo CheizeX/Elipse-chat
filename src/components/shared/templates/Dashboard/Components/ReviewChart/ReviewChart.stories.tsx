@@ -19,8 +19,6 @@ storiesOf('Ailalia/Organisms/Dashboard/ReviewChart', module).add(
         endDate={null}
         setStartDate={() => null}
         setEndDate={() => null}
-        setClose={() => null}
-        close={false}
       />
     );
   },

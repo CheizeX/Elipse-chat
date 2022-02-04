@@ -4,8 +4,10 @@ export interface IPropsFilterReviewButton {
 }
 export interface IPropsComponent {
   chartDatePicker: number;
+  setIsActive: React.Dispatch<React.SetStateAction<number>>;
+  isActive: number;
   setChartDatePicker: React.Dispatch<React.SetStateAction<number>>;
-  setClose: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsComponentVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export enum DatePicker {
   CURRENT_WEEK = 'currentWeek',

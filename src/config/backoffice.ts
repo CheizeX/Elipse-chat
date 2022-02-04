@@ -43,10 +43,10 @@ export const adminSection: BackofficeSection[] = [
     name: 'Canales',
     icon: '/icons/sidebar_chats.svg',
   },
-  // {
-  //   name: 'Configuración',
-  //   icon: '/icons/sidebar_disponibilidad.svg',
-  // },
+  {
+    name: 'Configuración',
+    icon: '/icons/sidebar_configuracion.svg',
+  },
   {
     name: 'Suscripciones',
     icon: '/icons/subscription.svg',

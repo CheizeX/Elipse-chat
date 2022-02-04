@@ -24,12 +24,23 @@ export const ChatsStateGraph: FC<ChatsStateGraphProps> = () => {
       : null;
   const onConversation =
     todayChats.length > 0
-      ? todayChats.filter((chat) => chat.status === ChatStatus.ON_CONVERSATION)
-          .length
+      ? todayChats.filter(
+          (chat) =>
+            chat.status === ChatStatus.ON_CONVERSATION &&
+            chat.isPaused === false,
+        ).length
       : null;
   const finished =
     todayChats.length > 0
       ? todayChats.filter((chat) => chat.status === ChatStatus.FINISHED).length
+      : null;
+  const onPause =
+    todayChats.length > 0
+      ? todayChats.filter(
+          (chat) =>
+            chat.status === ChatStatus.ON_CONVERSATION &&
+            chat.isPaused === true,
+        ).length
       : null;
 
   const data = [
@@ -48,6 +59,15 @@ export const ChatsStateGraph: FC<ChatsStateGraphProps> = () => {
         onConversation !== null
           ? ((onConversation / sumValues) * 100).toFixed()
           : 0
+      }%`,
+      // label: `${((onConversation / 14) * 100).toFixed()}%`,
+      color: '#3AA4FF',
+    },
+    {
+      id: 'Chat en Pausa',
+      value: onPause,
+      label: `${
+        onPause !== null ? ((onPause / sumValues) * 100).toFixed() : 0
       }%`,
       // label: `${((onConversation / 14) * 100).toFixed()}%`,
       color: '#24C3A7',

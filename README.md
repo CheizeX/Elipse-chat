@@ -7,7 +7,7 @@
 #### 1. Clone this repo
 
 ```
-$ git clone https://bitbucket.org/innovit_spa/ailalia_frontend
+$ git clone https://bitbucket.org/innovit_spa/elipsechat_frontend.git
 $ cd your-app-name
 ```
 

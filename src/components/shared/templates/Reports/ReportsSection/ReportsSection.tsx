@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { IType } from '../Components/LeftPanelReports/LeftPanel.interface';
 import { LeftPanelReports } from '../Components/LeftPanelReports/LeftPanelReports';
@@ -66,7 +66,7 @@ export const ReportsSection: FC = () => {
     setFilterAsignation(newCheckedAsignation);
   };
 
-  const getInfoAgents = async () => {
+  const getInfoAgents = useCallback(async () => {
     try {
       const data = await readingUsers(UserStatus.ALL);
       if (data.success === false) {
@@ -75,7 +75,6 @@ export const ReportsSection: FC = () => {
         const agentAsignation = data?.filter(
           (item: User) => item.role === UserRole.AGENT,
         );
-
         dispatch(setDataAgents(agentAsignation));
       }
     } catch (err) {
@@ -85,7 +84,7 @@ export const ReportsSection: FC = () => {
         message: `${err}`,
       });
     }
-  };
+  }, [dispatch, showAlert]);
 
   const responseChannels = filterChannel.map(
     (item) =>
@@ -158,7 +157,7 @@ export const ReportsSection: FC = () => {
   };
   useEffect(() => {
     getInfoAgents();
-  });
+  }, [getInfoAgents]);
   return (
     <StyledWrapperReports>
       <LeftPanelReports

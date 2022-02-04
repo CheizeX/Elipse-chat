@@ -54,7 +54,13 @@ const Template: Story = (args) => {
               </div>
             </>
           )}
-          {second && <div style={{ height: '360px', width: '460px' }} />}
+          {second && (
+            <div style={{ height: '360px', width: '460px' }}>
+              <button type="button" onClick={() => setSecond(false)}>
+                x
+              </button>
+            </div>
+          )}
         </DropdownContainer>
       </Dropdown>
     </>

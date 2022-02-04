@@ -37,7 +37,7 @@ export const StyledSearchByState = styled.div<IFilterStateProps>`
         theme.Colors.orange[3],
         null,
       ) ||
-      mySelector(position === 'ON_CONVERSATION', theme.Colors.green[1], null) ||
+      mySelector(position === 'ON_CONVERSATION', theme.Colors.blue[1], null) ||
       mySelector(position === 'FINISHED', theme.Colors.grays[6], null)};
     & > span {
       color: ${({ theme }) => theme.Colors.grays[10]};

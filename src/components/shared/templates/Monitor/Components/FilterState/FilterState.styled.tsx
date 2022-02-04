@@ -34,7 +34,7 @@ export const StyledFilterState = styled.div<IFilterStateProps>`
             fill: ${({ position, theme }) =>
               mySelector(position === 'one', theme.Colors.orange[3], null) ||
               mySelector(position === 'two', theme.Colors.blue[1], null) ||
-              mySelector(position === 'three', theme.Colors.green[1], null) ||
+              mySelector(position === 'three', theme.Colors.blue[1], null) ||
               mySelector(position === 'four', theme.Colors.grays[6], null)};
           }
         }

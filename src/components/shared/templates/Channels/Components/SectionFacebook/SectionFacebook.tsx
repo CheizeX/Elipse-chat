@@ -52,6 +52,7 @@ export const SectionFacebookComponent: FC<ISectionFacebook> = ({
   const showAlert = useToastContext();
   const [datosAuth, setDatosAuth] = useState<IConfirmAuthFacebook>();
   const [selectedComponent, setSelectedComponent] = useState<number>(1);
+  const [isActiveCheckbox, setIsActiveCheckbox] = useState<number>(-1);
   const firebaseConfig = {
     apiKey: 'AIzaSyCo-2GSdU6J7KnCRiVCWBhRw3VMtgvFGWg',
     authDomain: 'social-auth-385e3.firebaseapp.com',
@@ -72,6 +73,9 @@ export const SectionFacebookComponent: FC<ISectionFacebook> = ({
     const provider = new FacebookAuthProvider();
     provider.addScope('pages_messaging');
     provider.addScope('pages_show_list');
+    // provider.addScope('pages_read_engagement');
+    // provider.addScope('Page Public Content Access');
+    // provider.addScope('Page Public Metadata Access');
     const auth = getAuth();
     try {
       const result = await signInWithPopup(auth, provider);
@@ -101,7 +105,6 @@ export const SectionFacebookComponent: FC<ISectionFacebook> = ({
         setIsSectionWebChat(false);
         const result = await sendAuthFacebook(datosAuth);
         setConfirmationAccounth(true);
-        // console.log(result);
         showAlert?.addToast({
           alert: Toast.SUCCESS,
           title: 'Perfecto!',
@@ -151,6 +154,8 @@ export const SectionFacebookComponent: FC<ISectionFacebook> = ({
             <FacebookAccountSelector
               setSelectedComponent={setSelectedComponent}
               setDatosAuth={setDatosAuth}
+              setIsActiveCheckbox={setIsActiveCheckbox}
+              isActiveCheckbox={isActiveCheckbox}
             />
           ) : null}
         </div>

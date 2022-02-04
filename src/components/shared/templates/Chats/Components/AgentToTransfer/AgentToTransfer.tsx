@@ -11,11 +11,11 @@ import { ContainerWithOutTags } from '../../../../molecules/ContainerWithOutTags
 
 export const AgentToTransfer: FC<IAgentToTransferProps> = ({
   name,
-  time,
-  change,
-  minuts,
+  isPause,
+  isTransfer,
+  isAverages,
   tag,
-  message,
+  isConversation,
 }) => {
   return (
     <>
@@ -26,24 +26,24 @@ export const AgentToTransfer: FC<IAgentToTransferProps> = ({
       <StyledBadgeChatTransfer>
         <BadgeMolecule
           bgColor="#3AA4FF"
-          rightIcon={() => <SVGIcon iconFile="/icons/small_icon_watch.svg" />}>
-          <Text>{message}</Text>
+          rightIcon={() => <SVGIcon iconFile="/icons/small_message.svg" />}>
+          <Text>{isConversation}</Text>
         </BadgeMolecule>
         <BadgeMolecule
           bgColor="#24C3A7"
-          rightIcon={() => <SVGIcon iconFile="/icons/small_message.svg" />}>
-          <Text>{time}</Text>
+          rightIcon={() => <SVGIcon iconFile="/icons/pause.svg" />}>
+          <Text>{isPause}</Text>
         </BadgeMolecule>
         <BadgeMolecule
           bgColor="#B2B2B2"
           rightIcon={() => <SVGIcon iconFile="/icons/exchange_alt.svg" />}>
-          <Text>{change}</Text>
+          <Text>{isTransfer}</Text>
         </BadgeMolecule>
       </StyledBadgeChatTransfer>
       <BadgeMolecule
         bgColor="#8769FF"
         leftIcon={() => <SVGIcon iconFile="/icons/icon_watch.svg" />}>
-        <Text>{minuts}</Text>
+        <Text>{isAverages} min.</Text>
       </BadgeMolecule>
       <Text>Etiquetas</Text>
       <div>
@@ -52,6 +52,7 @@ export const AgentToTransfer: FC<IAgentToTransferProps> = ({
         ) : (
           tag?.map((element, index) => (
             <StyledContainerTagAgents
+              isAverages={isAverages}
               key={index.toString()}
               color={element.color}>
               {element.name}

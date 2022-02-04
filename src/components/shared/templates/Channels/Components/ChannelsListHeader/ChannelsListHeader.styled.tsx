@@ -9,5 +9,7 @@ export const StyledChannelSectionHeader = styled.div`
   padding: 0 1.4rem 0 1.3rem;
   & > span {
     color: ${({ theme }) => theme.Colors.grays[1]};
+    align-items: center;
+    display: flex;
   }
 `;

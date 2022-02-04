@@ -1,17 +1,20 @@
-import styled, { css } from 'styled-components';
-import { IFilterInteractionsProps } from './FilterInteractions.interface';
+import styled from 'styled-components';
 
-export const StyledFilterInteraction = styled.div<IFilterInteractionsProps>`
+export const WrapperFilterInteractions = styled.div`
+  position: relative;
+  width: 36px;
+  top: 8px;
+`;
+export const StyledFilterInteraction = styled.div`
+  position: absolute;
+  right: 15px;
+  top: 36px;
+  z-index: 2;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   width: 343px;
   height: fit-content;
   border-radius: 10px;
   box-shadow: 0px 0px 7px 0px #0000004a;
-  ${({ close }) =>
-    close &&
-    css<IFilterInteractionsProps>`
-      display: none;
-    `}
 `;
 export const StyledFilterInteractionHeader = styled.div`
   width: 340px;

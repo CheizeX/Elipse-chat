@@ -20,6 +20,7 @@ import useLocalStorage from '../../../../hooks/use-local-storage';
 import { Loader } from '../../atoms/Loader/Loader';
 import { ChannelsSection } from '../../templates/Channels/ChannelsSection/ChannelsSection';
 import { SubscriptionSection } from '../../templates/SubscriptionPlans/SubscriptionSection/SubscriptionSection';
+import { ConfigurationSection } from '../../templates/Configuration/ConfigurationSection/ConfigurationSection';
 
 const StyledContainer = styled.main`
   display: flex;
@@ -42,7 +43,6 @@ export const BackofficeLayout: FC<
 > = ({
   myAccount,
   setMyAccount,
-  setClose,
   setDatePicker,
   setStartDate,
   setEndDate,
@@ -96,7 +96,6 @@ export const BackofficeLayout: FC<
             />
             {selectedSection === 'Dashboard' && (
               <DashboardSection
-                setClose={setClose}
                 setDatePicker={setDatePicker}
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
@@ -109,6 +108,7 @@ export const BackofficeLayout: FC<
             {selectedSection === 'Reportes' && <ReportsSection />}
             {selectedSection === 'Canales' && <ChannelsSection />}
             {selectedSection === 'Suscripciones' && <SubscriptionSection />}
+            {selectedSection === 'Configuración' && <ConfigurationSection />}
           </BackofficeSection>
         </StyledContainer>
       ) : (

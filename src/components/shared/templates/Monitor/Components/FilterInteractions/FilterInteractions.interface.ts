@@ -1,8 +1,5 @@
 import { User } from '../../../../../../models/users/user';
 
-export interface IFilterInteractionsProps {
-  close: boolean;
-}
 export interface IFilterStatus {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   dateAgent?: User[];

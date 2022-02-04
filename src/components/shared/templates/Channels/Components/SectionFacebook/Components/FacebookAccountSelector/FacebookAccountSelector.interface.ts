@@ -9,4 +9,6 @@ export interface IPropsAuthFacebook {
     React.SetStateAction<IConfirmAuthFacebook | undefined>
   >;
   setSelectedComponent: React.Dispatch<React.SetStateAction<number>>;
+  isActiveCheckbox: number;
+  setIsActiveCheckbox: React.Dispatch<React.SetStateAction<number>>;
 }

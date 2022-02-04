@@ -33,6 +33,9 @@ import monitorCountAgentsAvailableState from './slices/monitor/count-agent';
 import chatToSetOnConversationIdToState from './slices/live-chat/chatset-on-conversation';
 import chatContainerAuthFacebookState from './slices/channels/auth-facebook';
 import chatIntegrationQRState from './slices/channels/integration-with-qr';
+import listChannelState from './slices/channels/list-channel';
+import chatsHistoryState from './slices/live-chat/chat-history';
+import chatsTodayTransferState from './slices/live-chat/chat-transfer';
 
 const liveChat = combineReducers({
   chatsPendings,
@@ -41,6 +44,8 @@ const liveChat = combineReducers({
   chatSelectedToTransferById,
   userSelectedToTransferById,
   chatToSetOnConversationIdToState,
+  chatsHistoryState,
+  chatsTodayTransferState,
 });
 
 const users = combineReducers({
@@ -83,6 +88,7 @@ const review = combineReducers({
 const channel = combineReducers({
   chatContainerAuthFacebookState,
   chatIntegrationQRState,
+  listChannelState,
 });
 
 export const store = configureStore({

@@ -21,6 +21,9 @@ import {
   DropZoneDisplayedProps,
   ChatInputDialogueProps,
   ShowOnlyPaused,
+  MessagesViewedOrNot,
+  IPropsSearchByName,
+  IPropsStringName,
 } from '../../ChatsSection/ChatsSection.interface';
 import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import {
@@ -36,7 +39,10 @@ export const ChatsList: FC<
     ChatInputDialogueProps &
     FilterChannelsProps &
     FilterChannel &
-    ShowOnlyPaused
+    ShowOnlyPaused &
+    MessagesViewedOrNot &
+    IPropsSearchByName &
+    IPropsStringName
 > = ({
   setUserSelected,
   userSelected,
@@ -52,6 +58,10 @@ export const ChatsList: FC<
   setCheckedTags,
   setShowOnlyPausedChats,
   showOnlyPausedChats,
+  setNewMessagesInChat,
+  newMessagesInChat,
+  onChangeSearchName,
+  searchByName,
 }) => {
   const { chatsOnConversation } = useAppSelector(
     (state) => state.liveChat.chatsOnConversation,
@@ -82,6 +92,7 @@ export const ChatsList: FC<
                 isPendings
                 setSortedChats={setSortedChats}
                 sortedChats={sortedChats || false}
+                onChangeSearchName={onChangeSearchName}
               />
               <PendingsChatItem
                 chatsPendings={chatsPendings}
@@ -90,6 +101,8 @@ export const ChatsList: FC<
                 setSortedChats={setSortedChats}
                 sortedChats={sortedChats || false}
                 setActiveByDefaultTab={setActiveByDefaultTab}
+                // string del input de busqueda.
+                searchByName={searchByName}
               />
             </StyledPendingsRender>
           </StyledPendings>
@@ -104,6 +117,8 @@ export const ChatsList: FC<
                 channel={channel}
                 setSortedChats={setSortedChats}
                 sortedChats={sortedChats || false}
+                // funcion para setear el string que realiza la busqueda por (telefono, email y name).
+                onChangeSearchName={onChangeSearchName}
               />
               <InConversationChatItem
                 showOnlyPausedChats={showOnlyPausedChats}
@@ -115,6 +130,9 @@ export const ChatsList: FC<
                 setActiveByDefaultTab={setActiveByDefaultTab}
                 setDropZoneDisplayed={setDropZoneDisplayed}
                 setChatInputDialogue={setChatInputDialogue}
+                newMessagesInChat={newMessagesInChat}
+                setNewMessagesInChat={setNewMessagesInChat}
+                searchByName={searchByName}
               />
             </StyledInConversationRender>
           </StyledInConversation>
@@ -134,6 +152,7 @@ export const ChatsList: FC<
                 isPendings
                 setSortedChats={setSortedChats}
                 sortedChats={sortedChats || false}
+                onChangeSearchName={onChangeSearchName}
               />
               <PendingsChatItem
                 chatsPendings={chatsPendings}
@@ -142,6 +161,7 @@ export const ChatsList: FC<
                 setSortedChats={setSortedChats}
                 sortedChats={sortedChats || false}
                 setActiveByDefaultTab={setActiveByDefaultTab}
+                searchByName={searchByName}
               />
             </StyledPendingsRender>
           </StyledPendings>
@@ -156,6 +176,7 @@ export const ChatsList: FC<
                 channel={channel}
                 setSortedChats={setSortedChats}
                 sortedChats={sortedChats || false}
+                onChangeSearchName={onChangeSearchName}
               />
               <InConversationChatItem
                 showOnlyPausedChats={showOnlyPausedChats}
@@ -167,6 +188,9 @@ export const ChatsList: FC<
                 setActiveByDefaultTab={setActiveByDefaultTab}
                 setDropZoneDisplayed={setDropZoneDisplayed}
                 setChatInputDialogue={setChatInputDialogue}
+                newMessagesInChat={newMessagesInChat}
+                setNewMessagesInChat={setNewMessagesInChat}
+                searchByName={searchByName}
               />
             </StyledInConversationRender>
           </StyledInConversation>

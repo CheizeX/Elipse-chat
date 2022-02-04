@@ -1,6 +1,4 @@
-/* eslint-disable import/no-cycle */
-import { FC, useState } from 'react';
-import { Dropdown } from '../../../../atoms/Dropdown/Dropdown';
+import { FC } from 'react';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
 import { Tabs } from '../../../../organisms/Tabs/Tabs';
@@ -12,6 +10,7 @@ import {
 import { FilterState } from '../FilterState/FilterState';
 import { FilterByAgent } from '../FilterByAgent/FilterByAgent';
 import {
+  WrapperFilterInteractions,
   StyledFilterInteraction,
   StyledFilterInteractionHeader,
   StyledFilterInteractionBody,
@@ -19,6 +18,7 @@ import {
 } from './FilterInteraction.styled';
 import { FilterChannels } from '../FilterChannels/FilterChannels';
 import { IFilterStatus } from './FilterInteractions.interface';
+import useDisplayElementOrNot from '../../../../../../hooks/use-display-element-or-not';
 
 export const FilterInteractions: FC<IFilterStatus> = ({
   onChange,
@@ -32,7 +32,8 @@ export const FilterInteractions: FC<IFilterStatus> = ({
   onHandleToggle,
   resetHandle,
 }) => {
-  const [filterClose, setFilterClose] = useState<boolean>(false);
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useDisplayElementOrNot(false);
 
   const handleReset = () => {
     const longStatus = statusAgent.length;
@@ -41,63 +42,66 @@ export const FilterInteractions: FC<IFilterStatus> = ({
     statusAgent?.splice(0, longStatus);
     IDAgents?.splice(0, longAgents);
     byChannels?.splice(0, longChannels);
-    setFilterClose(true);
+    setIsComponentVisible(false);
     resetHandle();
   };
   const handleToggle = () => {
-    setFilterClose(true);
+    setIsComponentVisible(false);
     onHandleToggle();
   };
 
   return (
-    <Dropdown
-      onClick={() => setFilterClose(false)}
-      triggerElement={() => <SVGIcon iconFile="/icons/filter.svg" />}>
-      <StyledFilterInteraction onChange={onChange} close={filterClose}>
-        <StyledFilterInteractionHeader>
-          <Text color="black"> Filtrar Interacciones por:</Text>
-          <button type="button" onClick={() => setFilterClose(true)}>
-            <SVGIcon iconFile="/icons/times.svg" />
-          </button>
-        </StyledFilterInteractionHeader>
-        <StyledFilterInteractionBody>
-          <Tabs>
-            <div title="Estado">
-              <FilterState
-                statusAgent={statusAgent}
-                handleFilterStatus={filterStatus}
-              />
-            </div>
-            <div title="Agente">
-              <FilterByAgent
-                onChange={onChange}
-                dateAgent={dateAgent ?? []}
-                handleFilterAgents={filterAgents}
-                byAgents={IDAgents}
-              />
-            </div>
-            <div title="Canal">
-              <FilterChannels
-                handleFilterChannels={filterChannels}
-                channel={byChannels}
-              />
-            </div>
-          </Tabs>
-        </StyledFilterInteractionBody>
-        <StyledFilterInteractionFooter>
-          <ButtonMolecule
-            text="Limpiar"
-            size={Size.MEDIUM}
-            variant={ButtonVariant.OUTLINED}
-            onClick={handleReset}
-          />
-          <ButtonMolecule
-            text="Filtrar"
-            size={Size.MEDIUM}
-            onClick={handleToggle}
-          />
-        </StyledFilterInteractionFooter>
-      </StyledFilterInteraction>
-    </Dropdown>
+    <WrapperFilterInteractions>
+      <button type="button" onClick={() => setIsComponentVisible(true)}>
+        <SVGIcon iconFile="/icons/filter.svg" />
+      </button>
+      {isComponentVisible && (
+        <StyledFilterInteraction ref={ref} onChange={onChange}>
+          <StyledFilterInteractionHeader>
+            <Text color="black"> Filtrar Interacciones por:</Text>
+            <button type="button" onClick={() => setIsComponentVisible(false)}>
+              <SVGIcon iconFile="/icons/times.svg" />
+            </button>
+          </StyledFilterInteractionHeader>
+          <StyledFilterInteractionBody>
+            <Tabs>
+              <div title="Estado">
+                <FilterState
+                  statusAgent={statusAgent}
+                  handleFilterStatus={filterStatus}
+                />
+              </div>
+              <div title="Agente">
+                <FilterByAgent
+                  onChange={onChange}
+                  dateAgent={dateAgent ?? []}
+                  handleFilterAgents={filterAgents}
+                  byAgents={IDAgents}
+                />
+              </div>
+              <div title="Canal">
+                <FilterChannels
+                  handleFilterChannels={filterChannels}
+                  channel={byChannels}
+                />
+              </div>
+            </Tabs>
+          </StyledFilterInteractionBody>
+          <StyledFilterInteractionFooter>
+            <ButtonMolecule
+              text="Limpiar"
+              size={Size.MEDIUM}
+              variant={ButtonVariant.OUTLINED}
+              onClick={handleReset}
+            />
+            <ButtonMolecule
+              text="Filtrar"
+              size={Size.MEDIUM}
+              onClick={handleToggle}
+            />
+          </StyledFilterInteractionFooter>
+        </StyledFilterInteraction>
+      )}
+    </WrapperFilterInteractions>
   );
 };

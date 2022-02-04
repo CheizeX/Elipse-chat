@@ -1,4 +1,5 @@
-import { FC, useState } from 'react';
+import { FC, useState, useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { ChannelsListHeader } from '../Components/ChannelsListHeader/ChannelsListHeader';
 import { StyledChannelSection } from './ChannelsSection.styled';
 import { ChannelsEmpty } from '../Components/ChannelsEmpty/ChannelsEmpty';
@@ -9,6 +10,14 @@ import { SectionWhatsAppComponent } from '../Components/SectionWhatsapp/SectionW
 import { SectionFacebookComponent } from '../Components/SectionFacebook/SectionFacebook';
 import { ConfirmationAuth } from '../Components/SectionFacebook/Components/ConfirmationAuth/ConfirmationAuth';
 import { SectionComponentInstagram } from '../Components/SectionInstagram/SectionInstagram';
+import { ChannelList } from '../Components/ChannelList/ChannelList';
+import { getAllChannel } from '../../../../../api/channels';
+import { useToastContext } from '../../../molecules/Toast/useToast';
+import { Toast } from '../../../molecules/Toast/Toast.interface';
+import { useAppDispatch } from '../../../../../redux/hook/hooks';
+import { setlistChannel } from '../../../../../redux/slices/channels/list-channel';
+import { RootState } from '../../../../../redux';
+import { DeleteChannel } from '../Components/DeleteChannel/DeleteChannel';
 
 export const ChannelsSection: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -16,6 +25,33 @@ export const ChannelsSection: FC = () => {
   const [seletedComponent, setSeletedComponent] = useState<string>('');
   const [confirmationAccount, setConfirmationAccounth] =
     useState<boolean>(false);
+
+  const showAlert = useToastContext();
+  const { listChannel } = useSelector(
+    (state: RootState) => state.channel.listChannelState,
+  );
+  const dispatch = useAppDispatch();
+
+  const getChannelList = useCallback(async () => {
+    try {
+      const response = await getAllChannel();
+      if (response.success === false) {
+        // dispatch(setlistChannel();
+      } else {
+        dispatch(setlistChannel(response));
+      }
+    } catch (err) {
+      showAlert?.addToast({
+        alert: Toast.ERROR,
+        title: 'ERROR',
+        message: `${err}`,
+      });
+    }
+  }, [setlistChannel, listChannel]);
+
+  useEffect(() => {
+    getChannelList();
+  }, []);
 
   return (
     <StyledChannelSection>
@@ -45,11 +81,24 @@ export const ChannelsSection: FC = () => {
             setIsSectionWebChat={setIsSectionWebChat}
           />
         ) : null}
+        {seletedComponent === 'DeleteChannel' ? (
+          <DeleteChannel setIsSectionWebChat={setIsSectionWebChat} />
+        ) : null}
       </ModalMolecule>
       <ModalMolecule isModal={confirmationAccount}>
         <ConfirmationAuth setConfirmationAccounth={setConfirmationAccounth} />
       </ModalMolecule>
-      <ChannelsEmpty setIsOpenModal={setIsOpenModal} />
+      {!listChannel?.facebook &&
+      !listChannel?.officialWhatsApp &&
+      !listChannel?.unofficialWhatsApp ? (
+        <ChannelsEmpty setIsOpenModal={setIsOpenModal} />
+      ) : (
+        <ChannelList
+          listChannel={listChannel}
+          setSeletedComponent={setSeletedComponent}
+          setIsSectionWebChat={setIsSectionWebChat}
+        />
+      )}
     </StyledChannelSection>
   );
 };

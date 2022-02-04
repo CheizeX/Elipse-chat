@@ -17,7 +17,7 @@ import {
 export interface SingleDatepickerProps {
   onChange?: (date: Date | null) => void;
   minDate?: Date | undefined;
-  maxDate: Date | undefined;
+  maxDate?: Date | undefined;
 }
 
 export const SingleDatepicker: FC<SingleDatepickerProps> = ({

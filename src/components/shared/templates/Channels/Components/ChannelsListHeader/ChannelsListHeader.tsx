@@ -10,6 +10,7 @@ export const ChannelsListHeader: FC<IPropsHeader> = ({ setIsOpenModal }) => {
       <Text>Canales añadidos</Text>
       <ButtonMolecule
         text="Añadir canal"
+        bgColor="#878787"
         onClick={() => setIsOpenModal(true)}
       />
     </StyledChannelSectionHeader>

@@ -224,7 +224,7 @@ export const StyledLabelsContainer = styled.div`
   height: fit-content;
   padding: 5px 0;
   margin-bottom: 5px;
-  border-top: 1px dotted ${({ theme }) => theme.Colors.grays[8]};
+  // border-top: 1px dotted ${({ theme }) => theme.Colors.grays[8]};
 `;
 
 export const StyledLabel = styled.span<StyledLabelProps>`

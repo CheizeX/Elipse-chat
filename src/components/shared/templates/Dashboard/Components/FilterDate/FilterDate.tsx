@@ -10,16 +10,10 @@ import { Text } from '../../../../atoms/Text/Text';
 
 export const FilterDateDashboard: FC<IPropsFilterDate> = ({
   setDatePicker,
-  setClose,
   datePicker,
-  close,
 }) => {
   return (
-    <StyledRangeDate
-      datePicker={datePicker}
-      close={close}
-      setDatePicker={setDatePicker}
-      setClose={setClose}>
+    <StyledRangeDate datePicker={datePicker} setDatePicker={setDatePicker}>
       <StyledHeaderRageDate>
         <Text>Fitrar por fecha</Text>
       </StyledHeaderRageDate>

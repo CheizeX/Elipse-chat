@@ -62,9 +62,11 @@ export const BackOffice: FC<IBackOfficeProps> = ({ text }) => {
       });
     }
   };
+
   const profilePicture = userDataInState.urlAvatar
     ? `${userDataInState.urlAvatar}?token=${accessToken}`
     : '';
+
   useEffect(() => {
     if (decodedToken) {
       dispatch(setUserDataInState(decodedToken));

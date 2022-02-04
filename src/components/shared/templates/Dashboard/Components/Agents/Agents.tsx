@@ -5,7 +5,6 @@ import {
 } from '../../../../../../redux/hook/hooks';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
-import { Dropdown } from '../../../../atoms/Dropdown/Dropdown';
 import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
 import {
   StyledWrapperAgent,
@@ -25,12 +24,11 @@ import { setReviewByAgent } from '../../../../../../redux/slices/dashboard/dashb
 import { UserRole } from '../../../../../../models/users/role';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
 import { User } from '../../../../../../models/users/user';
+import useDisplayElementOrNot from '../../../../../../hooks/use-display-element-or-not';
 
 export const Agents: FC<IPropsAgents & IContainerReview> = ({
   setDatePicker,
   datePicker,
-  setClose,
-  close,
   startDate,
   setStartDate,
   endDate,
@@ -50,26 +48,15 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
   const { dateName } = useAppSelector(
     (state) => state.dashboardFilterChatsByDate,
   );
-  // const { reviewByAgent } = useAppSelector(
-  //   (state) => state.review.chatContainerReviewState,
-  // );
   const containerAgent = usersData.filter(
     (item) => item.role === UserRole.AGENT,
   );
-  // const infoByAgent = usersData?.find((item) => item._id === reviewByAgent);
-  // const result = chatsByPeriod?.filter(
-  //   (item) => item.assignedAgent?._id === infoByAgent?._id,
-  // );
-  // const datosUnsatisfatory = result.filter(
-  //   (elem) => elem.finishedStatus === ChatFinishedStatus.SATISFACTORY,
-  // );
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useDisplayElementOrNot(false);
 
-  // const datosSatisfactory = result.filter(
-  //   (item) => item.finishedStatus === ChatFinishedStatus.UNSATISFACTORY,
-  // );
   const handleClick = () => {
     setSelectedComponent('AGENT');
-    setClose(false);
+    setIsComponentVisible(true);
   };
 
   const handleToggle = (id: string) => {
@@ -100,15 +87,14 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
 
   return (
     <StyledWrapperAgent>
-      <StyledHeaderAgent close={close}>
+      <StyledHeaderAgent>
         <Text>Chats finalizados</Text>
-        <Dropdown
-          onClick={() => handleClick()}
-          triggerElement={() => (
+        <div>
+          <button type="button" onClick={handleClick}>
             <BadgeMolecule
               leftIcon={() => <SVGIcon iconFile="/icons/candelar_alt.svg" />}
               rightIcon={() =>
-                close ? (
+                isComponentVisible ? (
                   <SVGIcon iconFile="/icons/chevron-square-down.svg" />
                 ) : (
                   <SVGIcon iconFile="/icons/chevron-square-up.svg" />
@@ -116,43 +102,46 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
               }>
               <Text>{dateName}</Text>
             </BadgeMolecule>
-          )}>
-          {datePicker === 0 && (
-            <FilterDateDashboard
-              setDatePicker={setDatePicker}
-              datePicker={datePicker}
-              setClose={setClose}
-            />
+          </button>
+          {isComponentVisible && datePicker === 0 && (
+            <div ref={ref}>
+              <FilterDateDashboard
+                setDatePicker={setDatePicker}
+                datePicker={datePicker}
+              />
+            </div>
           )}
-          {datePicker === 1 && (
-            <FIlterByPeriod
-              startDate={startDate}
-              setStartDate={setStartDate}
-              endDate={endDate}
-              setEndDate={setEndDate}
-              setDatePicker={setDatePicker}
-              datePicker={datePicker}
-              setClose={setClose}
-              close={close}
-              selectedComponent={selectedComponent}
-              setSelectedComponent={setSelectedComponent}
-            />
+          {isComponentVisible && datePicker === 1 && (
+            <div ref={ref}>
+              <FIlterByPeriod
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                setDatePicker={setDatePicker}
+                datePicker={datePicker}
+                selectedComponent={selectedComponent}
+                setSelectedComponent={setSelectedComponent}
+                setIsComponentVisible={setIsComponentVisible}
+              />
+            </div>
           )}
-          {datePicker === 2 && (
-            <FIlterByPeriod
-              startDate={startDate}
-              setStartDate={setStartDate}
-              endDate={endDate}
-              setEndDate={setEndDate}
-              setDatePicker={setDatePicker}
-              datePicker={datePicker}
-              setClose={setClose}
-              close={close}
-              selectedComponent={selectedComponent}
-              setSelectedComponent={setSelectedComponent}
-            />
+          {isComponentVisible && datePicker === 2 && (
+            <div ref={ref}>
+              <FIlterByPeriod
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                setDatePicker={setDatePicker}
+                datePicker={datePicker}
+                selectedComponent={selectedComponent}
+                setSelectedComponent={setSelectedComponent}
+                setIsComponentVisible={setIsComponentVisible}
+              />
+            </div>
           )}
-        </Dropdown>
+        </div>
       </StyledHeaderAgent>
       <span>
         <Text color="#2A2A2A">Agente</Text>
@@ -193,10 +182,13 @@ export const Agents: FC<IPropsAgents & IContainerReview> = ({
                     </span>
                   </div>
                   <button
-                    // disabled={
-                    //   datosUnsatisfatory.length < 1 &&
-                    //   datosSatisfactory.length < 1
-                    // }
+                    disabled={
+                      chatsByPeriod?.filter(
+                        (chat: Chat) =>
+                          chat.status === ChatStatus.FINISHED &&
+                          chat.assignedAgent._id === user._id,
+                      ).length === 0
+                    }
                     onClick={() => handleToggle(user._id)}
                     type="button">
                     <SVGIcon iconFile="/icons/bars-graphic.svg" />

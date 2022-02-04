@@ -20,7 +20,7 @@ export interface IContainerMoleculeProps {
   required?: boolean;
   onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setFocus: React.Dispatch<React.SetStateAction<boolean>>;
+  setFocus?: React.Dispatch<React.SetStateAction<boolean>>;
   onClick?: (ev: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   name?: string;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;

@@ -4,10 +4,8 @@ export interface IFilterContainer {
   id?: number;
   name?: string;
   color?: string;
-  close?: boolean;
 }
 export interface IFilterAgentsProps {
-  close?: boolean;
   dateAgent: User[];
   stateByAgent: number[];
   byAgentAvailable: string[];

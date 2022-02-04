@@ -6,7 +6,6 @@ storiesOf('Ailalia/Organisms/Dashboard/Agents', module).add('Default', () => {
   return (
     <Agents
       setSelectedComponent={() => null}
-      setClose={() => null}
       setDatePicker={() => null}
       startDate={null}
       endDate={null}

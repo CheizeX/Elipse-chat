@@ -41,4 +41,7 @@ export const sendAuthFacebook = (data: IConfirmAuthFacebook) => {
 export const getInstanceQR = () => {
   return baseRestApi.get<IInstanceQR[]>('/whatsapp360/getInstanceChatApi');
 };
-// https://rest-ailalia.ngrok.io/rest/v1/api/whatsapp360/getInstanceChatApi
+
+export const getAllChannel = () => {
+  return baseRestApi.get<[]>('/channelsCredentials/');
+};

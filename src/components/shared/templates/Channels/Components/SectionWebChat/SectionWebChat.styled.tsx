@@ -147,7 +147,6 @@ export const StyledBodyWebChat = styled.div<IContainerWebChat>`
     padding: 0 8px;
     & > div {
       width: 19rem;
-      // margin: 20px auto;
       border-radius: 10px;
     }
   }

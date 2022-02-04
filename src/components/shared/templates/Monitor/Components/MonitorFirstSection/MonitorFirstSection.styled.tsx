@@ -130,14 +130,19 @@ export const StyledAgentSection = styled.div<IContainerProps>`
       font-weight: ${({ theme }) => theme.fontWeight[700]};
       font-size: ${({ theme }) => theme.fontSize[10]};
       line-height: 12px;
-      background-color: ${({ position, theme }) =>
+      background-color: ${({ position, theme, isColorPaused }) =>
         mySelector(
           position === 'ASSIGNMENT_PENDING',
           theme.Colors.orange[3],
           null,
         ) ||
         mySelector(
-          position === 'ON_CONVERSATION',
+          position === 'ON_CONVERSATION' && isColorPaused === false,
+          theme.Colors.blue[1],
+          null,
+        ) ||
+        mySelector(
+          position === 'ON_CONVERSATION' && isColorPaused === true,
           theme.Colors.green[1],
           null,
         ) ||
@@ -238,6 +243,7 @@ export const WrapperAgents = styled.div`
         width: 163px;
         margin: 0 8px;
         display: flex;
+        justify-content: center;
         & :nth-child(1) {
           padding-left: 10px;
         }

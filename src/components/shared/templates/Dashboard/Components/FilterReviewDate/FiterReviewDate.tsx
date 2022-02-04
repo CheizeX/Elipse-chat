@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable sonarjs/cognitive-complexity */
+import React from 'react';
 import {
   StyledWrapper,
   WrapperReview,
@@ -23,12 +24,13 @@ import { Toast } from '../../../../molecules/Toast/Toast.interface';
 
 export const FilterReviewDate = ({
   children,
+  isActive,
+  setIsActive,
   setChartDatePicker,
-  setClose,
+  setIsComponentVisible,
 }: IPropsFilterReviewButton & IPropsComponent) => {
   const showAlert = useToastContext();
   const dispatch = useAppDispatch();
-  const [active, setActive] = useState(0);
 
   const childrenList = React.Children.toArray(children);
 
@@ -36,23 +38,35 @@ export const FilterReviewDate = ({
     const title = (child as React.ReactElement).props.title ?? index.toString();
 
     const handleDatePicker = async (id: number) => {
-      setActive(id);
+      setIsActive(id);
       try {
         if (id === 0) {
           const currentDts = await readReviewChats('0', 'currentWeek');
-          dispatch(setReviewChatsFinished(currentDts));
-          dispatch(setReviewDatePicker('Esta Semana'));
-          setClose(true);
+          if (currentDts.success !== false) {
+            dispatch(setReviewChatsFinished(currentDts));
+            dispatch(setReviewDatePicker('Esta Semana'));
+            setIsComponentVisible(false);
+          }
         } else if (id === 1) {
           const currentMonth = await readReviewChats('0', 'currentMonth');
-          dispatch(setReviewDatePicker('Este Mes'));
-          dispatch(setReviewChatsFinished(currentMonth));
-          setClose(true);
+          if (currentMonth.success === false) {
+            dispatch(setReviewChatsFinished([]));
+            dispatch(setReviewDatePicker('Este Mes'));
+          } else {
+            dispatch(setReviewChatsFinished(currentMonth));
+            dispatch(setReviewDatePicker('Este Mes'));
+            setIsComponentVisible(false);
+          }
         } else if (id === 2) {
           const lastMonth = await readReviewChats('0', 'lastMonth');
-          dispatch(setReviewDatePicker('Mes Anterior'));
-          dispatch(setReviewChatsFinished(lastMonth));
-          setClose(true);
+          if (lastMonth.success === false) {
+            dispatch(setReviewChatsFinished([]));
+            dispatch(setReviewDatePicker('Mes Anterior'));
+          } else {
+            dispatch(setReviewDatePicker('Mes Anterior'));
+            dispatch(setReviewChatsFinished(lastMonth));
+            setIsComponentVisible(false);
+          }
         } else {
           setChartDatePicker(1);
         }
@@ -64,16 +78,17 @@ export const FilterReviewDate = ({
         });
       }
     };
+
     return (
       <WrapperReview key={index.toString()}>
-        <StyledContainerRadioReview focusRadio={active === index}>
+        <StyledContainerRadioReview focusRadio={isActive === index}>
           <StyledRadioReview
-            focusRadio={active === index}
+            focusRadio={isActive === index}
             key={title + index.toString()}
             onClick={() => handleDatePicker(index)}
           />
         </StyledContainerRadioReview>
-        <StyledLabelReview focusRadio={active === index}>
+        <StyledLabelReview focusRadio={isActive === index}>
           <Text>{title}</Text>
         </StyledLabelReview>
       </WrapperReview>

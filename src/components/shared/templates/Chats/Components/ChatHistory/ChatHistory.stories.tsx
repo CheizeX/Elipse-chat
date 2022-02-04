@@ -9,6 +9,13 @@ export default {
 storiesOf('Ailalia/Organisms/LiveChat/ChatsHistory', module).add(
   'Default',
   () => {
-    return <ChatsHistory setLiveChatModal={() => null} />;
+    return (
+      <ChatsHistory
+        setIsContentChat={() => null}
+        setIsChannelChat={() => null}
+        setLiveChatModal={() => null}
+        setIsOpenModal={() => null}
+      />
+    );
   },
 );

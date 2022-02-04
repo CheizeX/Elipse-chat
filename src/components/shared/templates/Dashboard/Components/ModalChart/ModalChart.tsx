@@ -32,13 +32,16 @@ export const ModalChart: FC<IPropsChart> = ({ setComponentReview }) => {
   const { dateName } = useAppSelector(
     (state) => state.dashboardFilterChatsByDate,
   );
-  console.log(usersData);
   const infoByAgent = usersData?.find((item) => item._id === reviewByAgent);
-  console.log(infoByAgent, 'numero');
-  console.log(reviewByAgent, 'review');
   const result = chatsByPeriod?.filter(
     (item) => item.assignedAgent?._id === infoByAgent?._id,
   );
+  const sumChatFinished = chatsByPeriod?.filter(
+    (item) =>
+      item.assignedAgent &&
+      item.assignedAgent?._id === infoByAgent?._id &&
+      item.status === ChatStatus.FINISHED,
+  ).length;
   const datosOnConversation = result.filter(
     (item) => item.status === ChatStatus.ON_CONVERSATION,
   );
@@ -50,18 +53,19 @@ export const ModalChart: FC<IPropsChart> = ({ setComponentReview }) => {
   const datosSatisfactory = result.filter(
     (item) => item.finishedStatus === ChatFinishedStatus.UNSATISFACTORY,
   );
+
   const data = [
     {
       id: 'Satisfactorios',
-      label: 'Satisfactorios',
-      value: datosUnsatisfatory.length,
-      color: '#F78F28',
+      label: 'Satisfactorio',
+      value: ((datosSatisfactory.length / sumChatFinished) * 100).toFixed(),
+      color: '#24C3A7',
     },
     {
       id: 'Insatisfactorios',
       label: 'Insatisfactorios',
-      value: datosSatisfactory.length,
-      color: '#24C3A7',
+      value: ((datosUnsatisfatory.length / sumChatFinished) * 100).toFixed(),
+      color: '#F78F28',
     },
   ];
 
@@ -154,6 +158,7 @@ export const ModalChart: FC<IPropsChart> = ({ setComponentReview }) => {
             arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 3]] }}
             transitionMode="centerRadius"
             startAngle={-110}
+            arcLabel={(d) => `${d.value}%`}
             endAngle={360}
             legends={[
               {

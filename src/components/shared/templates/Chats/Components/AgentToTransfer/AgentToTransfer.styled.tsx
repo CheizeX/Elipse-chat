@@ -22,7 +22,7 @@ export const StyledBadgeChatTransfer = styled.div`
   height: 25px;
   justify-content: center;
   margin: auto;
-  & > :nth-child(1) {
+  & > :nth-child(2) {
     margin: 0 5px;
     & > div {
       height: 18px;
@@ -42,7 +42,7 @@ export const StyledBadgeChatTransfer = styled.div`
       }
     }
   }
-  & > :nth-child(2) {
+  & > :nth-child(1) {
     margin: 0 5px;
     & > div {
       height: 18px;

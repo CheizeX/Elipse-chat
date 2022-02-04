@@ -7,7 +7,6 @@ import { SVGIcon } from '../../atoms/SVGIcon/SVGIcon';
 import { UsersFilter } from '../Users/UsersFilter/UserFilter/UsersFilter';
 import { UserCreate } from '../Users/UserCreate/UserCreate';
 import { BadgeMolecule } from '../../molecules/Badge/Badge';
-import { NotificationUsers } from '../../atoms/NotificationUsers/NotificationUsers';
 import { ModalMolecule } from '../../molecules/Modal/Modal';
 import { ModifyUserTagModal } from '../UserTagsModals/ModifyUserTagModal/ModifyUserTagModal';
 import { EditUserTagModal } from '../UserTagsModals/EditUserTagModal/EditUserTagModal';
@@ -231,12 +230,12 @@ export const AddedUsersSection: FC = () => {
                     users={usersCreate}
                     editButton="Crear"
                     titleHeader="Crear Usuario"
-                    NotificationUsers={() => (
-                      <NotificationUsers
-                        text="Te quedan 4 usuarios por crear."
-                        message="Contáctate con nuestro equipo comercial para ampliar el límite de usuarios"
-                      />
-                    )}
+                    // NotificationUsers={() => (
+                    //   <NotificationUsers
+                    //     text="Te quedan 4 usuarios por crear."
+                    //     message="Contáctate con nuestro equipo comercial para ampliar el límite de usuarios"
+                    //   />
+                    // )}
                     setContainerTags={setContainerTags}
                     containerTags={containerTags}
                   />

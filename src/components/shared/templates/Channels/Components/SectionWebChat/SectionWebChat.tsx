@@ -48,7 +48,9 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
   const [customAvatar, setCustomAvatar] = useState<string>('Robot1.svg');
   const [customizeMyAvatar, setCustomizeMyAvatar] = useState<boolean>(false);
   const [customIsColor, setCustomIsColor] = useState<boolean>(false);
+  const [customizeByColor, setCustomizeByColor] = useState<string>('');
 
+  // byColors, byGradient
   const handleToggle = () => {
     setIsSection(isSection + 1);
   };
@@ -101,6 +103,8 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
               setPrimaryColor={setPrimaryColor}
               customIsColor={customIsColor}
               setCustomIsColor={setCustomIsColor}
+              setCustomizeByColor={setCustomizeByColor}
+              customizeByColor={customizeByColor}
             />
           ) : null}
           {isSection === 3 || isSection === 4 ? (

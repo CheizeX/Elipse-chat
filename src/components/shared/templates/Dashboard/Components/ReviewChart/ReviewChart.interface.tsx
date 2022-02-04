@@ -7,10 +7,4 @@ export interface IPropsReview {
   setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
   endDate: Date | null;
   setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
-  setClose: React.Dispatch<React.SetStateAction<boolean>>;
-  close: boolean;
-}
-
-export interface IPropsComponentReview {
-  close: boolean;
 }

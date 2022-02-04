@@ -33,7 +33,12 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
     align-items: center;
     & button {
       cursor: pointer;
-      width: 26px;
+      min-width: 40px;
+      max-width: 40px;
+      width: 100%;
+      height: 36px;
+      display: flex;
+      justify-content: flex-end;
     }
     & > :first-child {
       border-radius: 50%;
@@ -289,7 +294,7 @@ export const StyledPredefinidedTexts = styled.div<PredefinidedTextsInterface>`
 
   position: absolute;
   width: 350px;
-  height: 250px;
+  height: max-content;
   bottom: 60px;
   box-shadow: 0px 0px 5px ${({ theme }) => theme.Colors.grays[8]};
   border-radius: 10px;

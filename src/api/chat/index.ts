@@ -57,5 +57,12 @@ export const readReviewChats = async (
   );
 };
 
-// currentMonth
-// lastMonth
+export const readHistoryChat = async (
+  channel: string,
+  idClient: string,
+  data: string,
+) => {
+  return baseRestApi.get<Chat | boolean>(
+    `/chats/getChatsHistory/${channel}/${idClient}?query=${data}`,
+  );
+};

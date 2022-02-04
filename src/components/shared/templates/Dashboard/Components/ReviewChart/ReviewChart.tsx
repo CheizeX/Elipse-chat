@@ -1,10 +1,9 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../../../redux/hook/hooks';
-
 import { Text } from '../../../../atoms/Text/Text';
 import {
   StyledReviewChart,
@@ -21,9 +20,10 @@ import {
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
 import { IPropsReview } from './ReviewChart.interface';
-import { Dropdown } from '../../../../atoms/Dropdown/Dropdown';
 import { ContainerFilterReview } from '../ContainerFilterReview/ContainerFilterReview';
 import { FIlterByPeriod } from '../FIlterByPeriod/FIlterByPeriod';
+import useDisplayElementOrNot from '../../../../../../hooks/use-display-element-or-not';
+import { CardEmpty } from '../CardEmpty/CardEmpty';
 
 export const ReviewChart: FC<IPropsReview> = ({
   selectedComponent,
@@ -34,17 +34,18 @@ export const ReviewChart: FC<IPropsReview> = ({
   setStartDate,
   endDate,
   setEndDate,
-  setClose,
-  close,
 }) => {
   const { reviewChats, datePicker } = useAppSelector(
     (state) => state.review.chatContainerReviewState,
   );
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useDisplayElementOrNot(false);
 
+  const [isActive, setIsActive] = useState<number>(0);
   const dispatch = useAppDispatch();
   const showAlert = useToastContext();
 
-  const readReview = async () => {
+  const readReview = useCallback(async () => {
     try {
       const currentDts = await readReviewChats('0', 'currentWeek');
       if (currentDts.success === false) {
@@ -60,10 +61,10 @@ export const ReviewChart: FC<IPropsReview> = ({
         message: `${err}`,
       });
     }
-  };
+  }, [dispatch, showAlert]);
   useEffect(() => {
     readReview();
-  }, []);
+  }, [readReview]);
 
   const weekdays = [
     { id: 2, day: 'Lunes' },
@@ -73,6 +74,7 @@ export const ReviewChart: FC<IPropsReview> = ({
     { id: 6, day: 'Viernes' },
     { id: 7, day: 'Sabado' },
   ];
+
   const dataReview = reviewChats?.map((item, index) => {
     return {
       id: item._id,
@@ -81,64 +83,88 @@ export const ReviewChart: FC<IPropsReview> = ({
       Insatisfactorio: item.unsatisfactory,
     };
   });
-  const handleClose = () => {
+
+  const handleClick = () => {
+    setIsComponentVisible(!isComponentVisible);
     setSelectedComponent('REVIEW');
-    setClose(false);
   };
 
   return (
     <StyledReviewChart>
-      <StyledReviewChatsHeader close={close}>
+      <StyledReviewChatsHeader>
         <Text>Chats Satisfactorios e Insatisfactorios</Text>
-        <Dropdown
+        {/* <Dropdown
           onClick={handleClose}
           triggerElement={() => (
             <BadgeMolecule
               leftIcon={() => <SVGIcon iconFile="/icons/candelar_alt.svg" />}>
               <Text>{datePicker}</Text>
             </BadgeMolecule>
-          )}>
-          {chartDatePicker === 0 ? (
-            <ContainerFilterReview
-              setClose={setClose}
-              close={close}
-              setChartDatePicker={setChartDatePicker}
-              chartDatePicker={chartDatePicker}
-            />
+          )}> */}
+        <div>
+          <button
+            type="button"
+            // disabled={reviewChats.length < 1}
+            onClick={handleClick}>
+            <BadgeMolecule
+              leftIcon={() => <SVGIcon iconFile="/icons/candelar_alt.svg" />}>
+              <Text>{datePicker}</Text>
+              {isComponentVisible ? (
+                <SVGIcon iconFile="/icons/chevron-square-up.svg" />
+              ) : (
+                <SVGIcon iconFile="/icons/chevron-square-down.svg" />
+              )}
+            </BadgeMolecule>
+          </button>
+          {isComponentVisible && chartDatePicker === 0 ? (
+            <div ref={ref}>
+              <ContainerFilterReview
+                setChartDatePicker={setChartDatePicker}
+                chartDatePicker={chartDatePicker}
+                setIsActive={setIsActive}
+                isActive={isActive}
+                setIsComponentVisible={setIsComponentVisible}
+              />
+            </div>
           ) : null}
-          {chartDatePicker === 1 ? (
-            <FIlterByPeriod
-              setDatePicker={setChartDatePicker}
-              datePicker={chartDatePicker}
-              startDate={startDate}
-              setStartDate={setStartDate}
-              endDate={endDate}
-              setEndDate={setEndDate}
-              setClose={setClose}
-              close={close}
-              selectedComponent={selectedComponent}
-              setSelectedComponent={setSelectedComponent}
-            />
+          {isComponentVisible && chartDatePicker === 1 ? (
+            <div ref={ref}>
+              <FIlterByPeriod
+                setDatePicker={setChartDatePicker}
+                datePicker={chartDatePicker}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                selectedComponent={selectedComponent}
+                setSelectedComponent={setSelectedComponent}
+                setIsComponentVisible={setIsComponentVisible}
+              />
+            </div>
           ) : null}
-          {chartDatePicker === 2 ? (
-            <FIlterByPeriod
-              setDatePicker={setChartDatePicker}
-              datePicker={chartDatePicker}
-              startDate={startDate}
-              setStartDate={setStartDate}
-              endDate={endDate}
-              setEndDate={setEndDate}
-              setClose={setClose}
-              close={close}
-              selectedComponent={selectedComponent}
-              setSelectedComponent={setSelectedComponent}
-            />
+          {isComponentVisible && chartDatePicker === 2 ? (
+            <div ref={ref}>
+              <FIlterByPeriod
+                setDatePicker={setChartDatePicker}
+                datePicker={chartDatePicker}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                selectedComponent={selectedComponent}
+                setSelectedComponent={setSelectedComponent}
+                setIsComponentVisible={setIsComponentVisible}
+              />
+            </div>
           ) : null}
-        </Dropdown>
+        </div>
+        {/* </Dropdown> */}
       </StyledReviewChatsHeader>
       <StyledChart>
         {reviewChats.length < 1 ? (
-          <div>No hay datos</div>
+          <div>
+            <CardEmpty />
+          </div>
         ) : (
           <ResponsiveBar
             data={dataReview}
@@ -151,7 +177,7 @@ export const ReviewChart: FC<IPropsReview> = ({
             indexScale={{ type: 'band', round: true }}
             enableGridX
             enableLabel={false}
-            colors={{ scheme: 'purpleRed_green' }}
+            colors={['#24C3A7', '#F78F28']}
             defs={[
               {
                 id: '1',

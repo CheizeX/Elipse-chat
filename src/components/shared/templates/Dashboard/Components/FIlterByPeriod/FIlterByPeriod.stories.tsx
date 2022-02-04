@@ -7,13 +7,13 @@ storiesOf('Ailalia/Organisms/Dashboard/Components', module).add(
   () => {
     return (
       <FIlterByPeriod
-        setClose={() => null}
         setDatePicker={() => null}
         startDate={null}
         endDate={null}
         setStartDate={() => null}
         setEndDate={() => null}
         setSelectedComponent={() => null}
+        setIsComponentVisible={() => null}
       />
     );
   },

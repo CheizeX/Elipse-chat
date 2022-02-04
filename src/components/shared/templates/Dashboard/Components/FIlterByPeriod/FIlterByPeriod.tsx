@@ -31,13 +31,12 @@ import {
 export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
   setDatePicker,
   datePicker,
-  setClose,
-  close,
   startDate,
   setStartDate,
   endDate,
   setEndDate,
   selectedComponent,
+  setIsComponentVisible,
 }) => {
   const toasts = useToastContext();
   const dispatch = useAppDispatch();
@@ -65,7 +64,7 @@ export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
             `Desde el ( ${startDate?.toLocaleDateString()} ) hasta el ( ${endDate?.toLocaleDateString()} )`,
           ),
         );
-        setClose(true);
+        setIsComponentVisible(false);
       } else {
         try {
           const currentDts = await readReviewChats(
@@ -82,7 +81,7 @@ export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
             );
             dispatch(setReviewChatsFinished(currentDts));
           }
-          setClose(true);
+          setIsComponentVisible(false);
         } catch (err) {
           toasts?.addToast({
             alert: Toast.ERROR,
@@ -120,15 +119,11 @@ export const FIlterByPeriod: FC<IPropsByPeriod & IPropsAgents> = ({
   };
 
   const handleOnClose = () => {
-    setClose(true);
+    setIsComponentVisible(false);
   };
 
   return (
-    <StyledFIlterByPeriod
-      setClose={setClose}
-      setDatePicker={setDatePicker}
-      datePicker={datePicker}
-      close={close}>
+    <StyledFIlterByPeriod>
       <StyledHeader>
         <span>
           <button type="button" onClick={() => setDatePicker(0)}>

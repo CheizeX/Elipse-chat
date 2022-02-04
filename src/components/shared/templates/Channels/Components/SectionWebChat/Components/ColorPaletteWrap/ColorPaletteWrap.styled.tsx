@@ -26,7 +26,6 @@ export const StyledColorPaletteWrap = styled.div`
         display: flex;
         justify-content: center;
         width: 100px;
-        // margin: 2.25rem auto;
       }
     }
   }
@@ -88,6 +87,53 @@ export const StyledCustomColor = styled.div`
 `;
 export const StyledByColor = styled.div`
   margin-bottom: 28px;
+`;
+
+export const StyledCustomizeGradient = styled.div`
+  & > :first-child {
+    margin: auto;
+    height: 11rem;
+    margin-bottom: 2rem;
+  }
+  & > :nth-child(2) {
+    display: flex;
+    justify-content: center;
+    max-height: 40px;
+    align-items: center;
+    width: 224px;
+    & > span {
+      color: ${({ theme }) => theme.Colors.grays[3]};
+      font-weight: ${({ theme }) => theme.fontWeight[600]};
+      font-size: ${({ theme }) => theme.fontSize[14]};
+      line-height: 0.8rem;
+    }
+    & > div {
+      display: flex;
+      background: ${({ theme }) => theme.Colors.grays[9]};
+      border-radius: 20px;
+      // width: 8.6rem;
+      border: 20%;
+      justify-content: center;
+      align-items: center;
+      & > input {
+        outline: none;
+        background: ${({ theme }) => theme.Colors.grays[9]};
+        border: none;
+        width: 7rem;
+        text-align: center;
+      }
+    }
+  }
+  & > :last-child {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.8rem;
+    // padding: 0 16px;
+    & > button {
+      // width: 100px;
+      margin-bottom: 1rem;
+    }
+  }
 `;
 
 export const StyledWrapperColor = styled.div<IPropsColorWrap>`

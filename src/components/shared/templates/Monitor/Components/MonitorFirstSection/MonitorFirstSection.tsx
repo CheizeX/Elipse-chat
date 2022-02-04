@@ -13,6 +13,8 @@ import {
 import { IFirstSetionProps } from './MonitorFirstSection.interface';
 import { ChatsCardMonitor } from '../ChatsCardMonitor/ChatsCardMonitor';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
+import { useAppSelector } from '../../../../../../redux/hook/hooks';
+import { ChatStatus } from '../../../../../../models/chat/chat';
 
 export const MonitorFirstSection: FC<IFirstSetionProps> = ({
   onChange,
@@ -29,14 +31,22 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
 }) => {
   const [timeChat, setTimeChat] = useState(Date.now());
   const [accessToken] = useLocalStorage('AccessToken', '');
-  const finishChat =
-    chats && chats.filter((item) => item.status === 'FINISHED');
-  const onConversationChats = chats?.filter(
-    (item) => item.status === 'ON_CONVERSATION',
-  );
-  const pendintChat =
-    chats && chats.filter((item) => item.status === 'ASSIGNMENT_PENDING');
 
+  const { countOnConversation, countPause, countPending, countFinished } =
+    useAppSelector((state) => state.monitor.monitorTodayChatState);
+
+  const handleStatus = (status: string, pause: boolean) => {
+    if (ChatStatus.ON_CONVERSATION === status && pause === false) {
+      return 'En Conversación';
+    }
+    if (ChatStatus.FINISHED === status && !pause) {
+      return 'Finalizada';
+    }
+    if (ChatStatus.ASSIGNMENT_PENDING === status && !pause) {
+      return 'Pendiente';
+    }
+    return 'Chat en Pausa';
+  };
   useEffect(() => {
     const intervalToGetActualTime = setInterval(() => {
       setTimeChat(Date.now());
@@ -66,22 +76,28 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
       <div>
         <WrapperCard>
           <ChatsCardMonitor
-            name="Finalizadas"
-            number={finishChat && finishChat.length}
-            position="FINISHED"
-            icon="/icons/user_question.svg"
-          />
-          <ChatsCardMonitor
             name="Pendiente"
-            number={pendintChat && pendintChat.length}
+            number={countPending}
             position="ASSIGNMENT_PENDING"
             icon="/icons/user_question.svg"
           />
           <ChatsCardMonitor
-            name="En conversación"
-            number={onConversationChats && onConversationChats.length}
+            name="En Conversación"
+            number={countOnConversation}
             position="ON_CONVERSATION"
             icon="/icons/en-conversacion.svg"
+          />
+          <ChatsCardMonitor
+            name="Chats en Pausa"
+            number={countPause}
+            position="ON_PAUSE"
+            icon="/icons/pause.svg"
+          />
+          <ChatsCardMonitor
+            name="Finalizadas"
+            number={countFinished}
+            position="FINISHED"
+            icon="/icons/user_question.svg"
           />
         </WrapperCard>
         <WrapperAgents>
@@ -97,16 +113,21 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
           </span>
           <div>
             {chats?.map(
-              ({ _id, assignedAgent, channel, status, createdAt }, index) => (
-                <StyledAgentSection key={_id} index={index} position={status}>
+              (
+                { _id, assignedAgent, channel, status, createdAt, isPaused },
+                index,
+              ) => (
+                <StyledAgentSection
+                  key={_id}
+                  index={index}
+                  position={status}
+                  isColorPaused={isPaused}>
                   <div>
                     <SVGIcon iconFile={`/icons/${channel}.svg`} />
                   </div>
                   <span>
                     <BadgeMolecule>
-                      {status === 'ASSIGNMENT_PENDING' ? 'Pendiente' : null}
-                      {status === 'ON_CONVERSATION' ? 'En Conversación' : null}
-                      {status === 'FINISHED' ? 'Finalizada' : null}
+                      {handleStatus(status, isPaused)}
                     </BadgeMolecule>
                   </span>
                   <span>

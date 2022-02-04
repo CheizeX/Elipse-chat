@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { IPropsByPeriod } from './FilterByPeriod.interface';
 
-export const StyledFIlterByPeriod = styled.div<IPropsByPeriod>`
+export const StyledFIlterByPeriod = styled.div`
   background-color: ${({ theme }) => theme && theme.Colors.grays[10]};
   border-radius: 10px;
   box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.29);

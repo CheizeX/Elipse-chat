@@ -11,22 +11,26 @@ import { FilterReviewDate } from '../FilterReviewDate/FiterReviewDate';
 export const ContainerFilterReview: FC<IContainerPropsReview> = ({
   setChartDatePicker,
   chartDatePicker,
-  setClose,
-  close,
+  setIsComponentVisible,
+  setIsActive,
+  isActive,
 }) => {
   return (
     <StyledRangeDate
       setChartDatePicker={setChartDatePicker}
-      chartDatePicker={chartDatePicker}
-      close={close}
-      setClose={setClose}>
+      setIsComponentVisible={setIsComponentVisible}
+      isActive={isActive}
+      setIsActive={setIsActive}
+      chartDatePicker={chartDatePicker}>
       <StyledHeaderRageDate>
         <Text>Fitrar por fecha</Text>
       </StyledHeaderRageDate>
       <StyledBodyRageDate>
         <FilterReviewDate
+          setIsActive={setIsActive}
+          isActive={isActive}
           setChartDatePicker={setChartDatePicker}
-          setClose={setClose}
+          setIsComponentVisible={setIsComponentVisible}
           chartDatePicker={chartDatePicker}>
           <div key="1" title="Esta semana">
             Semana

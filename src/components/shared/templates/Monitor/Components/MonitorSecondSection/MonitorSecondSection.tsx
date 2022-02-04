@@ -3,7 +3,7 @@ import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { ContainerInput } from '../../../../molecules/Input/ContainerInput';
 import { Text } from '../../../../atoms/Text/Text';
 import { FilterAgents } from '../FilterAgents/FilterAgents';
-import { ChatStatus } from '../../../../../../models/chat/chat';
+import { Chat, ChatStatus } from '../../../../../../models/chat/chat';
 import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
 import {
   StyledWrapperSectionMonitor,
@@ -11,6 +11,12 @@ import {
   WrapperFirtSectionCard,
   WrapperSecondSectionAgent,
   StyledAgentActive,
+  TooltipBoxEmail,
+  StyledToolTipCardEmail,
+  TooltipTextEmail,
+  StyledToolTipCardName,
+  TooltipTextName,
+  TooltipBoxName,
 } from './MonitorSecondSection.styled';
 import { ChatsCardMonitor } from '../ChatsCardMonitor/ChatsCardMonitor';
 import { IMonitorSecondSection } from './MonitorSecondSection.interface';
@@ -33,6 +39,32 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
   handleStateAgents,
 }) => {
   const [accessToken] = useLocalStorage('AccessToken', '');
+
+  const handleLetterLimitName = (name: string) => {
+    if (name.length > 21) {
+      return `${name.slice(0, 21)}...`;
+    }
+    return name;
+  };
+  const handleLetterLimitEmail = (email: string) => {
+    if (email.length > 26) {
+      return `${email.slice(0, 26)}...`;
+    }
+    return email;
+  };
+  const handleTooltipName = (name: string) => {
+    if (name.length > 21) {
+      return <TooltipBoxName>{name}</TooltipBoxName>;
+    }
+    return null;
+  };
+
+  const handleTooltipEmail = (email: string) => {
+    if (email.length > 26) {
+      return <TooltipBoxEmail>{email}</TooltipBoxEmail>;
+    }
+    return null;
+  };
 
   return (
     <StyledWrapperSectionMonitor>
@@ -89,23 +121,33 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
                     <StyledAgentActive />
                   ) : null}
                 </span>
-                <span>{name.slice(0, 16)}</span>
-                <span>{email}</span>
+                <StyledToolTipCardName>
+                  <TooltipTextName>
+                    {handleLetterLimitName(name)}
+                  </TooltipTextName>
+                  {handleTooltipName(name)}
+                </StyledToolTipCardName>
+                <StyledToolTipCardEmail>
+                  <TooltipTextEmail>
+                    {handleLetterLimitEmail(email)}
+                  </TooltipTextEmail>
+                  {handleTooltipEmail(email)}
+                </StyledToolTipCardEmail>
               </div>
             </div>
             <span>
               <div>
                 <BadgeMolecule
-                  bgColor="#24C3A7"
+                  bgColor="#3AA4FF"
                   rightIcon={() => (
                     <SVGIcon iconFile="/icons/small_message.svg" />
                   )}>
                   <Text>
                     {chats?.filter(
-                      (chat: any) =>
+                      (chat: Chat) =>
                         chat.status === ChatStatus.ON_CONVERSATION &&
                         chat.assignedAgent &&
-                        chat.assignedAgent === _id,
+                        chat.assignedAgent._id === _id,
                     ).length ?? 0}
                   </Text>
                 </BadgeMolecule>
@@ -116,10 +158,10 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
                   )}>
                   <Text>
                     {chats?.filter(
-                      (chat: any) =>
+                      (chat: Chat) =>
                         chat.isTransfer === true &&
                         chat.assignedAgent &&
-                        chat.assignedAgent === _id,
+                        chat.assignedAgent._id === _id,
                     ).length ?? 0}
                   </Text>
                 </BadgeMolecule>
@@ -138,7 +180,7 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
                         ? 0
                         : chats
                             .filter(
-                              (chat: any) =>
+                              (chat: Chat) =>
                                 chat.status === ChatStatus.FINISHED &&
                                 chat.assignedAgent &&
                                 chat.assignedAgent._id === _id &&
@@ -156,7 +198,7 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
                           1000 /
                           60 /
                           chats.filter(
-                            (item: any) =>
+                            (item: Chat) =>
                               item.assignedAgent &&
                               item.assignedAgent._id === _id,
                           ).length
@@ -167,7 +209,7 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
               </BadgeMolecule>
             </span>
           </div>
-        )) ?? []}
+        )) || []}
       </WrapperSecondSectionAgent>
     </StyledWrapperSectionMonitor>
   );

@@ -15,7 +15,6 @@ export const Reports: FC = () => {
       setDatePicker={() => null}
       setEndDate={() => null}
       setMyAccount={() => {}}
-      setClose={() => null}
       setSelectedSection={() => {}}>
       <ReportsSection />
     </BackofficeLayout>

@@ -9,6 +9,7 @@ export interface IDataTag {
 export interface IContainerProps {
   index: number;
   position: string;
+  isColorPaused: boolean;
 }
 
 export interface IFirstSetionProps {

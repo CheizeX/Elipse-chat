@@ -10,7 +10,13 @@ import { websocketContext } from '../../../../../chat/index';
 import { Channels, Chat, ChatStatus } from '../../../../../models/chat/chat';
 import { User } from '../../../../../models/users/user';
 import { UserStatus } from '../../../../../models/users/status';
-import { setChatsToday } from '../../../../../redux/slices/monitor/monitor-chats';
+import {
+  setChatsToday,
+  setCountPending,
+  setCountFinished,
+  setCountPause,
+  setCountOnConversation,
+} from '../../../../../redux/slices/monitor/monitor-chats';
 import { Toast } from '../../../molecules/Toast/Toast.interface';
 import { useToastContext } from '../../../molecules/Toast/useToast';
 import { MonitorFirstSection } from '../Components/MonitorFirstSection/MonitorFirstSection';
@@ -53,6 +59,9 @@ export const MonitorSection: FC = () => {
   );
   const { countAgent } = useAppSelector(
     (state) => state.monitor.monitorCountAgentsAvailableState,
+  );
+  const { userDataInState } = useAppSelector(
+    (state) => state.userAuthCredentials,
   );
   const [agentInput, setAgentInput] = useState<string>('');
   const handleOnChangeState = (id: number) => {
@@ -112,7 +121,9 @@ export const MonitorSection: FC = () => {
       if (result.success === false) {
         dispatch(setAgentsAvailable([]));
       } else {
+        dispatch(setCountAgentsAvailable(result.length));
         dispatch(setAgentsAvailable(result));
+        dispatch(setCountAgentsAvailable(result.length));
       }
     } catch (err) {
       showAlert?.addToast({
@@ -128,10 +139,13 @@ export const MonitorSection: FC = () => {
       if (data.success === false) {
         dispatch(setAgentsNotAvailable([]));
       } else {
-        const dataAgents = data.filter((item: User) => item.role === 'AGENT');
+        const dataAgents = data?.filter((item: User) => item.role === 'AGENT');
         dispatch(setAllUser(dataAgents));
-        const userPaused = data.filter(
-          (item: User) => item.status === 'BATHROOM' || item.status === 'LUNCH',
+        const userPaused = data?.filter(
+          (item: User) =>
+            item.status === 'BATHROOM' ||
+            item.status === 'LUNCH' ||
+            item.status === 'CALL',
         );
         dispatch(setInfoByAgent(data));
         if (userPaused) {
@@ -155,6 +169,26 @@ export const MonitorSection: FC = () => {
       if (response.success === false) {
         dispatch(setChatsToday([]));
       } else {
+        const countOnConversation = response?.filter(
+          (chat: Chat) =>
+            chat.status === ChatStatus.ON_CONVERSATION &&
+            chat.isPaused === false,
+        );
+        const countIsPause = response?.filter(
+          (chat: Chat) =>
+            chat.status === ChatStatus.ON_CONVERSATION &&
+            chat.isPaused === true,
+        );
+        const countIspending = response?.filter(
+          (chat: Chat) => chat.status === ChatStatus.ASSIGNMENT_PENDING,
+        );
+        const countIsFinished = response?.filter(
+          (chat: Chat) => chat.status === ChatStatus.FINISHED,
+        );
+        dispatch(setCountOnConversation(countOnConversation.length));
+        dispatch(setCountPause(countIsPause.length));
+        dispatch(setCountPending(countIspending.length));
+        dispatch(setCountFinished(countIsFinished.length));
         dispatch(setChatsToday(response));
       }
     } catch (err) {
@@ -165,12 +199,14 @@ export const MonitorSection: FC = () => {
       });
     }
   };
+  // se agrego una nueva propiedad de CALL para realizar el fitro de busqueda por status.
   const handleOnClick = async () => {
     const responseState = stateByAgent.map(
       (item) =>
         (item === 1 ? UserStatus.AVAILABLE : null) ||
         (item === 2 ? UserStatus.LUNCH : null) ||
-        (item === 3 ? UserStatus.BATHROOM : null),
+        (item === 3 ? UserStatus.BATHROOM : null) ||
+        (item === 4 ? UserStatus.CALL : null),
     );
     const querParms = `${process.env.NEXT_PUBLIC_REST_API_URL}/users?agents=&status=${responseState}`;
     // const queryStatusParams = responseState;
@@ -248,19 +284,41 @@ export const MonitorSection: FC = () => {
     getAgentsAvailable();
     getAgentsNotAvailable();
     getChatsToday();
-    socket.emit('joinSupervisorRooms');
+    socket.emit('joinSupervisorRooms', userDataInState?.companyId);
   }, []);
 
   useEffect(() => {
     socket.on('newChatEvent', (data: Chat[]) => {
+      const countOnConversation = data?.filter(
+        (chat) =>
+          chat.status === ChatStatus.ON_CONVERSATION && chat.isPaused === false,
+      );
+      const countIsPause = data?.filter(
+        (chat) =>
+          chat.status === ChatStatus.ON_CONVERSATION && chat.isPaused === true,
+      );
+      const countIspending = data?.filter(
+        (chat) => chat.status === ChatStatus.ASSIGNMENT_PENDING,
+      );
+      const countIsFinished = data?.filter(
+        (chat) => chat.status === ChatStatus.FINISHED,
+      );
+      dispatch(setCountOnConversation(countOnConversation.length));
+      dispatch(setCountPause(countIsPause.length));
+      dispatch(setCountPending(countIspending.length));
+      dispatch(setCountFinished(countIsFinished.length));
       dispatch(setChatsToday(data));
     });
     socket.on('newUserStatusChange', (data: User[]) => {
       const agentAvailable = data.filter(
         (item: User) => item.status === 'AVAILABLE',
       );
+      // Se agrego una propiedad nueva de call.
       const agentNotAvailable = data.filter(
-        (item: User) => item.status === 'BATHROOM' || item.status === 'LUNCH',
+        (item: User) =>
+          item.status === UserStatus.BATHROOM ||
+          item.status === UserStatus.CALL ||
+          item.status === UserStatus.LUNCH,
       );
       dispatch(setCountAgentsAvailable(agentAvailable.length));
       dispatch(setAgentsAvailable(agentAvailable));

@@ -6,7 +6,7 @@ export const StyledTrialFormLayout = styled.div<SubscriptionSectionInterface>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  min-width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
   background: ${({ theme }) => theme.Colors.purples[1]};
@@ -20,10 +20,19 @@ export const StyledTrialFormLayout = styled.div<SubscriptionSectionInterface>`
   & > div {
     overflow: hidden;
     position: fixed;
-    min-width: 100%;
+    width: 100%;
     top: 0;
-    left: 0;
+    right: 0;
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & div {
+      & svg {
+        min-width: 100%;
+        min-height: 100vh;
+      }
+    }
   }
 `;
 
@@ -46,7 +55,7 @@ export const StyledTrialFormContainer = styled.main`
   & h1 {
     font-size: 1.4rem;
     line-height: 2rem;
-    color: ${({ theme }) => theme.Colors.purples[2]};
+    color: ${({ theme }) => theme.Colors.grays[3]};
     font-weight: 500;
     padding: 1rem;
     text-align: center;

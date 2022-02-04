@@ -5,10 +5,10 @@ export interface ITagTransferProps {
 export interface IAgentToTransferProps {
   color?: string;
   name?: string;
-  message?: number;
-  change?: number;
-  time?: number;
-  minuts?: string;
+  isConversation?: number;
+  isTransfer?: number;
+  isPause?: number;
+  isAverages: number | string;
   tag?: TagTransferType;
 }
 export type TagTransferType = ITagTransferProps[];

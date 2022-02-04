@@ -24,10 +24,13 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../../../redux/hook/hooks';
+import { setChatsTransfer } from '../../../../../../redux/slices/live-chat/chat-transfer';
 import { setUserToTransferById } from '../../../../../../redux/slices/live-chat/user-selected-to-transfer-by-id';
 import { setDataUser } from '../../../../../../redux/slices/users/user-management';
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
+import { readChatsToday } from '../../../../../../api/chat';
+import { Chat, ChatStatus } from '../../../../../../models/chat/chat';
 
 export const ChatTransfer: FC<IChatTransfer> = ({
   setLiveChatModal,
@@ -40,6 +43,9 @@ export const ChatTransfer: FC<IChatTransfer> = ({
     (state) => state.userAuthCredentials,
   );
   const { usersData } = useAppSelector((state) => state.users.useQueryState);
+  const { chatsTransfer } = useAppSelector(
+    (state) => state.liveChat.chatsTodayTransferState,
+  );
 
   const [searchAgent, setSearchAgent] = useState<string>('');
   const [agentToTransfer, setAgentToTransfer] = useState<string>('');
@@ -61,8 +67,27 @@ export const ChatTransfer: FC<IChatTransfer> = ({
     }
   }, []);
 
+  const getChatsToday = useCallback(async () => {
+    try {
+      const response = await readChatsToday('today');
+      console.log(response, 'jsjsjs');
+      if (response.success === false) {
+        dispatch(setChatsTransfer([]));
+      } else {
+        dispatch(setChatsTransfer(response));
+      }
+    } catch (error) {
+      toasts?.addToast({
+        alert: Toast.ERROR,
+        title: 'Error!',
+        message: `${error}`,
+      });
+    }
+  }, []);
+
   useEffect(() => {
     getAgentAvailable();
+    getChatsToday();
   }, []);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +147,72 @@ export const ChatTransfer: FC<IChatTransfer> = ({
             ?.filter((item) => item._id === agentToTransfer)
             .map(({ name, _id, tags }) => (
               <>
-                <AgentToTransfer key={_id} name={name} tag={tags} />
+                <AgentToTransfer
+                  key={_id}
+                  name={name}
+                  tag={tags}
+                  isConversation={
+                    chatsTransfer?.filter(
+                      (chat: Chat) =>
+                        chat.status === ChatStatus.ON_CONVERSATION &&
+                        chat.assignedAgent &&
+                        chat.assignedAgent._id === _id,
+                    ).length ?? 0
+                  }
+                  isPause={
+                    chatsTransfer?.filter(
+                      (chat: Chat) =>
+                        chat.status === ChatStatus.ON_CONVERSATION &&
+                        chat.isPaused === true &&
+                        chat.assignedAgent &&
+                        chat.assignedAgent._id === _id,
+                    ).length ?? 0
+                  }
+                  isTransfer={
+                    chatsTransfer?.filter(
+                      (chat: Chat) =>
+                        chat.isTransfer === true &&
+                        chat.assignedAgent &&
+                        chat.assignedAgent._id === _id,
+                    ).length ?? 0
+                  }
+                  isAverages={
+                    chatsTransfer !== undefined
+                      ? (chatsTransfer.filter(
+                          (chat) =>
+                            chat.status === ChatStatus.FINISHED &&
+                            chat.assignedAgent._id &&
+                            chat.assignedAgent._id === _id,
+                        ).length === 0
+                          ? 0
+                          : chatsTransfer
+                              .filter(
+                                (chat: any) =>
+                                  chat.status === ChatStatus.FINISHED &&
+                                  chat.assignedAgent &&
+                                  chat.assignedAgent._id === _id &&
+                                  chat,
+                              )
+                              .map(
+                                (item) =>
+                                  new Date(item.updatedAt).getTime() -
+                                  new Date(item.createdAt).getTime(),
+                              )
+                              .reduce(
+                                (acum, value) => Math.floor(acum + value),
+                                0,
+                              ) /
+                            1000 /
+                            60 /
+                            chatsTransfer.filter(
+                              (item: any) =>
+                                item.assignedAgent &&
+                                item.assignedAgent._id === _id,
+                            ).length
+                        ).toFixed(0) ?? 0
+                      : 0
+                  }
+                />
               </>
             ))}
         </div>

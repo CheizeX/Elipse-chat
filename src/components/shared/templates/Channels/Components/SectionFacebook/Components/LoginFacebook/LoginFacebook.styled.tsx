@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StyledLoginFacebook = styled.div`
   & > :nth-child(1) {
+    height: 222px;
     & > :nth-child(1) {
       display: flex;
       flex-direction: column;
@@ -16,6 +17,7 @@ export const StyledLoginFacebook = styled.div`
         font-weight: ${({ theme }) => theme.fontWeight[500]};
         font-size: ${({ theme }) => theme.fontSize[12]};
         line-height: 14px;
+        margin-top: 12px;
       }
     }
     & > :nth-child(2) {

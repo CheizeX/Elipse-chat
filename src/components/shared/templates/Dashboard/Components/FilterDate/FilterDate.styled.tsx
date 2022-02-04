@@ -8,8 +8,8 @@ export const StyledRangeDate = styled.div<IPropsFilterDate>`
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   box-shadow: 0px 0px 7px 0px #0000004a;
   position: absolute;
-  right: 0px;
-  top: 3px;
+  top: 64px;
+  right: 20px;
   ${({ datePicker }) =>
     datePicker &&
     css<IPropsFilterDate>`

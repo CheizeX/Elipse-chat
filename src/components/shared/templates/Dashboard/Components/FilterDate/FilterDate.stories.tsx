@@ -10,8 +10,6 @@ export default {
 storiesOf('Ailalia/Organisms/Dashboard/FilterDateDashboard', module).add(
   'Default',
   () => {
-    return (
-      <FilterDateDashboard setDatePicker={() => null} setClose={() => null} />
-    );
+    return <FilterDateDashboard setDatePicker={() => null} />;
   },
 );

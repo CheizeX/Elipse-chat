@@ -1,17 +1,23 @@
 import styled, { css } from 'styled-components';
-import { IUserFilterProps, IPropsRole } from './UserFilter.interface';
+import { IPropsRole } from './UserFilter.interface';
 
-export const StyledUserFilter = styled.div<IUserFilterProps>`
+export const StyledWrapperFilterUser = styled.div`
+  position: relative;
+  & > button {
+    width: 14px;
+    height: 14px;
+  }
+`;
+export const StyledUserFilter = styled.div`
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   width: 343px;
+  z-index: 3;
+  position: absolute;
+  top: 24px;
+  right: -8px;
   height: fit-content;
   border-radius: 10px;
   box-shadow: 0px 0px 7px 0px #0000004a;
-  ${({ isClose }) =>
-    isClose &&
-    css<IUserFilterProps>`
-      display: none;
-    `}
 `;
 
 export const StyledTab = styled.div`

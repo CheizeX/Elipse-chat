@@ -6,8 +6,7 @@ export const WrapperWebChat = styled.div<IPropsCustom>`
   width: 16rem;
   height: 23rem;
   background-color: ${({ primaryColor }) => primaryColor};
-  ${({ customIsColor, primaryColor, secondaryColor }) =>
-    !customIsColor &&
+  ${({ primaryColor, secondaryColor }) =>
     css<IPropsCustom>`
       background: linear-gradient(
         135deg,
@@ -198,8 +197,7 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
     & > :nth-child(2) {
       width: 180px;
       background-color: ${({ primaryColor }) => primaryColor};
-      ${({ customIsColor, primaryColor, secondaryColor }) =>
-        !customIsColor &&
+      ${({ primaryColor, secondaryColor }) =>
         css<IPropsCustom>`
           background: linear-gradient(
             135deg,
@@ -286,8 +284,7 @@ export const StyledBodyWebChat = styled.div<IPropsCustom>`
       }
       & > span {
         background-color: ${({ primaryColor }) => primaryColor};
-      ${({ customIsColor, primaryColor, secondaryColor }) =>
-        !customIsColor &&
+      ${({ primaryColor, secondaryColor }) =>
         css<IPropsCustom>`
           background: linear-gradient(
             115deg,

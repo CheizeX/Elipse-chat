@@ -15,19 +15,32 @@ export const StyledCardMonitor = styled.div<ICardContainer>`
       theme.Colors.orange[3],
       null,
     ) ||
-    mySelector(position === 'ON_CONVERSATION', theme.Colors.green[1], null) ||
+    mySelector(position === 'ON_CONVERSATION', theme.Colors.blue[1], null) ||
     mySelector(position === 'FINISHED', theme.Colors.grays[6], null) ||
     mySelector(position === 'AVAILABLE', theme.Colors.green[4], null) ||
     mySelector(position === 'LUNCH', theme.Colors.orange[3], null) ||
+    mySelector(position === 'ON_PAUSE', theme.Colors.green[1], null) ||
     mySelector(position === 'BATHROOM', theme.Colors.orange[3], null)};
   height: 71px;
-  width: 170px;
+  width: 140px;
   margin: 24px 8px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  & :nth-child(3) {
+    & > div {
+      & * {
+        & > svg {
+          & > path {
+            fill: ${({ theme }) => theme.Colors.grays[10]};
+            opacity: 0.3;
+          }
+        }
+      }
+    }
+  }
   & > :first-child {
     font-size: ${({ theme }) => theme.fontSize[32]};
     font-weight: ${({ theme }) => theme.fontWeight[700]};

@@ -1,17 +1,19 @@
-import styled, { css } from 'styled-components';
-import { IFilterContainer } from './FilterAgent.interface';
+import styled from 'styled-components';
 
-export const StyledFilterAgents = styled.div<IFilterContainer>`
+export const StyledWrapperFilter = styled.div`
+  position: relative;
+  width: 36px;
+`;
+
+export const StyledFilterAgents = styled.div`
+  position: absolute;
+  // right: 84px;
+  top: 136px;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   width: 343px;
   height: fit-content;
   border-radius: 10px;
   box-shadow: 0px 0px 7px 0px #0000004a;
-  ${({ close }) =>
-    close &&
-    css<IFilterContainer>`
-      display: none;
-    `}
 `;
 
 export const StyledFilterAgentsHeader = styled.div`

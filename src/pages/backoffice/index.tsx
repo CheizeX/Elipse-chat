@@ -14,7 +14,6 @@ const BackofficePage: NextPage<
   setMyAccount,
   myAccount,
   setDatePicker,
-  setClose,
   startDate,
   setStartDate,
   endDate,
@@ -27,7 +26,6 @@ const BackofficePage: NextPage<
       checkedTags={checkedTags}
       setCheckedTags={setCheckedTags}
       setDatePicker={setDatePicker}
-      setClose={setClose}
       startDate={startDate}
       setStartDate={setStartDate}
       endDate={endDate}

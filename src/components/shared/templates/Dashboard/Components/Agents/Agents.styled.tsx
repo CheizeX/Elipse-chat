@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { IContainerAgentProps } from './Agents.interface';
 
 export const StyledWrapperAgent = styled.div`
+  position: relative;
   width: 429px;
   height: 405px;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
@@ -63,46 +64,48 @@ export const StyledHeaderAgent = styled.div<IContainerAgentProps>`
     font-size: ${({ theme }) => theme.fontSize[14]};
     line-height: 17px;
   }
-  & > button {
-    margin-right: 23px;
-    cursor: pointer;
-    & > div {
-      height: 33px;
-      border-radius: 16px;
-      background-color: ${({ theme }) => theme.Colors.grays[9]};
-      & span {
-        color: ${({ theme }) => theme.Colors.grays[3]};
-        font-weight: ${({ theme }) => theme.fontWeight[600]};
-        font-size: ${({ theme }) => theme.fontSize[12]};
-        line-height: 14px;
-      }
-      & > :first-child {
-        & > div {
-          padding-top: 2px;
-          padding-left: 4px;
+  & > :nth-child(2) {
+    & > button {
+      margin-right: 23px;
+      cursor: pointer;
+      & > div {
+        height: 33px;
+        border-radius: 16px;
+        background-color: ${({ theme }) => theme.Colors.grays[9]};
+        & span {
+          color: ${({ theme }) => theme.Colors.grays[3]};
+          font-weight: ${({ theme }) => theme.fontWeight[600]};
+          font-size: ${({ theme }) => theme.fontSize[12]};
+          line-height: 14px;
+        }
+        & > :first-child {
           & > div {
-            & > svg {
-              width: 15px;
-              height: 17px;
-              & > path {
-                fill: ${({ theme }) => theme.Colors.grays[6]};
+            padding-top: 2px;
+            padding-left: 4px;
+            & > div {
+              & > svg {
+                width: 15px;
+                height: 17px;
+                & > path {
+                  fill: ${({ theme }) => theme.Colors.grays[6]};
+                }
               }
             }
           }
         }
-      }
-      & > :last-child {
-        width: 20px;
-        & > div {
-          width: 10px;
-          margin-left: 6px;
-          margin-top: 1px;
+        & > :last-child {
+          width: 20px;
           & > div {
-            & > svg {
-              width: 8px;
-              height: 4px;
-              & > path {
-                fill: ${({ theme }) => theme.Colors.grays[3]};
+            width: 10px;
+            margin-left: 6px;
+            margin-top: 1px;
+            & > div {
+              & > svg {
+                width: 8px;
+                height: 4px;
+                & > path {
+                  fill: ${({ theme }) => theme.Colors.grays[3]};
+                }
               }
             }
           }
@@ -112,11 +115,6 @@ export const StyledHeaderAgent = styled.div<IContainerAgentProps>`
   }
   & > div {
     z-index: 1;
-    & > :nth-child(1) {
-      & > :nth-child(1) {
-        display: ${({ close }) => (close && close === true ? 'none' : null)};
-      }
-    }
   }
 `;
 
@@ -166,7 +164,9 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
       height: 20px;
       margin-left: 4px;
       margin-right: 2px;
-
+      & > :disabled {
+        cursor: not-allowed;
+      }
       & > :hover {
         cursor: pointer;
         & * {
@@ -231,13 +231,21 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
       margin-left: 16px;
       position: relative;
       top: 3px;
-      &:disabled {
-        cursor: not-allowed;
-        opacity: 0.5;
+      & > div {
+        & * {
+          & > svg {
+            width: 14px;
+          height: 14px;
+            & > :nth-child(1) {
+              & > path {
+                fill: ${({ theme }) => theme.Colors.grays[6]};
+              }
+            }
+          }
+        }
       }
       & > :hover {
         cursor: pointer;
-
         & * {
           & > svg {
             & > :nth-child(1) {
@@ -248,24 +256,15 @@ export const StyledAgent = styled.div<IContainerAgentProps>`
           }
         }
       }
-      & * {
-        & > svg {
-          width: 14px;
-          height: 14px;
-        }
-      }
       &:active {
         opacity: 0.9;
       }
-      & > div {
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
         & * {
           & > svg {
-            & > :nth-child(1) {
-              & > path {
-                fill: ${({ theme }) => theme.Colors.grays[6]};
-              }
-            }
-          }
+            cursor: not-allowed;
         }
       }
     }
