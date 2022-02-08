@@ -19,25 +19,25 @@ export const AvatarContainer: FC<ICustomAvatar> = ({
   const dataAvatar = [
     {
       id: '1',
-      name: 'Robot1.svg',
+      name: 'Robot_1.svg',
     },
-    { id: '2', name: 'Robot2.svg' },
-    { id: '3', name: 'Robot3.svg' },
+    { id: '2', name: 'Robot_2.svg' },
+    { id: '3', name: 'Robot_3.svg' },
     {
       id: '4',
-      name: 'Mujer.svg',
+      name: 'Mujer_1.svg',
     },
     {
       id: '5',
-      name: 'Mujer2.svg',
+      name: 'Mujer_2.svg',
     },
-    { id: '6', name: 'Mujer3.svg' },
-    { id: '7', name: 'Hombre1.svg' },
-    { id: '8', name: 'Hombre2.svg' },
-    { id: '9', name: 'Hombre3.svg' },
-    { id: '10', name: 'Mascota1.svg' },
-    { id: '11', name: 'Mascota2.svg' },
-    { id: '12', name: 'Mascota3.svg' },
+    { id: '6', name: 'Mujer_3.svg' },
+    { id: '7', name: 'Hombre_1.svg' },
+    { id: '8', name: 'Hombre_2.svg' },
+    { id: '9', name: 'Hombre_3.svg' },
+    { id: '10', name: 'Mascota_1.svg' },
+    { id: '11', name: 'Mascota_2.svg' },
+    { id: '12', name: 'Mascota_3.svg' },
   ];
   const [active, setActive] = useState<string>('');
   const handleToggle = (id: string, name: string) => {

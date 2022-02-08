@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { BusinessHours } from '../Components/BusinessHours/BusinesHours';
 import { ListedRestrictionsLeft } from '../Components/ListedRestrictions/ListedRestrictions';
 import {
@@ -8,15 +8,10 @@ import {
 } from './ConfigurationSection.styled';
 
 export const ConfigurationSection: FC = () => {
-  const [sortedRestrictions, setSortedRestrictions] = useState<boolean>(false);
-
   return (
     <>
       <StyledConfigurationSection>
-        <ListedRestrictionsLeft
-          sortedRestrictions={sortedRestrictions}
-          setSortedRestrictions={setSortedRestrictions}
-        />
+        <ListedRestrictionsLeft />
         <StyledRightSideTimeRestrictions>
           <BusinessHours />
         </StyledRightSideTimeRestrictions>

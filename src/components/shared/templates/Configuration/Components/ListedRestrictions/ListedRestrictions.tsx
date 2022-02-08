@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { FC, useState } from 'react';
+import { FC, useState, useCallback } from 'react';
 import {
   StyledLeftSideTimeRestrictions,
   StyledLeftSideTimeRestrictionsHeader,
@@ -39,21 +39,23 @@ import {
   StyledStartTimeController,
 } from '../../../../molecules/TimeController/TimeController.styled';
 
-export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = ({
-  sortedRestrictions,
-}) => {
+export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
+  const [sortedRestrictions, setSortedRestrictions] = useState<boolean>(false);
   const [modalNewRestriction, setModalNewRestriction] = useState(false);
   const [activeRestrictionWhenCreate, setActiveRestrictionWhenCreate] =
     useState(false);
   const [datePickerDate, setDatePickerDate] = useState(false);
   const [startTimeController, setStartTimeController] = useState(false);
   const [endTimeController, setEndTimeController] = useState(false);
+  const [dateToEdit, setDateToEdit] = useState<Date | null>(null);
 
   const [selectedRestrictionDate, setSelectedRestrictionDate] =
     useState<Date | null>(null);
 
+  // const [restrictionOnOff, setRestrictionOnOff] = useState<any[]>([]);
   const numberOfRestrictions = restrictinosFromTheBackend.length;
-
+  console.log('RESTRICTIONS', restrictinosFromTheBackend);
+  // console.log('ON/OFF', restrictionOnOff);
   const [selectedRestrictionStartTime, setSelectedRestrictionStartTime] =
     useState({
       hour: '00',
@@ -75,6 +77,7 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = ({
   ) => {
     if (startOrFinish === 'Start') {
       setSelectedRestrictionStartTime(setHour(newTime));
+      setSelectedRestrictionEndTime(setHour(newTime));
     }
     if (startOrFinish === 'End') {
       setSelectedRestrictionEndTime(setHour(newTime));
@@ -96,23 +99,71 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = ({
     }
   };
 
-  const handleShowDatePicker = () => {
+  const handleEditRestriction = useCallback(
+    (
+      restriction: Date,
+      startTime: {
+        hour: string;
+        minute: string;
+      },
+      endTime: {
+        hour: string;
+        minute: string;
+      },
+      isActive: boolean,
+    ) => {
+      setDateToEdit(restriction);
+      setSelectedRestrictionDate(restriction);
+      setSelectedRestrictionStartTime(
+        setHour({
+          hour: startTime.hour,
+          minute: startTime.minute,
+        }),
+      );
+      setSelectedRestrictionEndTime(
+        setHour({
+          hour: endTime.hour,
+          minute: endTime.minute,
+        }),
+      );
+      setActiveRestrictionWhenCreate(isActive);
+      setModalNewRestriction(true);
+    },
+    [],
+  );
+
+  const handleCloseModalNewOrEditRestriction = useCallback(() => {
+    setModalNewRestriction(false);
+    setDateToEdit(null);
+    setSelectedRestrictionDate(null);
+    setSelectedRestrictionStartTime({
+      hour: '00',
+      minute: '00',
+    });
+    setSelectedRestrictionEndTime({
+      hour: '00',
+      minute: '00',
+    });
+    setActiveRestrictionWhenCreate(false);
+  }, []);
+
+  const handleShowDatePicker = useCallback(() => {
     setDatePickerDate(!datePickerDate);
     setEndTimeController(false);
     setStartTimeController(false);
-  };
+  }, [datePickerDate]);
 
-  const handleStartTimeController = () => {
+  const handleStartTimeController = useCallback(() => {
     setStartTimeController(!startTimeController);
     setEndTimeController(false);
     setDatePickerDate(false);
-  };
+  }, [startTimeController]);
 
-  const handleEndTimeController = () => {
+  const handleEndTimeController = useCallback(() => {
     setEndTimeController(!endTimeController);
     setStartTimeController(false);
     setDatePickerDate(false);
-  };
+  }, [endTimeController]);
 
   return (
     <StyledLeftSideTimeRestrictions>
@@ -131,7 +182,9 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = ({
             )}
           </span>
           <div>
-            <button type="button">
+            <button
+              type="button"
+              onClick={() => setSortedRestrictions(!sortedRestrictions)}>
               <SVGIcon iconFile="/icons/sidebar_disponibilidad.svg" />
               {sortedRestrictions ? (
                 <SVGIcon iconFile="/icons/upArrow.svg" />
@@ -140,7 +193,7 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = ({
               )}
             </button>
             <button type="button">
-              <SVGIcon iconFile="/icons/filter.svg" />
+              {/* <SVGIcon iconFile="/icons/filter.svg" /> */}
             </button>
           </div>
         </span>
@@ -173,75 +226,99 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = ({
             <Text>Opciones</Text>
           </div>
           <section>
-            {restrictinosFromTheBackend.map((restriction) => (
-              <div key={restriction.id}>
-                {Number(restriction.date) >= Date.now() ? (
-                  <div>Vigente</div>
-                ) : (
-                  <span>Caducada</span>
-                )}
-                <div>
-                  {Number(
-                    new Intl.DateTimeFormat('es-ES', {
-                      day: 'numeric',
-                    }).format(restriction.date),
-                  ) > 9
-                    ? new Intl.DateTimeFormat('es-ES', {
-                        day: 'numeric',
-                      }).format(restriction.date)
-                    : `0${new Intl.DateTimeFormat('es-ES', {
-                        day: 'numeric',
-                      }).format(restriction.date)}`}{' '}
-                  {`${
-                    new Intl.DateTimeFormat('es-ES', {
-                      month: 'long',
-                    })
-                      .format(restriction.date)
-                      // make upper case first letter
-                      .charAt(0)
-                      .toUpperCase() +
-                    new Intl.DateTimeFormat('es-ES', {
-                      month: 'long',
-                    })
-                      .format(restriction.date)
-                      .slice(1)
-                  }`}{' '}
-                  {new Intl.DateTimeFormat('es-ES', {
-                    year: 'numeric',
-                  }).format(restriction.date)}
-                </div>
-
-                <div>
-                  {restriction.start.hour}:{restriction.start.minute}
-                </div>
-                <div>
-                  {restriction.end.hour}:{restriction.end.minute}
-                </div>
-                <div>
-                  {Number(restriction.date) >= Date.now() && (
-                    <>
-                      <span>
-                        {restriction.isActive ? (
-                          <ToogleComponentForMappedRestrictions>
-                            <div />
-                          </ToogleComponentForMappedRestrictions>
-                        ) : (
-                          <ToogleComponentForMappedRestrictionsNoSel>
-                            <div />
-                          </ToogleComponentForMappedRestrictionsNoSel>
-                        )}
-                      </span>
-                      <button type="button">
-                        <SVGIcon iconFile="/icons/pen.svg" />
-                      </button>
-                    </>
+            {restrictinosFromTheBackend
+              .sort((a, b) => {
+                if (sortedRestrictions) {
+                  return a.date > b.date ? 1 : -1;
+                }
+                return a.date < b.date ? 1 : -1;
+              })
+              .map((restriction) => (
+                <div key={restriction.id}>
+                  {Number(restriction.date) >= Date.now() ? (
+                    <div>Vigente</div>
+                  ) : (
+                    <span>Caducada</span>
                   )}
-                  <button type="button">
-                    <SVGIcon iconFile="/icons/delete.svg" />
-                  </button>
+                  <div>
+                    {Number(
+                      new Intl.DateTimeFormat('es-ES', {
+                        day: 'numeric',
+                      }).format(restriction.date),
+                    ) > 9
+                      ? new Intl.DateTimeFormat('es-ES', {
+                          day: 'numeric',
+                        }).format(restriction.date)
+                      : `0${new Intl.DateTimeFormat('es-ES', {
+                          day: 'numeric',
+                        }).format(restriction.date)}`}{' '}
+                    {`${
+                      new Intl.DateTimeFormat('es-ES', {
+                        month: 'long',
+                      })
+                        .format(restriction.date)
+                        // make upper case first letter
+                        .charAt(0)
+                        .toUpperCase() +
+                      new Intl.DateTimeFormat('es-ES', {
+                        month: 'long',
+                      })
+                        .format(restriction.date)
+                        .slice(1)
+                    }`}{' '}
+                    {new Intl.DateTimeFormat('es-ES', {
+                      year: 'numeric',
+                    }).format(restriction.date)}
+                  </div>
+
+                  <div>
+                    {restriction.start.hour}:{restriction.start.minute}
+                  </div>
+                  <div>
+                    {restriction.end.hour}:{restriction.end.minute}
+                  </div>
+                  <div>
+                    {Number(restriction.date) >= Date.now() && (
+                      <>
+                        <span>
+                          {restriction.isActive ? (
+                            <ToogleComponentForMappedRestrictions
+                              onClick={() => {}}>
+                              <div />
+                            </ToogleComponentForMappedRestrictions>
+                          ) : (
+                            <ToogleComponentForMappedRestrictionsNoSel
+                              onClick={() => {}}>
+                              <div />
+                            </ToogleComponentForMappedRestrictionsNoSel>
+                          )}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleEditRestriction(
+                              restriction.date,
+                              {
+                                hour: restriction.start.hour,
+                                minute: restriction.start.minute,
+                              },
+                              {
+                                hour: restriction.end.hour,
+                                minute: restriction.end.minute,
+                              },
+                              restriction.isActive,
+                            )
+                          }>
+                          <SVGIcon iconFile="/icons/pen.svg" />
+                        </button>
+                      </>
+                    )}
+                    <button type="button">
+                      <SVGIcon iconFile="/icons/delete.svg" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </section>
         </StyledLeftSideTimeRestrictionsBodyRestrictions>
       )}
@@ -252,10 +329,14 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = ({
           setModal={setModalNewRestriction}>
           <StyledCreateNewRestriction>
             <StyledCreateNewRestrictionHeader>
-              <Text>Crear nueva restricción</Text>
+              {dateToEdit ? (
+                <Text>Editar restricción</Text>
+              ) : (
+                <Text>Crear nueva restricción</Text>
+              )}
               <button
                 type="button"
-                onClick={() => setModalNewRestriction(false)}>
+                onClick={() => handleCloseModalNewOrEditRestriction()}>
                 <SVGIcon iconFile="/icons/close.svg" />
               </button>
             </StyledCreateNewRestrictionHeader>
@@ -388,9 +469,13 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = ({
               <ButtonMolecule
                 text="Cancelar"
                 variant={ButtonVariant.OUTLINED}
-                onClick={() => setModalNewRestriction(false)}
+                onClick={() => handleCloseModalNewOrEditRestriction()}
               />
-              <ButtonMolecule text="Crear" />
+              {dateToEdit ? (
+                <ButtonMolecule text="Editar" />
+              ) : (
+                <ButtonMolecule text="Crear" />
+              )}
             </StyledCreateNewRestrictionFooter>
           </StyledCreateNewRestriction>
         </ModalMolecule>

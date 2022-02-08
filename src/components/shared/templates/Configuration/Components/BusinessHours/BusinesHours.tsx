@@ -54,143 +54,100 @@ export const BusinessHours: FC = () => {
 
   // --- LOGICA DE LOS HORARIOS ----------------------------------------------------------------------------------
   // Filtro los dias con horarios activos
-  const filteredActiveDays = Object.keys(timeRestrictions)
-    .filter((key) => timeRestrictions[key].isActive === true)
-    .map((day) => timeRestrictions[day]);
-
-  // Filtro los horarios activos consecutivos
-  const filteredActiveDaysConsecutive = filteredActiveDays.filter(
-    (day) =>
-      ((day.id + 1 ===
-        filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.id ||
-        day.id - 1 ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.id) &&
-        day.start.hour ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.start.hour &&
-        day.start.minute ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.start
-            .minute &&
-        day.end.hour ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.end.hour &&
-        day.end.minute ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.end.minute &&
-        day.reStart.hour ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.reStart
-            .hour &&
-        day.reStart.minute ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.reStart
-            .minute &&
-        day.reEnd.hour ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.reEnd.hour &&
-        day.reEnd.minute ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.reEnd
-            .minute &&
-        day.secondTime ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) + 1]
-            ?.secondTime) ||
-      (day.start.hour ===
-        filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.start.hour &&
-        day.start.minute ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.start
-            .minute &&
-        day.end.hour ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.end.hour &&
-        day.end.minute ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.end.minute &&
-        day.reStart.hour ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.reStart
-            .hour &&
-        day.reStart.minute ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.reStart
-            .minute &&
-        day.reEnd.hour ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.reEnd.hour &&
-        day.reEnd.minute ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.reEnd
-            .minute &&
-        day.secondTime ===
-          filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.secondTime),
+  const filteredActiveDays = useMemo(
+    () =>
+      Object.keys(timeRestrictions)
+        .map((day) => timeRestrictions[day])
+        .filter((day) => day.isActive),
+    [timeRestrictions],
   );
 
-  // Filtro los horarios activos No consecutivos
-  const filteredActiveDaysNoConsecutive = filteredActiveDays.filter(
-    (day) =>
-      day.id + 1 !==
-        filteredActiveDays[filteredActiveDays.indexOf(day) + 1]?.id &&
-      day.id - 1 !==
-        filteredActiveDays[filteredActiveDays.indexOf(day) - 1]?.id,
+  // Acomodo la estructura del objeto para que sea mas facil de manejar
+  const filteredActiveDaysGroupedDiferent = useMemo(
+    () =>
+      filteredActiveDays.reduce((acc, curr) => {
+        const { day, start, end, reEnd, reStart, secondTime, name, id } = curr;
+
+        if (!acc[day]) {
+          acc[id - 1] = [
+            name,
+            {
+              start: `${start.hour}:${start.minute}`,
+              end: `${end.hour}:${end.minute}`,
+              reStart: `${reStart.hour}:${reStart.minute}`,
+              reEnd: `${reEnd.hour}:${reEnd.minute}`,
+              secondTime,
+              id,
+            },
+          ];
+        }
+        return acc;
+      }, []),
+    [filteredActiveDays],
   );
 
-  // Seteo la propiedad group para dividirlos segun los dias consecutivos
-  const groupedDays = useMemo(() => {
-    let idAnterior = 0;
-    let groupDay = 0;
-    return filteredActiveDaysConsecutive.map((day) => {
-      if (idAnterior === 0) {
-        idAnterior = day.id;
-        return { ...day, group: ++groupDay };
-      }
-      if (idAnterior + 1 === day.id) {
-        idAnterior = day.id;
-        return { ...day, group: groupDay };
-      }
-      idAnterior = day.id;
-      return { ...day, group: ++groupDay };
-    });
-  }, [filteredActiveDaysConsecutive]);
+  // 1) si es el primer elemento del array le deja la propiedad group igual a 1.
+  // 2) si no es el primer elemento del array, se fija que los valores de las propiedades start, end, reStart, reEnd, secondTime sean iguales a los del elemento anterior, y
+  // si es asi, le asigna la propiedad group igual al valor de la propiedad group del elemento anterior.
+  // 3) si los valores de las propiedades start, end, reStart, reEnd, secondTime no son iguales a los del elemento anterior,
+  // le asigna la propiedad group igual al valor de la propiedad group del elemento anterior mas 1.
+  const grouped = useMemo(
+    () =>
+      filteredActiveDaysGroupedDiferent.reduce((acc: any[], curr: any[]) => {
+        const { group, ...rest } = curr[1];
+        const name = curr[0];
 
-  // Divido el objeto en grupos de dias consecutivos
+        if (acc.length === 0) {
+          acc.push({
+            group: 1,
+            name,
+            ...rest,
+          });
+        } else {
+          const last = acc[acc.length - 1];
+          const { start, end, reStart, reEnd, secondTime, id } = last;
+          if (
+            start === rest.start &&
+            end === rest.end &&
+            reStart === rest.reStart &&
+            reEnd === rest.reEnd &&
+            secondTime === rest.secondTime &&
+            id + 1 === rest.id
+          ) {
+            acc.push({
+              group: last.group,
+              name,
+              ...rest,
+            });
+          } else {
+            acc.push({
+              group: last.group + 1,
+              name,
+              ...rest,
+            });
+          }
+        }
+        return acc;
+      }, []),
+    [filteredActiveDaysGroupedDiferent],
+  );
+
+  // separo en diferentes arrays segun el grupo que tengan asignado
   const groupedDaysDivided = useMemo(
     () =>
-      groupedDays.reduce((acc, day) => {
-        if (!acc[day.group]) {
-          acc[day.group] = [];
-        }
-        acc[day.group].push(day);
-        return acc;
-      }, {} as any),
-    [groupedDays],
+      grouped
+        .reduce((acc: { [x: string]: any[] }, curr: { group: any }) => {
+          const { group } = curr;
+          if (!acc[group]) {
+            acc[group] = [];
+          }
+          acc[group].push(curr);
+          return acc;
+        }, [])
+        .filter((divided: any) => divided),
+    [grouped],
   );
-
-  // separo en subgrupos dentro de cada grupo, los dias que comparten los mismos horarios
-  const groupedDaysDividedConsecutive = useMemo(
-    () =>
-      Object.keys(groupedDaysDivided).map((key) => {
-        return groupedDaysDivided[key].filter(
-          (day: any) =>
-            groupedDaysDivided[key][0].start.hour === day.start.hour &&
-            groupedDaysDivided[key][0].end.hour === day.end.hour &&
-            groupedDaysDivided[key][0].reStart.hour === day.reStart.hour &&
-            groupedDaysDivided[key][0].reEnd.hour === day.reEnd.hour &&
-            groupedDaysDivided[key][0].start.minute === day.start.minute &&
-            groupedDaysDivided[key][0].end.minute === day.end.minute &&
-            groupedDaysDivided[key][0].reStart.minute === day.reStart.minute &&
-            groupedDaysDivided[key][0].reEnd.minute === day.reEnd.minute &&
-            groupedDaysDivided[key][0].secondTime === day.secondTime &&
-            (day.id + 1 ===
-              groupedDaysDivided[key][groupedDaysDivided[key].indexOf(day) + 1]
-                ?.id ||
-              day.id - 1 ===
-                groupedDaysDivided[key][
-                  groupedDaysDivided[key].indexOf(day) - 1
-                ]?.id),
-        );
-      }),
-    [groupedDaysDivided],
-  );
-  // FIN LOGICA HORARIOS ------------------------------------------------------------
-
-  console.log('TIME RESTRICTINOS', timeRestrictions);
-  console.log('filteredActiveDays', filteredActiveDays);
-
-  console.log('groupedDays', groupedDays);
-  console.log('groupedDaysMemo', groupedDaysDivided);
-
-  console.log(
-    'filteredActiveDaysNoConsecutive',
-    filteredActiveDaysNoConsecutive,
-  );
-  console.log('groupedDaysDividedConsecutive', groupedDaysDividedConsecutive);
+  // FIN LOGICA DE LOS HORARIOS ----------------------------------------------------------------------------------
 
   const handleStartTimeController = useCallback(
     (startDay: string) => {
@@ -267,6 +224,7 @@ export const BusinessHours: FC = () => {
           [dayActive]: {
             ...timeRestrictions[dayActive],
             start: setHour(newTime),
+            end: setHour(newTime),
           },
         });
       }
@@ -286,6 +244,7 @@ export const BusinessHours: FC = () => {
           [dayActive]: {
             ...timeRestrictions[dayActive],
             reStart: setHour(newTime),
+            reEnd: setHour(newTime),
           },
         });
       }
@@ -322,6 +281,7 @@ export const BusinessHours: FC = () => {
           [dayActive]: {
             ...timeRestrictions[dayActive],
             start: setMinute(newTime),
+            end: setMinute(newTime),
           },
         });
       }
@@ -340,6 +300,7 @@ export const BusinessHours: FC = () => {
           [dayActive]: {
             ...timeRestrictions[dayActive],
             reStart: setMinute(newTime),
+            reEnd: setMinute(newTime),
           },
         });
       }
@@ -382,16 +343,36 @@ export const BusinessHours: FC = () => {
         ) : (
           <StyledBusinessHoursBodySetted>
             <StyledBusinessHoursBodySettedGroupedDays>
-              {groupedDaysDividedConsecutive.map((day) => (
-                <Text color="red" key={day}>
-                  {day.length === 2 && `${day[0].name} y ${day[1].name}`}
-                  {day.length > 2 &&
-                    `${day[0].name} a ${day[day.length - 1].name}`}
-                </Text>
-                // <div>
-
-                // </div>
-              ))}
+              <>
+                {groupedDaysDivided &&
+                  groupedDaysDivided.map((day: any) => (
+                    <>
+                      <Text color="red" key={day.id}>
+                        {day.length === 1 && day[0].name}
+                        {day.length === 2 && `${day[0].name} y ${day[1].name}`}
+                        {day.length > 2 &&
+                          `${day[0].name} a ${day[day.length - 1].name}`}
+                      </Text>
+                      <div>
+                        <div />
+                        <Text>
+                          Desde <Text color="black">{day[0].start} hrs. </Text>
+                          hasta <Text color="black">{day[0].end} hrs.</Text>
+                        </Text>
+                      </div>
+                      {day[0].secondTime && (
+                        <div>
+                          <span />
+                          <Text color="gray">
+                            Desde{' '}
+                            <Text color="black">{day[0].reStart} hrs. </Text>
+                            hasta <Text color="black">{day[0].reEnd} hrs.</Text>
+                          </Text>
+                        </div>
+                      )}
+                    </>
+                  ))}
+              </>
             </StyledBusinessHoursBodySettedGroupedDays>
           </StyledBusinessHoursBodySetted>
         )}

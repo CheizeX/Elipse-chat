@@ -6,10 +6,12 @@ export interface ICustomWebChat {
   customizeMyAvatar?: boolean;
   secondaryColor: string;
   customIsColor: boolean;
+  isAnimation: boolean;
 }
 
 export interface IPropsCustom {
   primaryColor: string;
   secondaryColor: string;
   customIsColor: boolean;
+  isAnimation: boolean;
 }

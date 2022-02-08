@@ -56,11 +56,16 @@ export const WrapperWebChat = styled.div<IPropsCustom>`
       /* height: 1.8rem;
       max-height: 150px; */
       .parallax > use {
-        animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+        animation: ${({ isAnimation }) =>
+          isAnimation === true
+            ? `move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite`
+            : null};
       }
       .parallax > use:nth-child(1) {
-        animation-delay: -2s;
-        animation-duration: 7s;
+        animation-delay: ${({ isAnimation }) =>
+          isAnimation === true ? `-2s` : 'none'};
+        animation-duration: ${({ isAnimation }) =>
+          isAnimation === true ? `7s` : 'none'};
       }
       .parallax > use:nth-child(2) {
         animation-delay: -3s;

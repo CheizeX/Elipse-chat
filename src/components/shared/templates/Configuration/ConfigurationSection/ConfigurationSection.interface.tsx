@@ -1,9 +1,6 @@
 import { MouseEventHandler } from '@nivo/pie';
-import { Dispatch, SetStateAction } from 'react';
 
 export interface ConfigSectionInterface {
-  setSortedRestrictions?: Dispatch<SetStateAction<boolean>>;
-  sortedRestrictions?: boolean;
   datePickerDate?: boolean;
   selectedRestrictionDate?: Date | null;
   startTimeController?: boolean;

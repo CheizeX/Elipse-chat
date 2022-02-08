@@ -230,9 +230,10 @@ export const StyledLeftSideTimeRestrictionsBodyRestrictions = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   margin: 24px;
-  margin-top: 10px;
+  margin-top: 5px;
   border-radius: 10px;
   padding-bottom: 10px;
+  padding-top: 5px;
   overflow: hidden;
   color: ${({ theme }) => theme.Colors.grays[4]};
   & ::-webkit-scrollbar {

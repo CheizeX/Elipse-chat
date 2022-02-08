@@ -57,12 +57,12 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
     });
   }, []);
 
-  const handleOpenAttachments = (message: Message) => {
+  const handleOpenAttachments = (message: Message, chatChannel: string) => {
     window.open(
       `${
         process.env.NEXT_PUBLIC_REST_API_URL
       }/whatsapp360/file/${message.content.substring(
-        16,
+        chatChannel === 'Webchat' ? 14 : 16,
         message.content.length,
       )}${tokenQueryParam}`,
     );
@@ -106,7 +106,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 <button
                                   type="button"
                                   onClick={() =>
-                                    handleOpenAttachments(message)
+                                    handleOpenAttachments(message, chat.channel)
                                   }>
                                   <SVGIcon iconFile="/icons/download.svg" />
                                 </button>
@@ -164,7 +164,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 <button
                                   type="button"
                                   onClick={() =>
-                                    handleOpenAttachments(message)
+                                    handleOpenAttachments(message, chat.channel)
                                   }>
                                   <SVGIcon iconFile="/icons/download.svg" />
                                 </button>
@@ -222,7 +222,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 <button
                                   type="button"
                                   onClick={() =>
-                                    handleOpenAttachments(message)
+                                    handleOpenAttachments(message, chat.channel)
                                   }>
                                   <SVGIcon iconFile="/icons/download.svg" />
                                 </button>
@@ -623,16 +623,25 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                       </>
                     )}
                     {message.contentType !== 'ATTACHMENT' && (
-                      <Text>
-                        {/* <StyledCopyToClipboardAgent
+                      <>
+                        <Text>
+                          {/* <StyledCopyToClipboardAgent
                           onClick={() =>
                             handleCopyTextToClipboard(message.content)
                           }>
                           <CgClipboard />
                         </StyledCopyToClipboardAgent> */}
-                        {message.content}
-                      </Text>
+                          {message.content}
+                        </Text>
+                      </>
                     )}
+                    <Text color="gray" weight="400">
+                      {new Date(message.createdAt).toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: false,
+                      })}
+                    </Text>
                   </div>
                   <StyledAgentAvatar>
                     {userDataInState && userDataInState.urlAvatar !== '' ? (

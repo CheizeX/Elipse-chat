@@ -18,6 +18,7 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
   avatar,
   customizeMyAvatar,
   customIsColor,
+  isAnimation,
 }) => {
   return (
     <StyledCustomWebChat>
@@ -25,7 +26,8 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
         <WrapperWebChat
           primaryColor={primaryColor}
           customIsColor={customIsColor}
-          secondaryColor={secondaryColor}>
+          secondaryColor={secondaryColor}
+          isAnimation={isAnimation}>
           <div>
             <SVGIcon iconFile="/icons/chevron-square-down.svg" />
           </div>
@@ -82,7 +84,8 @@ export const CustomWebChat: FC<ICustomWebChat> = ({
           <StyledBodyWebChat
             customIsColor={customIsColor}
             primaryColor={primaryColor}
-            secondaryColor={secondaryColor}>
+            secondaryColor={secondaryColor}
+            isAnimation={isAnimation}>
             <div>
               {!customizeMyAvatar ? (
                 <SVGIcon iconFile={`/avatars/${avatar}`} />

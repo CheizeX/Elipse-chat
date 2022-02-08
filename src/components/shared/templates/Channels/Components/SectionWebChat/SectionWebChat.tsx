@@ -38,17 +38,23 @@ const data = [
   },
 ];
 
-export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
+export const SectionWebChat: FC<IPropsWebChat> = ({
+  setIsSectionWebChat,
+  // getChannelList,
+}) => {
   const [isSection, setIsSection] = useState<number>(1);
   const [primaryColor, setPrimaryColor] = useState<string>('#6e28bf');
   const [secondaryColor, setSecundaryColor] = useState<string>('#65edfa');
   const [customTitle, setCustomTitle] = useState<string>('Elipse Chat');
   const [customDescription, setCustomDescription] =
     useState<string>('Asistente Virtual');
-  const [customAvatar, setCustomAvatar] = useState<string>('Robot1.svg');
+  const [customAvatar, setCustomAvatar] = useState<string>('Robot_1.svg');
   const [customizeMyAvatar, setCustomizeMyAvatar] = useState<boolean>(false);
   const [customIsColor, setCustomIsColor] = useState<boolean>(false);
   const [customizeByColor, setCustomizeByColor] = useState<string>('');
+  const [isAnimation, setIsAnimation] = useState(false);
+
+  // animation: 'yes'
 
   // byColors, byGradient
   const handleToggle = () => {
@@ -61,6 +67,39 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
     setIsSectionWebChat(false);
     setIsSection(1);
   };
+  // funcion para setaar la animación
+  const handleAnimation = () => {
+    setIsAnimation(!isAnimation);
+  };
+  // funcion que envia los datos para crear el webChat
+  // const handleSubmit = () => {
+  //   try {
+  //     if (isAnimation === true) {
+  //       const response = {
+  //         name: customTitle,
+  //         description: customDescription,
+  //         isAnimation: 'yes',
+  //         avatar: customAvatar,
+  //         primaryColor,
+  //         secondaryColor,
+  //       };
+  //       console.log(response);
+  //     } else {
+  //       const result = {
+  //         name: customTitle,
+  //         description: customDescription,
+  //         isAnimation: 'no',
+  //         avatar: customAvatar,
+  //         primaryColor,
+  //         secondaryColor,
+  //       };
+  //       console.log(result);
+  //     }
+  // getChannelList()
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <StyledWebChat>
@@ -91,6 +130,8 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
               <WrapperNameAndDescription
                 setCustomDescription={setCustomDescription}
                 setCustomTitle={setCustomTitle}
+                handleAnimation={handleAnimation}
+                isAnimation={isAnimation}
               />
             </>
           ) : null}
@@ -130,6 +171,7 @@ export const SectionWebChat: FC<IPropsWebChat> = ({ setIsSectionWebChat }) => {
               primaryColor={primaryColor}
               secondaryColor={secondaryColor}
               customIsColor={customIsColor}
+              isAnimation={isAnimation}
             />
           </div>
         </div>

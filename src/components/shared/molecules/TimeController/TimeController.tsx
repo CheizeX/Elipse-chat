@@ -37,50 +37,92 @@ export const TimeController: FC<
           hour: String(Number(selectedRestrictionStartTime.hour) + 1),
           minute: selectedRestrictionStartTime.minute,
         }
-      : hourOrMinute === 'minute' && startOrEnd === 'Start'
+      : hourOrMinute === 'minute' && startTimeController
       ? {
           minute: String(Number(selectedRestrictionStartTime.minute) + 5),
           hour: selectedRestrictionStartTime.hour,
         }
-      : hourOrMinute === 'hour' && startOrEnd === 'End'
+      : hourOrMinute === 'hour' &&
+        endTimeController &&
+        selectedRestrictionEndTime.hour >= selectedRestrictionStartTime.hour
       ? {
           hour: String(Number(selectedRestrictionEndTime.hour) + 1),
           minute: selectedRestrictionEndTime.minute,
         }
-      : hourOrMinute === 'minute' && startOrEnd === 'End'
+      : hourOrMinute === 'minute' &&
+        endTimeController &&
+        selectedRestrictionEndTime.hour !== selectedRestrictionStartTime.hour &&
+        (selectedRestrictionStartTime.minute === '00' ||
+          selectedRestrictionStartTime.minute === '05')
       ? {
           minute: String(Number(selectedRestrictionEndTime.minute) + 5),
           hour: selectedRestrictionEndTime.hour,
         }
+      : hourOrMinute === 'minute' &&
+        endTimeController &&
+        selectedRestrictionEndTime.hour === selectedRestrictionStartTime.hour
+      ? {
+          minute:
+            selectedRestrictionStartTime.minute >
+            selectedRestrictionEndTime.minute
+              ? selectedRestrictionStartTime.minute
+              : selectedRestrictionEndTime.minute === '55'
+              ? selectedRestrictionStartTime.minute
+              : String(Number(selectedRestrictionEndTime.minute) + 5),
+          hour: selectedRestrictionEndTime.hour,
+        }
       : {
-          hour: selectedRestrictionStartTime.hour,
-          minute: selectedRestrictionStartTime.minute,
+          hour: endTimeController
+            ? selectedRestrictionEndTime.hour
+            : selectedRestrictionStartTime.hour,
+          minute: endTimeController
+            ? selectedRestrictionEndTime.minute
+            : selectedRestrictionStartTime.minute,
         };
 
   const decreaseHourOrMinute = (hourOrMinute: string) =>
-    hourOrMinute === 'hour' && startOrEnd === 'Start'
+    hourOrMinute === 'hour' && startTimeController
       ? {
           hour: String(Number(selectedRestrictionStartTime.hour) - 1),
           minute: selectedRestrictionStartTime.minute,
         }
-      : hourOrMinute === 'minute' && startOrEnd === 'Start'
+      : hourOrMinute === 'minute' && startTimeController
       ? {
           minute: String(Number(selectedRestrictionStartTime.minute) - 5),
           hour: selectedRestrictionStartTime.hour,
         }
-      : hourOrMinute === 'hour' && startOrEnd === 'End'
+      : hourOrMinute === 'hour' &&
+        endTimeController &&
+        selectedRestrictionEndTime.hour > selectedRestrictionStartTime.hour
       ? {
           hour: String(Number(selectedRestrictionEndTime.hour) - 1),
           minute: selectedRestrictionEndTime.minute,
         }
-      : hourOrMinute === 'minute' && startOrEnd === 'End'
+      : hourOrMinute === 'minute' &&
+        endTimeController &&
+        selectedRestrictionEndTime.hour !== selectedRestrictionStartTime.hour
       ? {
           minute: String(Number(selectedRestrictionEndTime.minute) - 5),
           hour: selectedRestrictionEndTime.hour,
         }
+      : hourOrMinute === 'minute' &&
+        endTimeController &&
+        selectedRestrictionEndTime.hour === selectedRestrictionStartTime.hour
+      ? {
+          minute:
+            selectedRestrictionStartTime.minute >=
+            selectedRestrictionEndTime.minute
+              ? selectedRestrictionStartTime.minute
+              : String(Number(selectedRestrictionEndTime.minute) - 5),
+          hour: selectedRestrictionEndTime.hour,
+        }
       : {
-          hour: selectedRestrictionStartTime.hour,
-          minute: selectedRestrictionStartTime.minute,
+          hour: endTimeController
+            ? selectedRestrictionEndTime.hour
+            : selectedRestrictionStartTime.hour,
+          minute: endTimeController
+            ? selectedRestrictionEndTime.minute
+            : selectedRestrictionStartTime.minute,
         };
 
   return (

@@ -1,4 +1,4 @@
-import { Channel } from '../../models/channels/channel';
+import { Channel, IPropsOfficialWhatsapp } from '../../models/channels/channel';
 import {
   IReceiveAuthFacebook,
   IConfirmAuthFacebook,
@@ -40,6 +40,13 @@ export const sendAuthFacebook = (data: IConfirmAuthFacebook) => {
 
 export const getInstanceQR = () => {
   return baseRestApi.get<IInstanceQR[]>('/whatsapp360/getInstanceChatApi');
+};
+
+export const createOfficialWhatsapp = (channelDate: IPropsOfficialWhatsapp) => {
+  return baseRestApi.post<IPropsOfficialWhatsapp>(
+    '/channelsCredentials/officialWhatsapp',
+    channelDate,
+  );
 };
 
 export const getAllChannel = () => {

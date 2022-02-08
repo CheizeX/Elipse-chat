@@ -42,3 +42,9 @@ export type IUnOfficialWhatsApp = {
   providerName: string;
   _id: string;
 };
+
+export type IPropsOfficialWhatsapp = {
+  providerName: string;
+  apiKey: string;
+  phoneNumber: string;
+};

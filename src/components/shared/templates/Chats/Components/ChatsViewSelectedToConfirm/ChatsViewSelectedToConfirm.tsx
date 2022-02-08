@@ -120,7 +120,7 @@ export const ChatsViewSelectedToConfirm: FC<
     }
     if (localStorage.getItem('newDialoguesLength')) {
       const newDialoguesLength = JSON.parse(
-        localStorage.getItem('newDialoguesLength') || '{}',
+        localStorage.getItem('newDialoguesLength') || '',
       );
       if (!newDialoguesLength[`${userSelected}`]) {
         // set an object with the userSelected as key and 0 as value
@@ -167,7 +167,7 @@ export const ChatsViewSelectedToConfirm: FC<
   const handleEnterToSendMessage = async (
     e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && chatInputDialogue !== '') {
       setChatInputDialogue('');
       const bodyObject: Message = {
         from: userDataInState.role,
@@ -358,10 +358,6 @@ export const ChatsViewSelectedToConfirm: FC<
     setEmojisDisplayed(false);
     setShowPredefinedTexts(false);
   };
-
-  // useEffect(() => {
-  //   setNewDialoguesLengthInLocalStorage();
-  // }, [setNewDialoguesLengthInLocalStorage]);
 
   return (
     <StyledChatsViewSelectedToConfirm>

@@ -1,30 +1,30 @@
 import { FC, useState } from 'react';
-import { ConfirmationQR } from './Comnponents/ConfirmationQR/ConfirmationQR';
+import { ConfirmationQR } from '../Components/ConfirmationQR/ConfirmationQR';
 
 import {
   ButtonMolecule,
   ButtonState,
   ButtonVariant,
   Size,
-} from '../../../../atoms/Button/Button';
-import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
-import { Text } from '../../../../atoms/Text/Text';
+} from '../../../../../atoms/Button/Button';
+import { SVGIcon } from '../../../../../atoms/SVGIcon/SVGIcon';
+import { Text } from '../../../../../atoms/Text/Text';
 
-import { ViewQR } from './Comnponents/ViewQR/ViewQR';
-import { IPropsChannelAdd } from './SectionWhatsApp.interface';
+import { ViewQR } from '../Components/ViewQR/ViewQR';
+import { IPropsChannelAdd } from './SectionUnOfficialWhatsApp.interface';
 import {
   StyledAddWhatsApp,
   StyledHeaderChannelAdd,
   StyledBodyAddChannel,
   StyledFooterAddChannel,
-} from './SectionWhatsApp.styled';
-import { getInstanceQR } from '../../../../../../api/channels';
-import { Toast } from '../../../../molecules/Toast/Toast.interface';
-import { useToastContext } from '../../../../molecules/Toast/useToast';
-import { setIntegrationQRWhatsApp } from '../../../../../../redux/slices/channels/integration-with-qr';
-import { useAppDispatch } from '../../../../../../redux/hook/hooks';
+} from './SectionUnOfficialWhatsApp.styled';
+import { getInstanceQR } from '../../../../../../../api/channels';
+import { Toast } from '../../../../../molecules/Toast/Toast.interface';
+import { useToastContext } from '../../../../../molecules/Toast/useToast';
+import { setIntegrationQRWhatsApp } from '../../../../../../../redux/slices/channels/integration-with-qr';
+import { useAppDispatch } from '../../../../../../../redux/hook/hooks';
 
-const dataWhatsApp = [
+const dataUnOfficialWhatsApp = [
   {
     num: 1,
     message: 'Selecciona un canal',
@@ -43,16 +43,17 @@ const dataWhatsApp = [
   },
 ];
 
-export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
+export const SectionUnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
   setIsSectionWebChat,
+  getChannelList,
 }) => {
-  const [selectByComponent, setSelectByComponent] = useState<number>(1);
+  const [selectedByComponent, setSelectedByComponent] = useState<number>(1);
   const [isChecked, setIsChecked] = useState(false);
   const showAlert = useToastContext();
   const dispatch = useAppDispatch();
 
   const handlePrev = () => {
-    setSelectByComponent(selectByComponent - 1);
+    setSelectedByComponent(selectedByComponent - 1);
   };
 
   const handleSubmit = async () => {
@@ -66,8 +67,9 @@ export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
             'Ops algo salio mal intentelo nuevamente o comuníquese con su proveedor de servicios.',
         });
       } else {
-        setSelectByComponent(selectByComponent + 1);
+        setSelectedByComponent(selectedByComponent + 1);
         dispatch(setIntegrationQRWhatsApp(result));
+        getChannelList();
       }
     } catch (err) {
       showAlert?.addToast({
@@ -80,15 +82,15 @@ export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
   return (
     <StyledAddWhatsApp>
       <StyledHeaderChannelAdd>
-        <Text>Añadiendo canal de WhatsApp</Text>
+        <Text>Añadiendo canal de WhatsApp No Official</Text>
         <button onClick={() => setIsSectionWebChat(false)} type="button">
           <SVGIcon iconFile="/icons/times.svg" />
         </button>
       </StyledHeaderChannelAdd>
-      <StyledBodyAddChannel selectByComponent={selectByComponent}>
+      <StyledBodyAddChannel selectedByComponent={selectedByComponent}>
         <div>
           <div>
-            {dataWhatsApp.map((item) => (
+            {dataUnOfficialWhatsApp.map((item) => (
               <div key={item.num}>
                 <div>
                   <div>{item.num}</div>
@@ -100,10 +102,10 @@ export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
           </div>
         </div>
         <div>
-          {selectByComponent === 1 ? (
+          {selectedByComponent === 1 ? (
             <ConfirmationQR isChecked={isChecked} setIsChecked={setIsChecked} />
           ) : null}
-          {selectByComponent === 2 ? <ViewQR /> : null}
+          {selectedByComponent === 2 ? <ViewQR /> : null}
         </div>
       </StyledBodyAddChannel>
       <StyledFooterAddChannel>
@@ -113,7 +115,7 @@ export const SectionWhatsAppComponent: FC<IPropsChannelAdd> = ({
           size={Size.MEDIUM}
           onClick={handlePrev}
           state={
-            selectByComponent <= 1 ? ButtonState.DISABLED : ButtonState.NORMAL
+            selectedByComponent <= 1 ? ButtonState.DISABLED : ButtonState.NORMAL
           }
         />
         <ButtonMolecule

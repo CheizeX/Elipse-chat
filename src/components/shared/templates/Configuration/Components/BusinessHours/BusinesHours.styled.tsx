@@ -5,7 +5,7 @@ import { ConfigSectionInterface } from '../../ConfigurationSection/Configuration
 export const StyledBusinessHours = styled.div`
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   width: 352px;
-  height: 260px;
+  max-height: 260px;
   border-radius: 10px;
   margin-bottom: 20px;
   display: flex;
@@ -47,7 +47,7 @@ export const StyledBusinessHoursHeader = styled.div`
 
 export const StyledBusinessHoursBodyWithoutSet = styled.div`
   width: 200px;
-  height: 100px;
+  height: 140px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,22 +69,79 @@ export const StyledBusinessHoursBodyWithoutSet = styled.div`
   }
   & > span {
     text-align: center;
+    margin-bottom: 20px;
   }
 `;
 export const StyledBusinessHoursBodySetted = styled.div`
   width: 100%;
   height: 100%;
+  max-height: 175px;
+  padding-left: 25px;
+  padding-right: 15px;
   padding-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  border: 1px solid red;
 `;
 export const StyledBusinessHoursBodySettedGroupedDays = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.Colors.grays[1]};
+  height: 100%;
+  overflow-y: auto;
+  & ::-webkit-scrollbar {
+    border-radius: 4px;
+    outline: 2px solid ${({ theme }) => theme.Colors.grays[9]};
+    width: 10px;
+  }
+  & ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    width: 8px;
+  }
+  & ::-webkit-scrollbar-button {
+    border-radius: 10px;
+    width: 7px;
+    height: 2px;
+  }
+  & ::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.Colors.grays[10]};
+    border-radius: 10px;
+    background-color: ${({ theme }) => theme.Colors.purples[2]};
+    border: 2px solid ${({ theme }) => theme.Colors.grays[10]};
+    padding-top: 20px;
+    &:hover {
+      background-color: ${({ theme }) => theme.Colors.purples[1]};
+    }
+  }
+
+  & span {
+    font-size: 12px;
+  }
+  & > span {
+    color: ${({ theme }) => theme.Colors.grays[1]};
+  }
+  & > div {
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    & > :first-child {
+      border-radius: 50%;
+      width: 5px;
+      height: 5px;
+      background-color: ${({ theme }) => theme.Colors.purples[1]};
+      margin-right: 5px;
+    }
+    & > span {
+      color: ${({ theme }) => theme.Colors.grays[3]};
+      font-weight: 500;
+      & > span {
+        font-weight: 600;
+        color: ${({ theme }) => theme.Colors.grays[1]};
+      }
+    }
+  }
 `;
 
 export const StyledSetBusinessTimeDateAndHours = styled.div`

@@ -47,6 +47,7 @@ const dataMessenger = [
 export const SectionFacebookComponent: FC<ISectionFacebook> = ({
   setIsSectionWebChat,
   setConfirmationAccounth,
+  getChannelList,
 }) => {
   const dispatch = useAppDispatch();
   const showAlert = useToastContext();
@@ -73,6 +74,9 @@ export const SectionFacebookComponent: FC<ISectionFacebook> = ({
     const provider = new FacebookAuthProvider();
     provider.addScope('pages_messaging');
     provider.addScope('pages_show_list');
+    // Permisos para la integración de instagram.
+    provider.addScope('instagram_manage_messages');
+    provider.addScope('instagram_basic');
     // provider.addScope('pages_read_engagement');
     // provider.addScope('Page Public Content Access');
     // provider.addScope('Page Public Metadata Access');
@@ -87,6 +91,7 @@ export const SectionFacebookComponent: FC<ISectionFacebook> = ({
           dispatch(setAuthFacebook([]));
         } else {
           dispatch(setAuthFacebook(dataAuthFacebook));
+          getChannelList();
         }
       }
       handleNext();

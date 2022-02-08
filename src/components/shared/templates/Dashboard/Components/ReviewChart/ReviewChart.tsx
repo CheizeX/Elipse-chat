@@ -83,7 +83,6 @@ export const ReviewChart: FC<IPropsReview> = ({
       Insatisfactorio: item.unsatisfactory,
     };
   });
-
   const handleClick = () => {
     setIsComponentVisible(!isComponentVisible);
     setSelectedComponent('REVIEW');

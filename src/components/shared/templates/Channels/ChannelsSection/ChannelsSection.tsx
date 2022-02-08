@@ -6,7 +6,6 @@ import { ChannelsEmpty } from '../Components/ChannelsEmpty/ChannelsEmpty';
 import { ModalMolecule } from '../../../molecules/Modal/Modal';
 import { AddChannel } from '../Components/AddChannel/AddChannel';
 import { SectionWebChat } from '../Components/SectionWebChat/SectionWebChat';
-import { SectionWhatsAppComponent } from '../Components/SectionWhatsapp/SectionWhatsapp';
 import { SectionFacebookComponent } from '../Components/SectionFacebook/SectionFacebook';
 import { ConfirmationAuth } from '../Components/SectionFacebook/Components/ConfirmationAuth/ConfirmationAuth';
 import { SectionComponentInstagram } from '../Components/SectionInstagram/SectionInstagram';
@@ -18,6 +17,8 @@ import { useAppDispatch } from '../../../../../redux/hook/hooks';
 import { setlistChannel } from '../../../../../redux/slices/channels/list-channel';
 import { RootState } from '../../../../../redux';
 import { DeleteChannel } from '../Components/DeleteChannel/DeleteChannel';
+import { SectionUnOfficialWhatsAppComponent } from '../Components/SectionWhatsapp/UnOfficialWhatsapp/SectionUnOfficialWhatsapp';
+import { SectionOfficialComponent } from '../Components/SectionWhatsapp/OfficialWhatsapp/OfficialWhatsapp';
 
 export const ChannelsSection: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -47,11 +48,11 @@ export const ChannelsSection: FC = () => {
         message: `${err}`,
       });
     }
-  }, [setlistChannel, listChannel]);
+  }, [dispatch, showAlert]);
 
   useEffect(() => {
     getChannelList();
-  }, []);
+  }, [getChannelList]);
 
   return (
     <StyledChannelSection>
@@ -65,15 +66,22 @@ export const ChannelsSection: FC = () => {
       </ModalMolecule>
       <ModalMolecule isModal={isSectionWebChat}>
         {seletedComponent === 'Web Chat' ? (
-          <SectionWebChat setIsSectionWebChat={setIsSectionWebChat} />
+          <SectionWebChat
+            setIsSectionWebChat={setIsSectionWebChat}
+            getChannelList={getChannelList}
+          />
         ) : null}
-        {seletedComponent === 'Whatsapp' ? (
-          <SectionWhatsAppComponent setIsSectionWebChat={setIsSectionWebChat} />
+        {seletedComponent === 'UnofficialWhatsapp' ? (
+          <SectionUnOfficialWhatsAppComponent
+            setIsSectionWebChat={setIsSectionWebChat}
+            getChannelList={getChannelList}
+          />
         ) : null}
         {seletedComponent === 'Messenger' ? (
           <SectionFacebookComponent
             setConfirmationAccounth={setConfirmationAccounth}
             setIsSectionWebChat={setIsSectionWebChat}
+            getChannelList={getChannelList}
           />
         ) : null}
         {seletedComponent === 'Instagram' ? (
@@ -83,6 +91,12 @@ export const ChannelsSection: FC = () => {
         ) : null}
         {seletedComponent === 'DeleteChannel' ? (
           <DeleteChannel setIsSectionWebChat={setIsSectionWebChat} />
+        ) : null}
+        {seletedComponent === 'OfficialWhatsapp' ? (
+          <SectionOfficialComponent
+            setIsSectionWebChat={setIsSectionWebChat}
+            getChannelList={getChannelList}
+          />
         ) : null}
       </ModalMolecule>
       <ModalMolecule isModal={confirmationAccount}>

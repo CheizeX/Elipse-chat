@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable no-nested-ternary */
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
 import { Channels, Chat } from '../../../../../../models/chat/chat';
@@ -63,7 +63,6 @@ export const InConversationChatItem: FC<
   sortedChats,
   showOnlyPausedChats,
   newMessagesInChat,
-  // setNewMessagesInChat,
   searchByName,
 }) => {
   const dispatch = useAppDispatch();
@@ -72,9 +71,28 @@ export const InConversationChatItem: FC<
   const { chatsOnConversation } = useAppSelector(
     (state) => state.liveChat.chatsOnConversation,
   );
+
   // const { tagsToFilter, channelsToFilter } = useAppSelector(
   //   (state) => state.optionsToFilterChats,
   // );
+
+  const getLengthOfNewMessages = JSON.parse(
+    localStorage?.getItem('newDialoguesLength') || '{}',
+  );
+  // set the getLengthOfNewMessages as an array
+  const newMessagesLength = Object.entries(getLengthOfNewMessages).map(
+    ([key, value]) => ({ key, value }),
+  );
+
+  useEffect(() => {
+    localStorage.setItem(
+      'viewedDialoguesLength',
+      JSON.stringify(newMessagesLength),
+    );
+  }, [newMessagesLength]);
+
+  console.log('OBJECT', getLengthOfNewMessages);
+  console.log('ARRAY', newMessagesLength);
 
   const [timeLapse, setTimeLapse] = React.useState(Date.now());
   const [
@@ -162,13 +180,17 @@ export const InConversationChatItem: FC<
     });
   }, [newMessagesInChat, newOnconversationDialoguesInChat]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const intervalToGetActualTime = setInterval(() => {
       setTimeLapse(Date.now());
       handleNewMessagesInChat();
     }, 10000);
     return () => clearInterval(intervalToGetActualTime);
   }, [handleNewMessagesInChat]);
+
+  // useEffect(() => {
+  //   getLengthOfNewMessages();
+  // }, [getLengthOfNewMessages]);
 
   if (sortedChats) {
     dispatch(setSortedByLastDate());
@@ -310,9 +332,9 @@ export const InConversationChatItem: FC<
                       </div>
                     )}
                     {chat.messages.length > 0 &&
-                      chat.messages.length !==
-                        newOnconversationDialoguesInChat[chat._id]
-                          ?.messagesLength && (
+                      newMessagesLength.find(
+                        (newMessage) => newMessage.key === chat._id,
+                      )?.value !== chat.messages.length && (
                         <div>
                           {String(
                             chat.messages.length -
@@ -321,20 +343,8 @@ export const InConversationChatItem: FC<
                                   ?.messagesLength,
                               ) || 0),
                           )}
-                          {
-                            (console.log(
-                              'chat.messages.length ',
-                              chat.messages.length,
-                            ),
-                            console.log(
-                              'newOnconversationDialoguesInChat[chat._id] ',
-                              newOnconversationDialoguesInChat[chat._id]
-                                ?.messagesLength,
-                            ))
-                          }
                         </div>
                       )}
-                    {console.log(newOnconversationDialoguesInChat, 'este')}
                   </div>
                 </StyledTimeAndState>
               </StyledInConversationChatItem>

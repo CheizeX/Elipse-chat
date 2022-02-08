@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IContainerWhatsApp } from './SectionWhatsApp.interface';
+import { IContainerWhatsApp } from './SectionUnOfficialWhatsApp.interface';
 
 export const StyledAddWhatsApp = styled.div`
   width: 35rem;
@@ -64,29 +64,29 @@ export const StyledBodyAddChannel = styled.div<IContainerWhatsApp>`
         & :nth-child(1) {
           opacity: 'none';
           & > :nth-child(2) {
-            opacity: ${({ selectByComponent }) =>
-              selectByComponent < 2 ? 0.6 : 'none'};
+            opacity: ${({ selectedByComponent }) =>
+              selectedByComponent < 2 ? 0.6 : 'none'};
           }
         }
         & :nth-child(2) {
           & > :nth-child(2) {
-            opacity: ${({ selectByComponent }) =>
-              selectByComponent < 3 ? 0.6 : 'none'};
+            opacity: ${({ selectedByComponent }) =>
+              selectedByComponent < 3 ? 0.6 : 'none'};
           }
-          opacity: ${({ selectByComponent }) =>
-            selectByComponent < 2 ? 0.6 : 'none'};
+          opacity: ${({ selectedByComponent }) =>
+            selectedByComponent < 2 ? 0.6 : 'none'};
         }
         & :nth-child(3) {
-          opacity: ${({ selectByComponent }) =>
-            selectByComponent < 3 ? 0.6 : 'none'};
+          opacity: ${({ selectedByComponent }) =>
+            selectedByComponent < 3 ? 0.6 : 'none'};
           & > :nth-child(2) {
-            opacity: ${({ selectByComponent }) =>
-              selectByComponent < 4 ? 0.6 : 'none'};
+            opacity: ${({ selectedByComponent }) =>
+              selectedByComponent < 4 ? 0.6 : 'none'};
           }
         }
         & :nth-child(4) {
-          opacity: ${({ selectByComponent }) =>
-            selectByComponent < 4 ? 0.6 : 'none'};
+          opacity: ${({ selectedByComponent }) =>
+            selectedByComponent < 4 ? 0.6 : 'none'};
         }
         & > :nth-child(1) {
           display: flex;
