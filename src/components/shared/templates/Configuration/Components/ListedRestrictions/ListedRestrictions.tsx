@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable no-nested-ternary */
 import { FC, useState, useCallback } from 'react';
 import {
@@ -18,7 +20,11 @@ import {
 } from './ListedRestrictions.styled';
 import { Text } from '../../../../atoms/Text/Text';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
-import { ButtonMolecule, ButtonVariant } from '../../../../atoms/Button/Button';
+import {
+  ButtonMolecule,
+  ButtonState,
+  ButtonVariant,
+} from '../../../../atoms/Button/Button';
 import { ConfigSectionInterface } from '../../ConfigurationSection/ConfigurationSection.interface';
 import { ModalMolecule } from '../../../../molecules/Modal/Modal';
 import {
@@ -30,7 +36,6 @@ import { ContainerInput } from '../../../../molecules/Input/ContainerInput';
 import { SingleDatepicker } from '../../../../organisms/Datepicker/SingleDatepicker';
 import { TimeController } from '../../../../molecules/TimeController/TimeController';
 import {
-  restrictinosFromTheBackend,
   setHour,
   setMinute,
 } from '../../ConfigurationSection/ConfigurationSection.shared';
@@ -38,8 +43,20 @@ import {
   StyledEndTimeController,
   StyledStartTimeController,
 } from '../../../../molecules/TimeController/TimeController.styled';
+import { baseRestApi } from '../../../../../../api/base';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../redux/hook/hooks';
+import { useToastContext } from '../../../../molecules/Toast/useToast';
+import { Toast } from '../../../../molecules/Toast/Toast.interface';
+import { getConfigurationData } from '../../../../../../redux/slices/configuration/configuration-info';
 
 export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
+  const dispatch = useAppDispatch();
+  const showAlert = useToastContext();
+
+  const [loading, setLoading] = useState(false);
   const [sortedRestrictions, setSortedRestrictions] = useState<boolean>(false);
   const [modalNewRestriction, setModalNewRestriction] = useState(false);
   const [activeRestrictionWhenCreate, setActiveRestrictionWhenCreate] =
@@ -48,24 +65,99 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
   const [startTimeController, setStartTimeController] = useState(false);
   const [endTimeController, setEndTimeController] = useState(false);
   const [dateToEdit, setDateToEdit] = useState<Date | null>(null);
-
   const [selectedRestrictionDate, setSelectedRestrictionDate] =
     useState<Date | null>(null);
-
-  // const [restrictionOnOff, setRestrictionOnOff] = useState<any[]>([]);
-  const numberOfRestrictions = restrictinosFromTheBackend.length;
-  console.log('RESTRICTIONS', restrictinosFromTheBackend);
-  // console.log('ON/OFF', restrictionOnOff);
   const [selectedRestrictionStartTime, setSelectedRestrictionStartTime] =
     useState({
       hour: '00',
       minute: '00',
     });
-
   const [selectedRestrictionEndTime, setSelectedRestrictionEndTime] = useState({
     hour: '00',
     minute: '00',
   });
+  const { listOfRestrictions } = useAppSelector(
+    (state) => state.configurationInfo,
+  );
+
+  const numberOfRestrictions = listOfRestrictions?.length;
+
+  const objectWithNewRestrictionToSendToBack = {
+    date: selectedRestrictionDate,
+    startTime: selectedRestrictionStartTime,
+    endTime: selectedRestrictionEndTime,
+    isActive: activeRestrictionWhenCreate,
+  };
+
+  const handleCreateOrEditRestrictionOnbjectToSendToBack = async () => {
+    setLoading(true);
+    try {
+      await baseRestApi.post(
+        `${process.env.NEXT_PUBLIC_REST_API_URL}/business-time/restriction`,
+        objectWithNewRestrictionToSendToBack,
+      );
+      showAlert?.addToast({
+        alert: Toast.SUCCESS,
+        title: 'NUEVO RESTRICCION HORARIA',
+        message: `La nueva restricción se ha definido correctamente`,
+      });
+      setLoading(false);
+      dispatch(getConfigurationData());
+      setModalNewRestriction(false);
+    } catch (error) {
+      showAlert?.addToast({
+        alert: Toast.WARNING,
+        title: 'ERROR DE HORARIO',
+        message:
+          'No se pudo crear la restricción. Verifica haber completado todos los datos.',
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleDeleteRestriction = async (id: string) => {
+    setLoading(true);
+    try {
+      await baseRestApi.delete(
+        `${process.env.NEXT_PUBLIC_REST_API_URL}/business-time/restriction/${id}`,
+      );
+      showAlert?.addToast({
+        alert: Toast.SUCCESS,
+        title: 'RESTRICCIÓN ELIMINADA',
+        message: `La restricción se ha eliminado correctamente`,
+      });
+      setLoading(false);
+      dispatch(getConfigurationData());
+    } catch (error) {
+      showAlert?.addToast({
+        alert: Toast.WARNING,
+        title: 'ERROR DE HORARIO',
+        message: 'No se pudo eliminar la restricción.',
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleActivateRestriction = async (id: string, isActive: boolean) => {
+    setLoading(true);
+    try {
+      await baseRestApi.patch(
+        `${process.env.NEXT_PUBLIC_REST_API_URL}/business-time/switchRestrictionStatus/${id}`,
+        {
+          isActive,
+        },
+      );
+      setLoading(false);
+      dispatch(getConfigurationData());
+    } catch (error) {
+      showAlert?.addToast({
+        alert: Toast.WARNING,
+        title: 'ERROR DE HORARIO',
+        message: 'No se pudo cambiar el estado de la restricción.',
+      });
+    }
+    setLoading(false);
+  };
 
   const onChangeDate = (newDate: Date | null) => {
     setSelectedRestrictionDate(newDate);
@@ -226,7 +318,8 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
             <Text>Opciones</Text>
           </div>
           <section>
-            {restrictinosFromTheBackend
+            {listOfRestrictions
+              .filter((restriction) => restriction)
               .sort((a, b) => {
                 if (sortedRestrictions) {
                   return a.date > b.date ? 1 : -1;
@@ -235,7 +328,8 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
               })
               .map((restriction) => (
                 <div key={restriction.id}>
-                  {Number(restriction.date) >= Date.now() ? (
+                  {Number(new Date(restriction.date).getDate()) >=
+                  new Date(Date.now()).getDate() ? (
                     <div>Vigente</div>
                   ) : (
                     <span>Caducada</span>
@@ -244,51 +338,59 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
                     {Number(
                       new Intl.DateTimeFormat('es-ES', {
                         day: 'numeric',
-                      }).format(restriction.date),
+                      }).format(new Date(restriction.date)),
                     ) > 9
                       ? new Intl.DateTimeFormat('es-ES', {
                           day: 'numeric',
-                        }).format(restriction.date)
+                        }).format(new Date(restriction.date))
                       : `0${new Intl.DateTimeFormat('es-ES', {
                           day: 'numeric',
-                        }).format(restriction.date)}`}{' '}
+                        }).format(new Date(restriction.date))}`}{' '}
                     {`${
                       new Intl.DateTimeFormat('es-ES', {
                         month: 'long',
                       })
-                        .format(restriction.date)
+                        .format(new Date(restriction.date))
                         // make upper case first letter
                         .charAt(0)
                         .toUpperCase() +
                       new Intl.DateTimeFormat('es-ES', {
                         month: 'long',
                       })
-                        .format(restriction.date)
+                        .format(new Date(restriction.date))
                         .slice(1)
                     }`}{' '}
                     {new Intl.DateTimeFormat('es-ES', {
                       year: 'numeric',
-                    }).format(restriction.date)}
+                    }).format(new Date(restriction.date))}
                   </div>
 
                   <div>
-                    {restriction.start.hour}:{restriction.start.minute}
+                    {restriction.startTime.hour}:{restriction.startTime.minute}
                   </div>
                   <div>
-                    {restriction.end.hour}:{restriction.end.minute}
+                    {restriction.endTime.hour}:{restriction.endTime.minute}
                   </div>
                   <div>
-                    {Number(restriction.date) >= Date.now() && (
+                    {Number(new Date(restriction.date).getDate()) >=
+                      new Date(Date.now()).getDate() && (
                       <>
                         <span>
                           {restriction.isActive ? (
                             <ToogleComponentForMappedRestrictions
-                              onClick={() => {}}>
+                              onClick={() =>
+                                handleActivateRestriction(
+                                  restriction._id,
+                                  false,
+                                )
+                              }>
                               <div />
                             </ToogleComponentForMappedRestrictions>
                           ) : (
                             <ToogleComponentForMappedRestrictionsNoSel
-                              onClick={() => {}}>
+                              onClick={() =>
+                                handleActivateRestriction(restriction._id, true)
+                              }>
                               <div />
                             </ToogleComponentForMappedRestrictionsNoSel>
                           )}
@@ -297,14 +399,14 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
                           type="button"
                           onClick={() =>
                             handleEditRestriction(
-                              restriction.date,
+                              new Date(restriction.date),
                               {
-                                hour: restriction.start.hour,
-                                minute: restriction.start.minute,
+                                hour: restriction.startTime.hour,
+                                minute: restriction.startTime.minute,
                               },
                               {
-                                hour: restriction.end.hour,
-                                minute: restriction.end.minute,
+                                hour: restriction.endTime.hour,
+                                minute: restriction.endTime.minute,
                               },
                               restriction.isActive,
                             )
@@ -313,7 +415,9 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
                         </button>
                       </>
                     )}
-                    <button type="button">
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteRestriction(restriction._id)}>
                       <SVGIcon iconFile="/icons/delete.svg" />
                     </button>
                   </div>
@@ -472,9 +576,25 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
                 onClick={() => handleCloseModalNewOrEditRestriction()}
               />
               {dateToEdit ? (
-                <ButtonMolecule text="Editar" />
+                <ButtonMolecule
+                  text="Editar"
+                  onClick={handleCreateOrEditRestrictionOnbjectToSendToBack}
+                  state={
+                    loading
+                      ? ButtonState.DISABLED && ButtonState.LOADING
+                      : ButtonState.NORMAL
+                  }
+                />
               ) : (
-                <ButtonMolecule text="Crear" />
+                <ButtonMolecule
+                  text="Crear"
+                  onClick={handleCreateOrEditRestrictionOnbjectToSendToBack}
+                  state={
+                    loading
+                      ? ButtonState.DISABLED && ButtonState.LOADING
+                      : ButtonState.NORMAL
+                  }
+                />
               )}
             </StyledCreateNewRestrictionFooter>
           </StyledCreateNewRestriction>

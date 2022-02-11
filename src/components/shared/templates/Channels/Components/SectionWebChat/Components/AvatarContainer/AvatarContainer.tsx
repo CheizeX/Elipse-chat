@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useRef } from 'react';
 import { SVGIcon } from '../../../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../../../atoms/Text/Text';
 import { Event, ICustomAvatar } from './AvatarContainer.interface';
@@ -40,6 +40,8 @@ export const AvatarContainer: FC<ICustomAvatar> = ({
     { id: '12', name: 'Mascota_3.svg' },
   ];
   const [active, setActive] = useState<string>('');
+  const hiddenFileInput = useRef(null);
+
   const handleToggle = (id: string, name: string) => {
     setCustomizeMyAvatar(false);
     setActive(id);
@@ -59,6 +61,10 @@ export const AvatarContainer: FC<ICustomAvatar> = ({
       setCustomizeMyAvatar(false);
     }
   };
+  // const handleClick = (event: any) => {
+  //   console.log(hiddenFileInput, 'holaaaaaaaaaaa');
+  //   hiddenFileInput.current.click();
+  // };
   return (
     <>
       <StyledAvatarContainer>
@@ -84,7 +90,9 @@ export const AvatarContainer: FC<ICustomAvatar> = ({
         <div>
           <input
             type="file"
-            name="file"
+            ref={hiddenFileInput}
+            name="fileItem"
+            id="fileItem"
             accept="image/*"
             onChange={processImage}
           />

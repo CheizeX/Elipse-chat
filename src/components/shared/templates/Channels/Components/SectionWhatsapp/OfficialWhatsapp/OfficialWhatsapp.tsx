@@ -43,7 +43,7 @@ export const SectionOfficialComponent: FC<IPropsOfficialWhatsapp> = ({
   const [selectedComponent, setSelectedComponent] = useState<number>(2);
   const [isPhone, setIsPhone] = useState<string>('+56');
   const [isApiKey, setIsApiKey] = useState<string>('');
-  const [isValid, setIsValid] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(true);
   const showAlert = useToastContext();
 
   const handleComponentPrevious = () => {

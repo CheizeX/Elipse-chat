@@ -12,8 +12,8 @@ import {
 import { IPropsCardChannel } from './CardChannel.interface';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
-import { Dropdown } from '../../../../atoms/Dropdown/Dropdown';
 import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
+import useDisplayElementOrNot from '../../../../../../hooks/use-display-element-or-not';
 
 export const CardChannel: FC<IPropsCardChannel> = ({
   name,
@@ -25,8 +25,13 @@ export const CardChannel: FC<IPropsCardChannel> = ({
   setIsSectionWebChat,
   setSeletedComponent,
 }) => {
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useDisplayElementOrNot(false);
   const [toggle, setToggle] = useState<boolean>(isActive);
   const inputRef = useRef(null);
+  const handleClick = () => {
+    setIsComponentVisible(!isComponentVisible);
+  };
   const handleClickCard = () => {
     setSeletedComponent('DeleteChannel');
     setIsSectionWebChat(true);
@@ -36,7 +41,12 @@ export const CardChannel: FC<IPropsCardChannel> = ({
       <div>
         <StyledPicture>
           <div>
-            <img src={`${image}`} alt="No se encontro la imagen" />
+            {service === 'Web Chat' &&
+            image.substring(image.length - 3, image.length) === 'svg' ? (
+              <SVGIcon iconFile={`/avatars/${image}`} />
+            ) : (
+              <img src={`${image}`} alt="No se encontro la imagen" />
+            )}
           </div>
           <SVGIcon iconFile={`/icons/${icon}.svg`} />
         </StyledPicture>
@@ -54,27 +64,37 @@ export const CardChannel: FC<IPropsCardChannel> = ({
                 onClick={() => setToggle(!toggle)}
               />
             </StyledBoxWrapper>
-            <Dropdown
+            {/* <Dropdown
               triggerElement={() => (
+                )}> */}
+            <button type="button" onClick={handleClick}>
+              {isComponentVisible ? (
                 <SVGIcon iconFile="/icons/user_options.svg" />
-              )}>
-              <DropdownContainerCard>
-                {/* <BadgeMolecule
+              ) : (
+                <SVGIcon color="#8520D0" iconFile="/icons/user_options.svg" />
+              )}
+            </button>
+            {isComponentVisible ? (
+              <div ref={ref}>
+                <DropdownContainerCard>
+                  {/* <BadgeMolecule
                   bgColor="transparent"
                   leftIcon={() => <SVGIcon iconFile="/icons/pen.svg" />}>
                   <button type="button">
-                    <Text>Editar</Text>
+                  <Text>Editar</Text>
                   </button>
                 </BadgeMolecule> */}
-                <BadgeMolecule
-                  bgColor="transparent"
-                  leftIcon={() => <SVGIcon iconFile="/icons/delete.svg" />}>
-                  <button type="button" onClick={handleClickCard}>
-                    <Text>Eliminar </Text>
-                  </button>
-                </BadgeMolecule>
-              </DropdownContainerCard>
-            </Dropdown>
+                  <BadgeMolecule
+                    bgColor="transparent"
+                    leftIcon={() => <SVGIcon iconFile="/icons/delete.svg" />}>
+                    <button type="button" onClick={handleClickCard}>
+                      <Text>Eliminar </Text>
+                    </button>
+                  </BadgeMolecule>
+                </DropdownContainerCard>
+              </div>
+            ) : null}
+            {/* </Dropdown> */}
           </div>
         </div>
       </div>
@@ -94,6 +114,14 @@ export const CardChannel: FC<IPropsCardChannel> = ({
               <span>facebook</span>
             </div>
           </StyledFacebookService>
+        ) : null}
+        {service === 'Instagram' ? (
+          <StyledWhatsApp360>
+            <img
+              src="https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png"
+              alt="No se encontro la imagen"
+            />
+          </StyledWhatsApp360>
         ) : null}
         <div>
           <Text>{service}</Text>

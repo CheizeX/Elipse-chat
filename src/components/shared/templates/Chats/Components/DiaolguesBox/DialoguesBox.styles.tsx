@@ -422,3 +422,13 @@ export const StyledUserPendingDialogue = styled.div`
     }
   }
 `;
+
+export const StyledInputText = styled.p`
+  /* outline: none;
+  width: 100%;
+  &:-webkit-autofill {
+    & {
+      transition: background-color 600000s 0s, color 600000s 0s;
+    }
+  } */
+`;

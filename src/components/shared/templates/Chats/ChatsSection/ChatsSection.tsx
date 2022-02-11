@@ -30,6 +30,7 @@ import {
 } from '../Components/ChatsFilter/ChatFilter/ChatFilter.interface';
 import { ModalClosePreviousSession } from '../Components/ModalClosePreviousSession/ModalClosePreviousSession';
 import { SeccionChatHistory } from '../Components/SeccionChatHistory/SeccionChatHistory';
+// import { baseRestApi } from '../../../../../api/base';
 
 export const ChatsSection: FC<
   UploadableFile &
@@ -80,6 +81,7 @@ export const ChatsSection: FC<
       messageLength: number;
     },
   );
+  console.log(userSelected);
   // Funcion para buscar por nombre y rut
   // const onChangeSearchName = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setSearchByName(event.target.value);
@@ -95,7 +97,19 @@ export const ChatsSection: FC<
   // --------------- <<< WEB SOCKET EVENTS >>> -----------------
   // Escucha los chats de usuarios o agentes según el parámetro que se le pase
   const getNewMessageFromNewUserOrAgent = useCallback(async (event: string) => {
-    socket?.on(event, (data: Chat[]) => {
+    socket?.on(event, async (data: Chat[]) => {
+      // const user = data.find((asd) => asd.client.clientId === userSelected);
+      // console.log(user, 'USER');
+      // if (user && user?.unreadMessages > 0) {
+      //   try {
+      //     await baseRestApi.patch(
+      //       `${process.env.NEXT_PUBLIC_REST_API_URL}/chats/resetUnreadMessages/${user._id}`,
+      //       {},
+      //     );
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // }
       dispatch(setChatsOnConversation(data));
     });
   }, []);
@@ -125,10 +139,10 @@ export const ChatsSection: FC<
 
   // Trae los chats transferidos
   const wsGetTransferedChats = useCallback(async () => {
-    socket?.on('newTransfer', (data: Chat[]) => {
+    socket?.on('newTransfer', async (data: Chat[]) => {
       dispatch(setChatsOnConversation(data));
     });
-  }, []);
+  }, [dispatch, userSelected]);
 
   // escucha los chats que pasan a on_conversation
   const wsNewChatAssigned = useCallback(async () => {
@@ -291,6 +305,7 @@ export const ChatsSection: FC<
 
         {liveChatPage && liveChatPage === 'EndChat' ? (
           <EndChat
+            setUserSelected={setUserSelected}
             liveChatModal={liveChatModal}
             setLiveChatModal={setLiveChatModal}
           />

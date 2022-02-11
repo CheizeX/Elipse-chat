@@ -45,6 +45,7 @@ import {
 } from '../../../../../../redux/slices/live-chat/chat-history';
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
+import { baseRestApi } from '../../../../../../api/base';
 
 export const InConversationChatItem: FC<
   StyledLabelProps &
@@ -59,12 +60,14 @@ export const InConversationChatItem: FC<
 > = ({
   setUserSelected,
   userSelected,
-  setActiveByDefaultTab,
+  // setActiveByDefaultTab,
   sortedChats,
   showOnlyPausedChats,
-  newMessagesInChat,
   searchByName,
 }) => {
+  // const { tagsToFilter, channelsToFilter } = useAppSelector(
+  //   (state) => state.optionsToFilterChats,
+  // );
   const dispatch = useAppDispatch();
   const showAlert = useToastContext();
 
@@ -72,75 +75,23 @@ export const InConversationChatItem: FC<
     (state) => state.liveChat.chatsOnConversation,
   );
 
-  // const { tagsToFilter, channelsToFilter } = useAppSelector(
-  //   (state) => state.optionsToFilterChats,
-  // );
-
-  const getLengthOfNewMessages = JSON.parse(
-    localStorage?.getItem('newDialoguesLength') || '{}',
-  );
-  // set the getLengthOfNewMessages as an array
-  const newMessagesLength = Object.entries(getLengthOfNewMessages).map(
-    ([key, value]) => ({ key, value }),
-  );
-
-  useEffect(() => {
-    localStorage.setItem(
-      'viewedDialoguesLength',
-      JSON.stringify(newMessagesLength),
-    );
-  }, [newMessagesLength]);
-
-  console.log('OBJECT', getLengthOfNewMessages);
-  console.log('ARRAY', newMessagesLength);
-
   const [timeLapse, setTimeLapse] = React.useState(Date.now());
-  const [
-    newOnconversationDialoguesInChat,
-    setNewOnconversationDialoguesInChat,
-  ] = React.useState({} as any);
 
-  // const setNewDialoguesLengthInLocalStorage = useCallback(
-  //   (value: number) => {
-  //     if (!localStorage.getItem('newDialoguesLength')) {
-  //       localStorage.setItem('newDialoguesLength', JSON.stringify({}));
-  //     }
-  //     if (localStorage.getItem('newDialoguesLength')) {
-  //       const newDialoguesLength = JSON.parse(
-  //         localStorage.getItem('newDialoguesLength') || '{}',
-  //       );
-  //       if (!newDialoguesLength[`${userSelected}`]) {
-  //         // set an object with the userSelected as key and 0 as value
-  //         newDialoguesLength[`${userSelected}`] = value.toString();
-
-  //         localStorage.setItem(
-  //           'newDialoguesLength',
-  //           JSON.stringify({ ...newDialoguesLength }),
-  //         );
-  //       }
-  //     }
-  //   },
-  //   [userSelected],
-  // );
+  const handleResetNoViewedChats = useCallback(async (id: string) => {
+    try {
+      await baseRestApi.patch(
+        `${process.env.NEXT_PUBLIC_REST_API_URL}/chats/resetUnreadMessages/${id}`,
+        {},
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const handleSendMessageToUser = useCallback(
-    async (
-      clientId: string,
-      channel: string,
-      chatId: string,
-      messagesLength: number,
-    ) => {
-      // setNewDialoguesLengthInLocalStorage(messagesLength);
+    async (clientId: string, channel: string, chatId: string) => {
       setUserSelected(clientId);
-      setActiveByDefaultTab(1);
-
-      setNewOnconversationDialoguesInChat({
-        ...newOnconversationDialoguesInChat,
-        [chatId]: {
-          ...newOnconversationDialoguesInChat[chatId],
-          messagesLength,
-        },
-      });
+      handleResetNoViewedChats(chatId);
 
       try {
         const hasHistory = await readHistoryChat(
@@ -159,38 +110,15 @@ export const InConversationChatItem: FC<
         });
       }
     },
-    [
-      dispatch,
-      newOnconversationDialoguesInChat,
-      setNewOnconversationDialoguesInChat,
-      setUserSelected,
-      setActiveByDefaultTab,
-      showAlert,
-    ],
+    [dispatch, setUserSelected, showAlert],
   );
-
-  console.log('CHATS ON CONVERSATION', chatsOnConversation);
-  console.log('NEW ARRAY', newOnconversationDialoguesInChat);
-  const handleNewMessagesInChat = useCallback(() => {
-    // verificar si newMessagesInChat esta dentro de newOnconversationDialoguesInChat y si no esta, agregarlo
-
-    setNewOnconversationDialoguesInChat({
-      ...newOnconversationDialoguesInChat,
-      ...newMessagesInChat,
-    });
-  }, [newMessagesInChat, newOnconversationDialoguesInChat]);
 
   useEffect(() => {
     const intervalToGetActualTime = setInterval(() => {
       setTimeLapse(Date.now());
-      handleNewMessagesInChat();
     }, 10000);
     return () => clearInterval(intervalToGetActualTime);
-  }, [handleNewMessagesInChat]);
-
-  // useEffect(() => {
-  //   getLengthOfNewMessages();
-  // }, [getLengthOfNewMessages]);
+  }, []);
 
   if (sortedChats) {
     dispatch(setSortedByLastDate());
@@ -238,17 +166,14 @@ export const InConversationChatItem: FC<
                   chat.client.clientId,
                   chat.channel,
                   chat._id,
-                  chat.messages.length,
                 )
               }>
               <StyledInConversationChatItem>
                 <StyledClientAndAgentAvatars>
                   {chat.isPaused && <SVGIcon iconFile="/icons/pause.svg" />}
-
                   {chat.isPaused === false && chat.client.profilePic && (
                     <img src={chat.client.profilePic} alt={chat.client.name} />
                   )}
-
                   {chat.isPaused === false && !chat.client.profilePic && (
                     <SVGIcon iconFile="/icons/user.svg" />
                   )}
@@ -331,20 +256,6 @@ export const InConversationChatItem: FC<
                         <SVGIcon iconFile="/icons/exchange_alt.svg" />
                       </div>
                     )}
-                    {chat.messages.length > 0 &&
-                      newMessagesLength.find(
-                        (newMessage) => newMessage.key === chat._id,
-                      )?.value !== chat.messages.length && (
-                        <div>
-                          {String(
-                            chat.messages.length -
-                              (Number(
-                                newOnconversationDialoguesInChat[chat._id]
-                                  ?.messagesLength,
-                              ) || 0),
-                          )}
-                        </div>
-                      )}
                   </div>
                 </StyledTimeAndState>
               </StyledInConversationChatItem>

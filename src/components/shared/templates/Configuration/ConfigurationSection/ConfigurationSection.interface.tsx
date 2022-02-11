@@ -12,6 +12,7 @@ export interface ConfigSectionInterface {
   activeRestrictionWhenCreate?: boolean;
   dayActive?: string;
   selected?: string;
+  restrictions?: any[];
 }
 
 export interface TimeControllerInterface {

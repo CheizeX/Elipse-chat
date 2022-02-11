@@ -30,20 +30,30 @@ export const StyledChatsList = styled.section`
 `;
 
 export const StyledIndicatorOnConversation = styled.span`
-  min-width: 0.625rem;
-  height: 0.625rem;
+  min-width: 1.7rem;
+  min-height: 1.5rem;
+  max-width: 2.2rem;
+  width: fit-content;
+  height: fit-content;
   background-color: ${({ theme }) => theme.Colors.orange[2]};
   z-index: 1;
   position: absolute;
-  right: 1.85rem;
-  top: 2.25rem;
-  border-radius: 50%;
+  right: 0.5rem;
+  top: 1rem;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.1rem;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: ${({ theme }) => theme.Colors.grays[10]};
+  outline: ${({ theme }) => theme.Colors.grays[8]};
+  padding: 0.125rem 0.25rem;
 `;
 
 export const StyledIndicatorPendings = styled.span`
   min-width: 0.625rem;
   height: 0.625rem;
-  background-color: ${({ theme }) => theme.Colors.grays[9]};
   z-index: 1;
   position: absolute;
   left: 1.9375rem;
@@ -56,6 +66,7 @@ export const StyledIndicatorPendings = styled.span`
   font-weight: bold;
   color: ${({ theme }) => theme.Colors.orange[2]};
   background-color: ${({ theme }) => theme.Colors.orange[2]};
+  border-radius: 0.5rem 0.5rem 0.5rem 0.1rem;
 `;
 
 export const StyledIndicatorPaused = styled.span`

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledWrapperOfficialWhatsappSuccess = styled.div`
+export const WrapperInstagramSuccess = styled.div`
   height: 100%;
   & > :first-child {
     margin-top: 30px;

@@ -8,7 +8,16 @@ import { StyledConfirmationQR } from './ConfirmationQR.styled';
 export const ConfirmationQR: FC<IPropsComponentQR> = ({
   isChecked,
   setIsChecked,
+  setSelectedByComponent,
 }) => {
+  const handleChecked = () => {
+    setIsChecked(!isChecked);
+    if (isChecked) {
+      setSelectedByComponent(1);
+    } else {
+      setSelectedByComponent(2);
+    }
+  };
   return (
     <StyledConfirmationQR checkedConfirmation={isChecked}>
       <Text>
@@ -37,10 +46,7 @@ export const ConfirmationQR: FC<IPropsComponentQR> = ({
           </div>
           <div>
             <div>
-              <Checkbox
-                checked={isChecked}
-                onClick={() => setIsChecked(!isChecked)}
-              />
+              <Checkbox checked={isChecked} onClick={handleChecked} />
               <Text>¿Estás dispuesto a continuar con el proceso?</Text>
             </div>
           </div>

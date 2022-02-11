@@ -2,7 +2,11 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable no-nested-ternary */
 import { FC, useCallback, useMemo, useState } from 'react';
-import { ButtonMolecule, ButtonVariant } from '../../../../atoms/Button/Button';
+import {
+  ButtonMolecule,
+  ButtonState,
+  ButtonVariant,
+} from '../../../../atoms/Button/Button';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
 import { ModalMolecule } from '../../../../molecules/Modal/Modal';
@@ -10,7 +14,6 @@ import { Checkbox } from '../../../../atoms/Checkbox/Checkbox';
 import {
   setHour,
   setMinute,
-  weekdaysForBusinessTimeObject,
 } from '../../ConfigurationSection/ConfigurationSection.shared';
 import {
   StyledSetBusinessTimeSetDayItem,
@@ -33,8 +36,19 @@ import {
 import { IconButtonMolecule } from '../../../../atoms/IconButton/IconButton';
 import { ContainerInput } from '../../../../molecules/Input/ContainerInput';
 import { TimeController } from '../../../../molecules/TimeController/TimeController';
+import { ConfigSectionInterface } from '../../ConfigurationSection/ConfigurationSection.interface';
+import { baseRestApi } from '../../../../../../api/base';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../redux/hook/hooks';
+import { useToastContext } from '../../../../molecules/Toast/useToast';
+import { Toast } from '../../../../molecules/Toast/Toast.interface';
+import { getConfigurationData } from '../../../../../../redux/slices/configuration/configuration-info';
 
-export const BusinessHours: FC = () => {
+export const BusinessHours: FC<ConfigSectionInterface> = () => {
+  const dispatch = useAppDispatch();
+  const showAlert = useToastContext();
   const [modalBusinessTime, setModalBusinessTime] = useState(false);
 
   const [startTimeController, setStartTimeController] = useState(false);
@@ -43,13 +57,18 @@ export const BusinessHours: FC = () => {
     useState(false);
   const [endSecondTimeController, setEndSecondTimeController] = useState(false);
   const [dayActive, setDayActive] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const { businessHoursData } = useAppSelector(
+    (state) => state.configurationInfo,
+  );
 
   const [timeRestrictions, setTimeRestrictions] = useState({
-    ...weekdaysForBusinessTimeObject,
+    ...businessHoursData,
   } as any);
 
   const businessHoursSetted = !Object.keys(timeRestrictions).every(
-    (key) => timeRestrictions[key].isActive === false,
+    (key: any) => businessHoursData[key]?.isActive === false,
   );
 
   // --- LOGICA DE LOS HORARIOS ----------------------------------------------------------------------------------
@@ -67,7 +86,6 @@ export const BusinessHours: FC = () => {
     () =>
       filteredActiveDays.reduce((acc, curr) => {
         const { day, start, end, reEnd, reStart, secondTime, name, id } = curr;
-
         if (!acc[day]) {
           acc[id - 1] = [
             name,
@@ -149,72 +167,63 @@ export const BusinessHours: FC = () => {
   );
   // FIN LOGICA DE LOS HORARIOS ----------------------------------------------------------------------------------
 
-  const handleStartTimeController = useCallback(
-    (startDay: string) => {
-      setEndTimeController(false);
-      setStartSecondTimeController(false);
-      setEndSecondTimeController(false);
-      setStartTimeController(!startTimeController);
-      setDayActive(startDay);
-    },
-    [
-      startTimeController,
-      setEndTimeController,
-      setStartTimeController,
-      setEndSecondTimeController,
-      setStartSecondTimeController,
-    ],
-  );
+  const handleSendActualizedInfoToBackend = async () => {
+    setLoading(true);
+    try {
+      await baseRestApi.patch(
+        `${process.env.NEXT_PUBLIC_REST_API_URL}/business-time/time`,
+        timeRestrictions,
+      );
+      showAlert?.addToast({
+        alert: Toast.SUCCESS,
+        title: 'NUEVO HORARIO DEFINIDO',
+        message: `El nuevo horario se ha definido correctamente`,
+      });
+      setLoading(false);
+      dispatch(getConfigurationData());
+      setModalBusinessTime(false);
+    } catch (error) {
+      showAlert?.addToast({
+        alert: Toast.ERROR,
+        title: 'ERROR DE HORARIO',
+        message:
+          'No se pudo definir el nuevo horario. Verifica que los datos sean correctos.',
+      });
+    }
+    setLoading(false);
+  };
 
-  const handleEndTimeController = useCallback(
-    (endDay: string) => {
-      setStartTimeController(false);
-      setStartSecondTimeController(false);
-      setEndSecondTimeController(false);
-      setEndTimeController(!endTimeController);
-      setDayActive(endDay);
-    },
-    [
-      endTimeController,
-      setEndTimeController,
-      setStartTimeController,
-      setEndSecondTimeController,
-      setStartSecondTimeController,
-    ],
-  );
+  const handleStartTimeController = (startDay: string) => {
+    setEndTimeController(false);
+    setStartSecondTimeController(false);
+    setEndSecondTimeController(false);
+    setStartTimeController(!startTimeController);
+    setDayActive(startDay);
+  };
 
-  const handleStartSecondTimeController = useCallback(
-    (startDay: string) => {
-      setEndTimeController(false);
-      setStartTimeController(false);
-      setEndSecondTimeController(false);
-      setStartSecondTimeController(!startSecondTimeController);
-      setDayActive(startDay);
-    },
-    [
-      startSecondTimeController,
-      setEndTimeController,
-      setStartTimeController,
-      setEndSecondTimeController,
-      setStartSecondTimeController,
-    ],
-  );
+  const handleEndTimeController = (endDay: string) => {
+    setStartTimeController(false);
+    setStartSecondTimeController(false);
+    setEndSecondTimeController(false);
+    setEndTimeController(!endTimeController);
+    setDayActive(endDay);
+  };
 
-  const handleEndSecondTimeController = useCallback(
-    (endDay: string) => {
-      setEndTimeController(false);
-      setStartTimeController(false);
-      setStartSecondTimeController(false);
-      setEndSecondTimeController(!endSecondTimeController);
-      setDayActive(endDay);
-    },
-    [
-      endSecondTimeController,
-      setEndTimeController,
-      setStartTimeController,
-      setStartSecondTimeController,
-    ],
-  );
+  const handleStartSecondTimeController = (startDay: string) => {
+    setEndTimeController(false);
+    setStartTimeController(false);
+    setEndSecondTimeController(false);
+    setStartSecondTimeController(!startSecondTimeController);
+    setDayActive(startDay);
+  };
+
+  const handleEndSecondTimeController = (endDay: string) => {
+    setEndTimeController(false);
+    setStartTimeController(false);
+    setStartSecondTimeController(false);
+    setEndSecondTimeController(!endSecondTimeController);
+    setDayActive(endDay);
+  };
 
   const onChangeHour = useCallback(
     (newTime: { hour: string; minute: string }, startOrFinish: string) => {
@@ -334,7 +343,7 @@ export const BusinessHours: FC = () => {
           )}
         </StyledBusinessHoursHeader>
         {!businessHoursSetted ? (
-          <StyledBusinessHoursBodyWithoutSet>
+          <StyledBusinessHoursBodyWithoutSet key="123">
             <SVGIcon iconFile="/icons/business-time-not.svg" />
             <Text color="#B2B2B2">
               No has establecido un Horario de atención.
@@ -343,36 +352,34 @@ export const BusinessHours: FC = () => {
         ) : (
           <StyledBusinessHoursBodySetted>
             <StyledBusinessHoursBodySettedGroupedDays>
-              <>
-                {groupedDaysDivided &&
-                  groupedDaysDivided.map((day: any) => (
-                    <>
-                      <Text color="red" key={day.id}>
-                        {day.length === 1 && day[0].name}
-                        {day.length === 2 && `${day[0].name} y ${day[1].name}`}
-                        {day.length > 2 &&
-                          `${day[0].name} a ${day[day.length - 1].name}`}
+              {groupedDaysDivided &&
+                groupedDaysDivided.map((day: any) => (
+                  <>
+                    <Text color="red" key={`${`${day[0].name}a`}`}>
+                      {day.length === 1 && day[0].name}
+                      {day.length === 2 && `${day[0].name} y ${day[1].name}`}
+                      {day.length > 2 &&
+                        `${day[0].name} a ${day[day.length - 1].name}`}
+                    </Text>
+                    <div>
+                      <div />
+                      <Text>
+                        Desde <Text color="black">{day[0].start} hrs. </Text>
+                        hasta <Text color="black">{day[0].end} hrs.</Text>
                       </Text>
-                      <div>
-                        <div />
-                        <Text>
-                          Desde <Text color="black">{day[0].start} hrs. </Text>
-                          hasta <Text color="black">{day[0].end} hrs.</Text>
+                    </div>
+                    {day[0].secondTime && (
+                      <div key={day[0].id}>
+                        <span />
+                        <Text color="gray">
+                          Desde{' '}
+                          <Text color="black">{day[0].reStart} hrs. </Text>
+                          hasta <Text color="black">{day[0].reEnd} hrs.</Text>
                         </Text>
                       </div>
-                      {day[0].secondTime && (
-                        <div>
-                          <span />
-                          <Text color="gray">
-                            Desde{' '}
-                            <Text color="black">{day[0].reStart} hrs. </Text>
-                            hasta <Text color="black">{day[0].reEnd} hrs.</Text>
-                          </Text>
-                        </div>
-                      )}
-                    </>
-                  ))}
-              </>
+                    )}
+                  </>
+                ))}
             </StyledBusinessHoursBodySettedGroupedDays>
           </StyledBusinessHoursBodySetted>
         )}
@@ -396,11 +403,13 @@ export const BusinessHours: FC = () => {
                 <SVGIcon iconFile="/icons/close.svg" />
               </button>
             </StyledSetBusinessTimeDateAndHoursHeader>
+
             <StyledSetBusinessTimeDateAndHoursBody>
-              {Object.keys(weekdaysForBusinessTimeObject).map((day) => (
-                <StyledSetBusinessTimeSetDayItem key={day}>
+              {Object.keys(timeRestrictions).map((day, index) => (
+                <StyledSetBusinessTimeSetDayItem key={day + index.toString()}>
                   <div>
                     <Checkbox
+                      key={timeRestrictions[day].name}
                       checked={timeRestrictions[day].isActive}
                       onClick={() => {
                         setTimeRestrictions({
@@ -412,7 +421,7 @@ export const BusinessHours: FC = () => {
                         });
                       }}
                     />
-                    <Text color="#b2b2b2">{day}</Text>
+                    <Text color="#b2b2b2">{timeRestrictions[day].name}</Text>
                   </div>
 
                   <StyledSetBusinessTimeSetHourStartAndFinish
@@ -629,7 +638,15 @@ export const BusinessHours: FC = () => {
                 variant={ButtonVariant.OUTLINED}
                 onClick={() => setModalBusinessTime(false)}
               />
-              <ButtonMolecule text="Establecer" />
+              <ButtonMolecule
+                text="Establecer"
+                onClick={handleSendActualizedInfoToBackend}
+                state={
+                  loading
+                    ? ButtonState.DISABLED && ButtonState.LOADING
+                    : ButtonState.NORMAL
+                }
+              />
             </StyledSetBusinessTimeDateAndHoursFooter>
           </StyledSetBusinessTimeDateAndHours>
         </ModalMolecule>
@@ -637,17 +654,3 @@ export const BusinessHours: FC = () => {
     </>
   );
 };
-
-// get server side props to get the restrictions of the business
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const { businessId } = context.query;
-//   const { data } = await getBusinessRestrictions({
-//     businessId: businessId as string,
-//   });
-
-//   return {
-//     props: {
-//       timeRestrictions: data.businessRestrictions,
-//     },
-//   };
-// };

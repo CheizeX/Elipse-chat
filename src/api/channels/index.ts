@@ -1,4 +1,8 @@
-import { Channel, IPropsOfficialWhatsapp } from '../../models/channels/channel';
+import {
+  Channel,
+  IPropsInstagram,
+  IPropsOfficialWhatsapp,
+} from '../../models/channels/channel';
 import {
   IReceiveAuthFacebook,
   IConfirmAuthFacebook,
@@ -49,6 +53,16 @@ export const createOfficialWhatsapp = (channelDate: IPropsOfficialWhatsapp) => {
   );
 };
 
+export const readPageInstagram = (dataInstagram: IPropsInstagram) => {
+  return baseRestApi.post<IPropsInstagram>(
+    '/channelsCredentials/instagram',
+    dataInstagram,
+  );
+};
+
 export const getAllChannel = () => {
   return baseRestApi.get<[]>('/channelsCredentials/');
+};
+export const getHasPageInstagram = () => {
+  return baseRestApi.get<IPropsInstagram[]>('/instagram');
 };

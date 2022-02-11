@@ -1,5 +1,7 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable sonarjs/cognitive-complexity */
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Text } from '../../../../atoms/Text/Text';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
@@ -79,8 +81,6 @@ export const ChatsViewSelectedToConfirm: FC<
   setEmojisDisplayed,
   showPredefinedTexts,
   setShowPredefinedTexts,
-  // newMessagesInChat,
-  // setNewMessagesInChat,
 }) => {
   const showAlert = useToastContext();
 
@@ -123,16 +123,21 @@ export const ChatsViewSelectedToConfirm: FC<
         localStorage.getItem('newDialoguesLength') || '',
       );
       if (!newDialoguesLength[`${userSelected}`]) {
-        // set an object with the userSelected as key and 0 as value
-        newDialoguesLength[`${userSelected}`] = '0';
-
         localStorage.setItem(
           'newDialoguesLength',
-          JSON.stringify({ ...newDialoguesLength }),
+          JSON.stringify(
+            Object.assign(newDialoguesLength, {
+              [`${userSelected}`]: '0',
+            }),
+          ),
         );
       }
     }
   }, [userSelected]);
+
+  useEffect(() => {
+    setNewDialoguesLengthInLocalStorage();
+  }, [setNewDialoguesLengthInLocalStorage]);
 
   const handleSetUserToOnConversation = async () => {
     // if (chatsOnConversation?.length < userDataInState?.maxChatsOnConversation) {
@@ -322,8 +327,6 @@ export const ChatsViewSelectedToConfirm: FC<
     setLiveChatModal(true);
     setLiveChatPage('EndChat');
     dispatch(setChatsToSendId(chatToTalkWithUserId || ''));
-    // quitar el objeto que coincida con el userSelected de newMessagesInChat
-    setUserSelected('');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -525,7 +528,6 @@ export const ChatsViewSelectedToConfirm: FC<
             <button type="button" onClick={handleDropZoneDisplayed}>
               <SVGIcon iconFile="/icons/clipper.svg" />
             </button>
-
             {/* <button type="button" onClick={handleSowEmojisButtton}>
               <SVGIcon iconFile="/icons/emojis.svg" />
             </button> */}
@@ -546,7 +548,6 @@ export const ChatsViewSelectedToConfirm: FC<
           <IconButtonMolecule
             onClick={handleClickToSendMessage}
             state={
-              // eslint-disable-next-line no-nested-ternary
               chatInputDialogue === ''
                 ? IconButtonState.DISABLED
                 : sendingMessage === true

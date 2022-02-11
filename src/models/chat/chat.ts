@@ -66,4 +66,5 @@ export type Chat = {
   isPaused: boolean;
   createdAt: Date;
   updatedAt: Date;
+  unreadMessages: number;
 };

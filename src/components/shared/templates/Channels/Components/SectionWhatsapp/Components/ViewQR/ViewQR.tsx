@@ -1,13 +1,14 @@
 import { FC } from 'react';
-import { useAppSelector } from '../../../../../../../../redux/hook/hooks';
+// import { useAppSelector } from '../../../../../../../../redux/hook/hooks';
 import { Text } from '../../../../../../atoms/Text/Text';
 import { LinkToMolecule } from '../../../../../../molecules/LinkTo/LinkTo';
 import { StyledQR, StyledLink, StyledViewQr } from './ViewQR.styled';
+import { IViewQR } from './ViewOR.interface';
 
-export const ViewQR: FC = () => {
-  const { dataInfoQR } = useAppSelector(
-    (state) => state.channel.chatIntegrationQRState,
-  );
+export const ViewQR: FC<IViewQR> = () => {
+  // const { dataInfoQR } = useAppSelector(
+  //   (state) => state.channel.chatIntegrationQRState,
+  // );
   return (
     <StyledViewQr>
       <div>
@@ -24,10 +25,17 @@ export const ViewQR: FC = () => {
           </div>
         </StyledLink>
         <StyledQR>
-          <img
-            src={`https://api.chat-api.com/instance${dataInfoQR[0].instanceId}/qr_code?token=${dataInfoQR[0].instanceToken}`}
-            alt="qr"
-          />
+          {/* {whatsappUnOfficial ? (
+            <img
+              src={`https://api.wassenger.com/v1/devices/${dataInfoQR[0].instanceId}/scan?force=true&Token=${dataInfoQR[0].instanceToken}`}
+              alt="qr"
+            />
+          ) : (
+            <img
+              src={`https://api.wassenger.com/v1/devices/${dataInfoQR[0].instanceId}/scan?Token=${dataInfoQR[0].instanceToken}`}
+              alt="qr"
+            />
+          )} */}
         </StyledQR>
         <div>
           <StyledLink>

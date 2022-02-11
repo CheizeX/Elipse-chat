@@ -18,11 +18,12 @@ import {
   StyledBodyAddChannel,
   StyledFooterAddChannel,
 } from './SectionUnOfficialWhatsApp.styled';
-import { getInstanceQR } from '../../../../../../../api/channels';
+// import { getInstanceQR } from '../../../../../../../api/channels';
 import { Toast } from '../../../../../molecules/Toast/Toast.interface';
 import { useToastContext } from '../../../../../molecules/Toast/useToast';
-import { setIntegrationQRWhatsApp } from '../../../../../../../redux/slices/channels/integration-with-qr';
-import { useAppDispatch } from '../../../../../../../redux/hook/hooks';
+// import { setIntegrationQRWhatsApp } from '../../../../../../../redux/slices/channels/integration-with-qr';
+// import { useAppDispatch } from '../../../../../../../redux/hook/hooks';
+import { WhatsappExists } from '../Components/WhatsappExists/WhatsappExists';
 
 const dataUnOfficialWhatsApp = [
   {
@@ -45,32 +46,36 @@ const dataUnOfficialWhatsApp = [
 
 export const SectionUnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
   setIsSectionWebChat,
-  getChannelList,
+  // getChannelList,
+  whatsappUnOfficial,
 }) => {
   const [selectedByComponent, setSelectedByComponent] = useState<number>(1);
   const [isChecked, setIsChecked] = useState(false);
+  const [unLink, setUnLink] = useState<boolean>(false);
   const showAlert = useToastContext();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const handlePrev = () => {
     setSelectedByComponent(selectedByComponent - 1);
   };
-
+  const handleNext = () => {
+    setSelectedByComponent(selectedByComponent + 1);
+  };
   const handleSubmit = async () => {
     try {
-      const result = await getInstanceQR();
-      if (result.success === false) {
-        showAlert?.addToast({
-          alert: Toast.ERROR,
-          title: 'ERROR',
-          message:
-            'Ops algo salio mal intentelo nuevamente o comuníquese con su proveedor de servicios.',
-        });
-      } else {
-        setSelectedByComponent(selectedByComponent + 1);
-        dispatch(setIntegrationQRWhatsApp(result));
-        getChannelList();
-      }
+      // const result = await getInstanceQR();
+      // if (result.success === false) {
+      //   showAlert?.addToast({
+      //     alert: Toast.ERROR,
+      //     title: 'ERROR',
+      //     message:
+      //       'Ops algo salio mal intentelo nuevamente o comuníquese con su proveedor de servicios.',
+      //   });
+      // } else {
+      //   dispatch(setIntegrationQRWhatsApp(result));
+      // getChannelList();
+      // }
+      handleNext();
     } catch (err) {
       showAlert?.addToast({
         alert: Toast.ERROR,
@@ -82,7 +87,7 @@ export const SectionUnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
   return (
     <StyledAddWhatsApp>
       <StyledHeaderChannelAdd>
-        <Text>Añadiendo canal de WhatsApp No Official</Text>
+        <Text>Añadiendo canal de WhatsApp No Oficial</Text>
         <button onClick={() => setIsSectionWebChat(false)} type="button">
           <SVGIcon iconFile="/icons/times.svg" />
         </button>
@@ -102,10 +107,28 @@ export const SectionUnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
           </div>
         </div>
         <div>
-          {selectedByComponent === 1 ? (
-            <ConfirmationQR isChecked={isChecked} setIsChecked={setIsChecked} />
+          {!whatsappUnOfficial && selectedByComponent === 1 ? (
+            <ConfirmationQR
+              isChecked={isChecked}
+              setSelectedByComponent={setSelectedByComponent}
+              setIsChecked={setIsChecked}
+            />
           ) : null}
-          {selectedByComponent === 2 ? <ViewQR /> : null}
+          {whatsappUnOfficial &&
+          (selectedByComponent === 1 || selectedByComponent === 2) ? (
+            <WhatsappExists
+              setUnLink={setUnLink}
+              setSelectedByComponent={setSelectedByComponent}
+              unLink={unLink}
+            />
+          ) : null}
+          {/* {selectedByComponent === 1 ||
+          (selectedByComponent === 2 && whatsappUnOfficial) ? (
+            <WhatsappExists />
+          ) : null} */}
+          {selectedByComponent === 3 ? (
+            <ViewQR whatsappUnOfficial={whatsappUnOfficial} />
+          ) : null}
         </div>
       </StyledBodyAddChannel>
       <StyledFooterAddChannel>
@@ -122,7 +145,9 @@ export const SectionUnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
           text="Siguiente"
           size={Size.MEDIUM}
           onClick={handleSubmit}
-          state={!isChecked ? ButtonState.DISABLED : ButtonState.NORMAL}
+          state={
+            selectedByComponent < 2 ? ButtonState.DISABLED : ButtonState.NORMAL
+          }
         />
       </StyledFooterAddChannel>
     </StyledAddWhatsApp>

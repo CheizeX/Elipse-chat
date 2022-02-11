@@ -72,7 +72,11 @@ export const ChatsList: FC<
 
   return (
     <StyledChatsList>
-      {chatsOnConversation?.length > 0 && <StyledIndicatorOnConversation />}
+      {chatsOnConversation?.length > 0 && (
+        <StyledIndicatorOnConversation>
+          {chatsOnConversation?.length}00
+        </StyledIndicatorOnConversation>
+      )}
       {chatsPendings?.length > 0 && <StyledIndicatorPendings />}
       {chatsOnConversation?.length > 0 &&
         chatsOnConversation.some((chat) => chat.isPaused) && (

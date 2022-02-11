@@ -12,8 +12,10 @@ export type Channel = {
 
 export type ListChannel = {
   facebook: IFacebook;
+  webchat: IPropsWebChat;
   officialWhatsApp: IOfficialWhatsApp;
   unofficialWhatsApp: IOfficialWhatsApp;
+  instagram: IPropsInstagram;
 };
 
 export type IFacebook = {
@@ -47,4 +49,21 @@ export type IPropsOfficialWhatsapp = {
   providerName: string;
   apiKey: string;
   phoneNumber: string;
+};
+
+export type IPropsWebChat = {
+  name: string;
+  description: string;
+  avatar: string;
+  isActive: boolean;
+  _id: string;
+};
+
+export type IPropsInstagram = {
+  id: string;
+  image: string;
+  name: string;
+  username: string;
+  accessToken: string;
+  isActive: boolean;
 };

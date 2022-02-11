@@ -73,6 +73,7 @@ export const ChannelsSection: FC = () => {
         ) : null}
         {seletedComponent === 'UnofficialWhatsapp' ? (
           <SectionUnOfficialWhatsAppComponent
+            whatsappUnOfficial={!!listChannel.unofficialWhatsApp}
             setIsSectionWebChat={setIsSectionWebChat}
             getChannelList={getChannelList}
           />
@@ -87,6 +88,8 @@ export const ChannelsSection: FC = () => {
         {seletedComponent === 'Instagram' ? (
           <SectionComponentInstagram
             setIsSectionWebChat={setIsSectionWebChat}
+            hasMessengerAccount={!!listChannel.facebook}
+            getChannelList={getChannelList}
           />
         ) : null}
         {seletedComponent === 'DeleteChannel' ? (

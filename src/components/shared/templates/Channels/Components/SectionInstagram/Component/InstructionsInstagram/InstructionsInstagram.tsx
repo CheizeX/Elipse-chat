@@ -21,7 +21,7 @@ export const InstructionsInstagram: FC = () => {
           <div>
             <SVGIcon iconFile="/icons/check_password.svg" />
             <Text size="12px" weight="400">
-              Selecciona Configuracion en el menú de la izquierda.
+              Selecciona Configuración en el menú de la izquierda.
             </Text>
           </div>
           <div>
@@ -33,15 +33,15 @@ export const InstructionsInstagram: FC = () => {
           <div>
             <SVGIcon iconFile="/icons/check_password.svg" />
             <Text size="12px" weight="400">
-              Para agregar una cuenta de instagram a tu pagina. selecciona
-              Conectar cuenta. Asegurate que la opción Permitir acceso a los
-              mensajes de Instagran en la bandeja de entrada este activa y has
+              Para agregar una cuenta de Instagram a tu página. selecciona
+              Conectar cuenta. Asegúrate que la opción Permitir acceso a los
+              mensajes de Instagram en la bandeja de entrada este activa y has
               click en Continuar. Ingresa nombre de usuario y tu contraseña de
-              instagram, y selecciona iniciar sesión
+              Instagram, y selecciona iniciar sesión.
             </Text>
             <Text>
-              Si no tienes cuenta comercial, se te pedira que conviertas tu
-              cuenta comercial en una.
+              Si no tienes cuenta comercial, se te pedirá que conviertas tu
+              cuenta personal en una.
             </Text>
           </div>
         </div>

@@ -9,13 +9,11 @@ import {
 
 export const ConfigurationSection: FC = () => {
   return (
-    <>
-      <StyledConfigurationSection>
-        <ListedRestrictionsLeft />
-        <StyledRightSideTimeRestrictions>
-          <BusinessHours />
-        </StyledRightSideTimeRestrictions>
-      </StyledConfigurationSection>
-    </>
+    <StyledConfigurationSection>
+      <ListedRestrictionsLeft />
+      <StyledRightSideTimeRestrictions>
+        <BusinessHours />
+      </StyledRightSideTimeRestrictions>
+    </StyledConfigurationSection>
   );
 };

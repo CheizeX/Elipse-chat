@@ -125,7 +125,7 @@ export const StyledBusinessHoursBodySettedGroupedDays = styled.div`
     padding-left: 10px;
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     & > :first-child {
       border-radius: 50%;
       width: 5px;

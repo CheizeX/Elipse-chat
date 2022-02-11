@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 
 export const weekdaysForBusinessTimeObject = {
-  Lunes: {
+  lunes: {
     id: 1,
     name: 'Lunes',
     isActive: true,
@@ -23,7 +23,7 @@ export const weekdaysForBusinessTimeObject = {
       minute: '00',
     },
   },
-  Martes: {
+  martes: {
     id: 2,
     name: 'Martes',
     isActive: true,
@@ -45,7 +45,7 @@ export const weekdaysForBusinessTimeObject = {
       minute: '00',
     },
   },
-  Miercoles: {
+  miercoles: {
     id: 3,
     name: 'Miércoles',
     isActive: true,
@@ -67,7 +67,7 @@ export const weekdaysForBusinessTimeObject = {
       minute: '00',
     },
   },
-  Jueves: {
+  jueves: {
     id: 4,
     name: 'Jueves',
     isActive: true,
@@ -89,7 +89,7 @@ export const weekdaysForBusinessTimeObject = {
       minute: '00',
     },
   },
-  Viernes: {
+  viernes: {
     id: 5,
     name: 'Viernes',
     isActive: true,
@@ -111,7 +111,7 @@ export const weekdaysForBusinessTimeObject = {
       minute: '00',
     },
   },
-  Sábado: {
+  sábado: {
     id: 6,
     name: 'Sábado',
     isActive: true,
@@ -133,7 +133,7 @@ export const weekdaysForBusinessTimeObject = {
       minute: '00',
     },
   },
-  Domingo: {
+  domingo: {
     id: 7,
     name: 'Domingo',
     isActive: false,
@@ -163,11 +163,11 @@ export const restrictinosFromTheBackend = [
   {
     id: 1,
     date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-    start: {
+    startTime: {
       hour: '12',
       minute: '00',
     },
-    end: {
+    endTime: {
       hour: '20',
       minute: '00',
     },
@@ -176,11 +176,11 @@ export const restrictinosFromTheBackend = [
   {
     id: 2,
     date: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
-    start: {
+    startTime: {
       hour: '14',
       minute: '00',
     },
-    end: {
+    endTime: {
       hour: '20',
       minute: '00',
     },
@@ -189,11 +189,11 @@ export const restrictinosFromTheBackend = [
   {
     id: 3,
     date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
+    startTime: {
       hour: '08',
       minute: '00',
     },
-    end: {
+    endTime: {
       hour: '20',
       minute: '00',
     },
@@ -202,11 +202,11 @@ export const restrictinosFromTheBackend = [
   {
     id: 4,
     date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
+    startTime: {
       hour: '08',
       minute: '00',
     },
-    end: {
+    endTime: {
       hour: '20',
       minute: '00',
     },
@@ -215,11 +215,11 @@ export const restrictinosFromTheBackend = [
   {
     id: 5,
     date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
+    startTime: {
       hour: '08',
       minute: '00',
     },
-    end: {
+    endTime: {
       hour: '20',
       minute: '00',
     },
@@ -228,11 +228,11 @@ export const restrictinosFromTheBackend = [
   {
     id: 6,
     date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
+    startTime: {
       hour: '08',
       minute: '00',
     },
-    end: {
+    endTime: {
       hour: '20',
       minute: '00',
     },
@@ -241,11 +241,11 @@ export const restrictinosFromTheBackend = [
   {
     id: 7,
     date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
+    startTime: {
       hour: '08',
       minute: '00',
     },
-    end: {
+    endTime: {
       hour: '20',
       minute: '00',
     },
@@ -254,50 +254,11 @@ export const restrictinosFromTheBackend = [
   {
     id: 8,
     date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
+    startTime: {
       hour: '08',
       minute: '00',
     },
-    end: {
-      hour: '20',
-      minute: '00',
-    },
-    isActive: false,
-  },
-  {
-    id: 9,
-    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
-      hour: '08',
-      minute: '00',
-    },
-    end: {
-      hour: '20',
-      minute: '00',
-    },
-    isActive: false,
-  },
-  {
-    id: 10,
-    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
-      hour: '08',
-      minute: '00',
-    },
-    end: {
-      hour: '20',
-      minute: '00',
-    },
-    isActive: false,
-  },
-  {
-    id: 11,
-    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    start: {
-      hour: '08',
-      minute: '00',
-    },
-    end: {
+    endTime: {
       hour: '20',
       minute: '00',
     },

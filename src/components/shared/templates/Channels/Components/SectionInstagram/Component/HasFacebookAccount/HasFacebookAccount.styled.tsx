@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledWrapperOfficialWhatsappSuccess = styled.div`
+export const StyledWrapperHasFacebook = styled.div`
   height: 100%;
   & > :first-child {
     margin-top: 30px;
@@ -14,7 +14,7 @@ export const StyledWrapperOfficialWhatsappSuccess = styled.div`
           width: 60px;
           height: 60px;
           & > path {
-            fill: ${({ theme }) => theme.Colors.green[3]};
+            fill: ${({ theme }) => theme.Colors.orange[2]};
           }
         }
       }
@@ -35,10 +35,25 @@ export const StyledWrapperOfficialWhatsappSuccess = styled.div`
       margin-top: 20px;
       color: ${({ theme }) => theme.Colors.grays[3]};
       width: 100%;
-
       text-align: center;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 6px;
+      margin-top: 20px;
+      font-weight: ${({ theme }) => theme.fontWeight[500]};
+      font-size: ${({ theme }) => theme.fontSize[12]};
+      line-height: 12px;
+    }
+    & > :nth-child(3) {
+      margin-top: 20px;
+      color: ${({ theme }) => theme.Colors.grays[3]};
+      width: 100%;
+      text-align: center;
+      margin: 0 auto;
+      padding: 0 6px;
+      margin-top: 20px;
+      font-weight: ${({ theme }) => theme.fontWeight[500]};
+      font-size: ${({ theme }) => theme.fontSize[12]};
+      line-height: 12px;
     }
   }
 `;
