@@ -16,7 +16,6 @@ const initialState: IAuthFacebookSlice = {
     isActive: false,
     accessToken: '',
     username: '',
-    // isActive: false,
   },
   isLoanding: false,
   error: null,
