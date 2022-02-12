@@ -77,6 +77,7 @@ export const SectionFacebookComponent: FC<ISectionFacebook> = ({
     // Permisos para la integración de instagram.
     provider.addScope('instagram_manage_messages');
     provider.addScope('instagram_basic');
+    provider.addScope('instagram_manage_metadata');
     // provider.addScope('pages_read_engagement');
     // provider.addScope('Page Public Content Access');
     // provider.addScope('Page Public Metadata Access');
