@@ -26,6 +26,7 @@ import {
   StyledInConversationChatItem,
   StyledInConversationContainer,
   StyledInConversationWrapper,
+  StyledNotViewedMessages,
   StyledTimeAndState,
 } from './InConversationChatItem.styles';
 import {
@@ -177,7 +178,6 @@ export const InConversationChatItem: FC<
                   {chat.isPaused === false && !chat.client.profilePic && (
                     <SVGIcon iconFile="/icons/user.svg" />
                   )}
-
                   {chat.channel === Channels.WHATSAPP && (
                     <SVGIcon iconFile="/icons/whatsapp.svg" />
                   )}
@@ -189,6 +189,11 @@ export const InConversationChatItem: FC<
                   )}
                   {chat.channel === Channels.WEBCHAT && (
                     <SVGIcon iconFile="/icons/webchat.svg" />
+                  )}
+                  {chat.unreadMessages > 0 && (
+                    <StyledNotViewedMessages>
+                      {chat.unreadMessages > 99 ? '99+' : chat.unreadMessages}
+                    </StyledNotViewedMessages>
                   )}
                 </StyledClientAndAgentAvatars>
                 <StyledNameAndDialog>

@@ -77,6 +77,7 @@ export const SectionOfficialComponent: FC<IPropsOfficialWhatsapp> = ({
           providerName: '360',
           apiKey: isApiKey,
           phoneNumber: isPhone,
+          isActive: false,
         });
         showAlert?.addToast({
           alert: Toast.SUCCESS,

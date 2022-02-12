@@ -30,7 +30,6 @@ import {
 } from '../Components/ChatsFilter/ChatFilter/ChatFilter.interface';
 import { ModalClosePreviousSession } from '../Components/ModalClosePreviousSession/ModalClosePreviousSession';
 import { SeccionChatHistory } from '../Components/SeccionChatHistory/SeccionChatHistory';
-// import { baseRestApi } from '../../../../../api/base';
 
 export const ChatsSection: FC<
   UploadableFile &
@@ -81,7 +80,6 @@ export const ChatsSection: FC<
       messageLength: number;
     },
   );
-  console.log(userSelected);
   // Funcion para buscar por nombre y rut
   // const onChangeSearchName = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setSearchByName(event.target.value);
@@ -98,18 +96,6 @@ export const ChatsSection: FC<
   // Escucha los chats de usuarios o agentes según el parámetro que se le pase
   const getNewMessageFromNewUserOrAgent = useCallback(async (event: string) => {
     socket?.on(event, async (data: Chat[]) => {
-      // const user = data.find((asd) => asd.client.clientId === userSelected);
-      // console.log(user, 'USER');
-      // if (user && user?.unreadMessages > 0) {
-      //   try {
-      //     await baseRestApi.patch(
-      //       `${process.env.NEXT_PUBLIC_REST_API_URL}/chats/resetUnreadMessages/${user._id}`,
-      //       {},
-      //     );
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // }
       dispatch(setChatsOnConversation(data));
     });
   }, []);
@@ -230,10 +216,10 @@ export const ChatsSection: FC<
   return (
     <StyledChatsSection>
       <ChatsList
+        setCheckedTags={setCheckedTags}
         setShowOnlyPausedChats={setShowOnlyPausedChats}
         showOnlyPausedChats={showOnlyPausedChats}
         checkedTags={checkedTags}
-        setCheckedTags={setCheckedTags}
         handleCleanChannels={handleCleanChannels}
         channel={channel}
         userSelected={userSelected}

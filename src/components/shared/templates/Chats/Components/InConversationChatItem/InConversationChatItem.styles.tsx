@@ -27,7 +27,7 @@ export const StyledInConversationWrapper = styled.div<StyledPendingWrapperProps>
   padding: 12px 0 0 0;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   &:hover {
-    background-color: ${({ theme }) => theme.Colors.purples[1]};
+    background-color: ${({ theme }) => theme.Colors.purples[2]};
     cursor: pointer;
     box-shadow: 0 0 5px rgb(155, 16, 247);
     & > button {
@@ -190,4 +190,22 @@ export const StyledTimeAndState = styled.div`
       font-weight: ${({ theme }) => theme.fontWeight[700]};
     }
   }
+`;
+
+export const StyledNotViewedMessages = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 23px;
+  width: 23px;
+  border-radius: 50%;
+  color: ${({ theme }) => theme.Colors.grays[10]};
+  font-weight: ${({ theme }) => theme.fontWeight[700]};
+  font-size: ${({ theme }) => theme.fontSize[10]};
+  position: absolute;
+  left: 40px;
+  bottom: 6px;
+  box-shadow: 0px 0px 7px 0px ${({ theme }) => theme.Colors.grays[4]};
+  border: 2px solid ${({ theme }) => theme.Colors.grays[10]};
+  background-color: ${({ theme }) => theme.Colors.grays[2]};
 `;

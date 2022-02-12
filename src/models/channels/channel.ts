@@ -49,6 +49,7 @@ export type IPropsOfficialWhatsapp = {
   providerName: string;
   apiKey: string;
   phoneNumber: string;
+  isActive: boolean;
 };
 
 export type IPropsWebChat = {

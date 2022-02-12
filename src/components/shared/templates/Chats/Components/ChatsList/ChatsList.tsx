@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/cognitive-complexity */
 import { FC } from 'react';
 import { Tabs } from '../../../../organisms/Tabs/Tabs';
@@ -13,6 +14,10 @@ import {
   StyledIndicatorOnConversation,
   StyledIndicatorPendings,
   StyledIndicatorPaused,
+  StyledIndicatorPendingsWarning,
+  StyledIndicatorPendingsAlarm,
+  StyledIndicatorOnConversationWarning,
+  StyledIndicatorOnConversationAlarm,
 } from './ChatsList.styles';
 import {
   TabProps,
@@ -72,12 +77,36 @@ export const ChatsList: FC<
 
   return (
     <StyledChatsList>
-      {chatsOnConversation?.length > 0 && (
+      {chatsOnConversation?.length > 0 && chatsOnConversation?.length < 10 ? (
         <StyledIndicatorOnConversation>
-          {chatsOnConversation?.length}00
+          {chatsOnConversation.length}
         </StyledIndicatorOnConversation>
-      )}
-      {chatsPendings?.length > 0 && <StyledIndicatorPendings />}
+      ) : chatsOnConversation?.length >= 10 &&
+        chatsOnConversation?.length < 100 ? (
+        <StyledIndicatorOnConversationWarning>
+          {chatsOnConversation?.length}
+        </StyledIndicatorOnConversationWarning>
+      ) : chatsOnConversation?.length >= 100 ? (
+        <StyledIndicatorOnConversationAlarm>
+          {chatsOnConversation?.length > 999
+            ? '999+'
+            : chatsOnConversation?.length}
+        </StyledIndicatorOnConversationAlarm>
+      ) : null}
+      {chatsPendings?.length > 0 && chatsPendings?.length < 10 ? (
+        <StyledIndicatorPendings>
+          {chatsPendings.length}
+        </StyledIndicatorPendings>
+      ) : chatsPendings?.length >= 10 && chatsPendings?.length < 100 ? (
+        <StyledIndicatorPendingsWarning>
+          {chatsPendings?.length}
+        </StyledIndicatorPendingsWarning>
+      ) : chatsPendings?.length >= 100 ? (
+        <StyledIndicatorPendingsAlarm>
+          {chatsPendings?.length > 999 ? '999+' : chatsPendings?.length}
+        </StyledIndicatorPendingsAlarm>
+      ) : null}
+
       {chatsOnConversation?.length > 0 &&
         chatsOnConversation.some((chat) => chat.isPaused) && (
           <StyledIndicatorPaused>| |</StyledIndicatorPaused>
