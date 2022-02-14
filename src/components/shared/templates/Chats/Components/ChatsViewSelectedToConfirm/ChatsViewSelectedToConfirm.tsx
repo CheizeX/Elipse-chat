@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable prefer-destructuring */
 /* eslint-disable sonarjs/cognitive-complexity */
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { CgClipboard } from 'react-icons/cg';
 import { Text } from '../../../../atoms/Text/Text';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { ButtonMolecule } from '../../../../atoms/Button/Button';
@@ -52,6 +52,7 @@ import { setChatToSetOnConversationInStateId } from '../../../../../../redux/sli
 import { RootState } from '../../../../../../redux';
 import { readHistoryChat } from '../../../../../../api/chat';
 import { setChatsHistory } from '../../../../../../redux/slices/live-chat/chat-history';
+import { StyledCopyToClipboardUser } from '../DiaolguesBox/DialoguesBox.styles';
 
 export const ChatsViewSelectedToConfirm: FC<
   SelectedUserProps &
@@ -83,6 +84,7 @@ export const ChatsViewSelectedToConfirm: FC<
   setShowPredefinedTexts,
 }) => {
   const showAlert = useToastContext();
+  const toasts = useToastContext();
 
   const dispatch = useAppDispatch();
   const { userDataInState }: any = useAppSelector(
@@ -114,30 +116,17 @@ export const ChatsViewSelectedToConfirm: FC<
   const chatToTalkWithUserId = chatToTalkWithUser?._id;
   const chatToTalkWithUserNumber = chatToTalkWithUser?.client.clientId;
 
-  const setNewDialoguesLengthInLocalStorage = useCallback(() => {
-    if (!localStorage.getItem('newDialoguesLength')) {
-      localStorage.setItem('newDialoguesLength', JSON.stringify({}));
-    }
-    if (localStorage.getItem('newDialoguesLength')) {
-      const newDialoguesLength = JSON.parse(
-        localStorage.getItem('newDialoguesLength') || '',
-      );
-      if (!newDialoguesLength[`${userSelected}`]) {
-        localStorage.setItem(
-          'newDialoguesLength',
-          JSON.stringify(
-            Object.assign(newDialoguesLength, {
-              [`${userSelected}`]: '0',
-            }),
-          ),
-        );
-      }
-    }
-  }, [userSelected]);
-
-  useEffect(() => {
-    setNewDialoguesLengthInLocalStorage();
-  }, [setNewDialoguesLengthInLocalStorage]);
+  const handleCopyTextToClipboard = useCallback(
+    (arg: string) => {
+      navigator.clipboard.writeText(arg);
+      toasts?.addToast({
+        alert: Toast.SUCCESS,
+        title: '',
+        message: `TEXTO COPIADO AL PORTAPAPELES`,
+      });
+    },
+    [toasts],
+  );
 
   const handleSetUserToOnConversation = async () => {
     // if (chatsOnConversation?.length < userDataInState?.maxChatsOnConversation) {
@@ -150,7 +139,6 @@ export const ChatsViewSelectedToConfirm: FC<
       );
       setUserSelected(`${userSelected}` as string);
       setActiveByDefaultTab(1);
-      setNewDialoguesLengthInLocalStorage();
     } catch (error) {
       showAlert?.addToast({
         alert: Toast.ERROR,
@@ -385,24 +373,34 @@ export const ChatsViewSelectedToConfirm: FC<
             {chatsOnConversation?.find(
               (chat) => chat.client.clientId === userSelected?.toString(),
             ) && (
-              <Text>
-                {chatsOnConversation?.find(
-                  (chat) => chat.client.clientId === userSelected,
-                )?.client.name || userSelected}
-                {' - '}
-                {chatsOnConversation?.find(
-                  (chat) => chat.client.clientId === userSelected,
-                )?.client.clientId || userSelected}
-              </Text>
+              <>
+                <Text>
+                  {chatsOnConversation?.find(
+                    (chat) => chat.client.clientId === userSelected,
+                  )?.client.name || userSelected}
+                  {' - '}
+                  {chatsOnConversation?.find(
+                    (chat) => chat.client.clientId === userSelected,
+                  )?.client.clientId || userSelected}
+                  <StyledCopyToClipboardUser
+                    onClick={() =>
+                      handleCopyTextToClipboard(String(userSelected))
+                    }>
+                    <CgClipboard />
+                  </StyledCopyToClipboardUser>
+                </Text>
+              </>
             )}
             {chatsPendings?.find(
               (chat) => chat.client.clientId === userSelected?.toString(),
             ) && (
-              <Text>
-                {chatsPendings?.find(
-                  (chat) => chat.client.clientId === userSelected,
-                )?.client.name || userSelected}
-              </Text>
+              <>
+                <Text>
+                  {chatsPendings?.find(
+                    (chat) => chat.client.clientId === userSelected,
+                  )?.client.name || userSelected}
+                </Text>
+              </>
             )}
           </span>
           {hasHistory && !seccionIsPending ? (

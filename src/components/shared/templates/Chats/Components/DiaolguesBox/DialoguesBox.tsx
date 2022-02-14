@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable sonarjs/no-identical-functions */
 import React, { FC, useRef, useCallback, useState } from 'react';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
@@ -17,13 +16,10 @@ import {
 import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import { ModalBackgroundProps } from '../../../../molecules/Modal/Modal';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
-// import { useToastContext } from '../../../../molecules/Toast/useToast';
-// import { Toast } from '../../../../molecules/Toast/Toast.interface';
 
 export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   userSelected,
 }) => {
-  // const toasts = useToastContext();
   const [idModal, setIdModal] = useState('');
 
   const { chatsOnConversation } = useAppSelector(
@@ -46,15 +42,6 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   }, [dialogueBoxRef]);
 
   const tokenQueryParam = `?token=${accessToken}`;
-
-  // const handleCopyTextToClipboard = useCallback((arg: string) => {
-  //   navigator.clipboard.writeText(arg);
-  //   toasts?.addToast({
-  //     alert: Toast.SUCCESS,
-  //     title: '',
-  //     message: `TEXTO COPIADO AL PORTAPAPELES`,
-  //   });
-  // }, []);
 
   const handleOpenAttachments = (message: Message, chatChannel: string) => {
     window.open(
@@ -344,16 +331,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                     )}
                     {message.contentType !== 'ATTACHMENT' && (
                       <>
-                        <StyledInputText>
-                          {/* <StyledCopyToClipboardUser
-                            onClick={() =>
-                              handleCopyTextToClipboard(message.content)
-                            }>
-                            <CgClipboard />
-                          </StyledCopyToClipboardUser> */}
-                          {message.content}
-                        </StyledInputText>
-
+                        <StyledInputText>{message.content}</StyledInputText>
                         <Text>
                           {new Date(message.createdAt).toLocaleTimeString(
                             'en-US',
@@ -621,12 +599,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         </div>
                       </>
                     )}
-                    {/* <StyledCopyToClipboardAgent
-                        onClick={() =>
-                          handleCopyTextToClipboard(message.content)
-                        }>
-                        <CgClipboard />
-                      </StyledCopyToClipboardAgent> */}
+
                     {message.contentType !== 'ATTACHMENT' && (
                       //  <StyledInputText value={message.content} />
                       <StyledInputText>{message.content}</StyledInputText>

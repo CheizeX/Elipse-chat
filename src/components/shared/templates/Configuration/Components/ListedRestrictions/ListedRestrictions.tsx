@@ -112,6 +112,7 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
           'No se pudo crear la restricción. Verifica haber completado todos los datos.',
       });
     }
+    setDateToEdit(null);
     setLoading(false);
   };
 
@@ -467,7 +468,17 @@ export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
                   </Text>
                   <ContainerInput
                     required
-                    onClick={handleShowDatePicker}
+                    onClick={
+                      !dateToEdit
+                        ? handleShowDatePicker
+                        : () =>
+                            showAlert?.addToast({
+                              alert: Toast.WARNING,
+                              title: 'NO PUEDES EDITAR LA FECHA',
+                              message:
+                                'Para eso deberías crear una Nueva Restricción con la fehca que deseas',
+                            })
+                    }
                     onChange={() => onChangeDate}
                     value={
                       selectedRestrictionDate

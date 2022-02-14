@@ -1,6 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable sonarjs/no-identical-functions */
-/* eslint-disable no-nested-ternary */
 import React, { FC, useCallback, useEffect } from 'react';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
@@ -47,6 +44,7 @@ import {
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
 import { baseRestApi } from '../../../../../../api/base';
+import { getTimeAgo } from '../../ChatsSection/ChatsSection.shared';
 
 export const InConversationChatItem: FC<
   StyledLabelProps &
@@ -75,8 +73,6 @@ export const InConversationChatItem: FC<
   const { chatsOnConversation } = useAppSelector(
     (state) => state.liveChat.chatsOnConversation,
   );
-
-  const [timeLapse, setTimeLapse] = React.useState(Date.now());
 
   const handleResetNoViewedChats = useCallback(async (id: string) => {
     try {
@@ -111,21 +107,16 @@ export const InConversationChatItem: FC<
         });
       }
     },
-    [dispatch, setUserSelected, showAlert],
+    [dispatch, setUserSelected, showAlert, handleResetNoViewedChats],
   );
 
   useEffect(() => {
-    const intervalToGetActualTime = setInterval(() => {
-      setTimeLapse(Date.now());
-    }, 10000);
-    return () => clearInterval(intervalToGetActualTime);
-  }, []);
-
-  if (sortedChats) {
-    dispatch(setSortedByLastDate());
-  } else {
-    dispatch(setSortedByFirstDate());
-  }
+    if (sortedChats) {
+      dispatch(setSortedByLastDate());
+    } else {
+      dispatch(setSortedByFirstDate());
+    }
+  }, [dispatch, sortedChats]);
 
   return (
     <StyledInConversationContainer>
@@ -213,47 +204,7 @@ export const InConversationChatItem: FC<
                 <StyledTimeAndState>
                   <div>
                     <SVGIcon iconFile="/icons/watch.svg" />
-                    {Math.floor(
-                      (timeLapse - new Date(chat.createdAt).getTime()) /
-                        (1000 * 60),
-                    ) > 59 &&
-                      (Math.floor(
-                        (timeLapse - new Date(chat.createdAt).getTime()) /
-                          (1000 * 60),
-                      ) > 119 ? (
-                        <Text>
-                          Hace +
-                          {Math.floor(
-                            (timeLapse - new Date(chat.createdAt).getTime()) /
-                              (1000 * 60) /
-                              60,
-                          )}{' '}
-                          hs.
-                        </Text>
-                      ) : (
-                        <Text>
-                          Hace +
-                          {Math.floor(
-                            (timeLapse - new Date(chat.createdAt).getTime()) /
-                              (1000 * 60) /
-                              60,
-                          )}{' '}
-                          h.
-                        </Text>
-                      ))}
-                    {Math.floor(
-                      (Date.now() - new Date(chat.createdAt).getTime()) /
-                        (1000 * 60),
-                    ) <= 59 && (
-                      <Text>
-                        Hace{' '}
-                        {Math.floor(
-                          (timeLapse - new Date(chat.createdAt).getTime()) /
-                            (1000 * 60),
-                        )}{' '}
-                        min.
-                      </Text>
-                    )}
+                    <Text>{getTimeAgo(Number(new Date(chat.createdAt)))}</Text>
                   </div>
                   <div>
                     {chat.isTransfer === true && (
