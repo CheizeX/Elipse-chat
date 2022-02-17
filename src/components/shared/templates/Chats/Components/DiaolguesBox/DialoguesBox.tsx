@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 import React, { FC, useRef, useCallback, useState } from 'react';
+import Link from 'next/link';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
 import { SelectedUserProps } from '../../ChatsSection/ChatsSection.interface';
@@ -12,6 +13,9 @@ import {
   StyledUserPendingDialogue,
   StyledBoxAvatar,
   StyledInputText,
+  StyledDeletedMessage,
+  PendingDeletedMessagesStyle,
+  WrapperLinkOnConversation,
 } from './DialoguesBox.styles';
 import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import { ModalBackgroundProps } from '../../../../molecules/Modal/Modal';
@@ -36,6 +40,8 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   const profilePicture = `${userDataInState?.urlAvatar}?token=${accessToken}`;
 
   const dialogueBoxRef = useRef<HTMLDivElement>(null);
+  const regex =
+    '[a-zA-Zd]+://(w+:w+@)?([a-zA-Zd.-]+.[A-Za-z]{2,4})(:d+)?(/.*)?';
 
   const scrollToBottom = useCallback(() => {
     dialogueBoxRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -73,7 +79,11 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
           .map((chat) =>
             chat.messages?.map((message, index) =>
               message.from === chat.client.clientId ? (
-                <StyledUserDialogue key={index.toString()}>
+                <StyledUserDialogue
+                  key={index.toString()}
+                  deletedMessage={
+                    message.isDeleted ? message.isDeleted : false
+                  }>
                   <div>
                     {message.contentType === 'ATTACHMENT' && (
                       <>
@@ -331,7 +341,26 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                     )}
                     {message.contentType !== 'ATTACHMENT' && (
                       <>
-                        <StyledInputText>{message.content}</StyledInputText>
+                        {message.isDeleted === true ? (
+                          <StyledDeletedMessage>
+                            Se eliminó este mensage
+                            <SVGIcon iconFile="/icons/band.svg" />
+                          </StyledDeletedMessage>
+                        ) : (
+                          <>
+                            {new RegExp(regex).test(message.content) ? (
+                              <Link href={`${message.content}`}>
+                                <WrapperLinkOnConversation>
+                                  {message.content}{' '}
+                                </WrapperLinkOnConversation>
+                              </Link>
+                            ) : (
+                              <StyledInputText>
+                                {message.content}
+                              </StyledInputText>
+                            )}
+                          </>
+                        )}
                         <Text>
                           {new Date(message.createdAt).toLocaleTimeString(
                             'en-US',
@@ -602,7 +631,28 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
 
                     {message.contentType !== 'ATTACHMENT' && (
                       //  <StyledInputText value={message.content} />
-                      <StyledInputText>{message.content}</StyledInputText>
+                      <>
+                        {message.isDeleted === true ? (
+                          <StyledDeletedMessage>
+                            Se eliminó este mensage
+                            <SVGIcon iconFile="/icons/band.svg" />
+                          </StyledDeletedMessage>
+                        ) : (
+                          <>
+                            {new RegExp(regex).test(message.content) ? (
+                              <Link href={`${message.content}`}>
+                                <WrapperLinkOnConversation>
+                                  {message.content}{' '}
+                                </WrapperLinkOnConversation>
+                              </Link>
+                            ) : (
+                              <StyledInputText>
+                                {message.content}
+                              </StyledInputText>
+                            )}
+                          </>
+                        )}
+                      </>
                     )}
                     <Text color="gray" weight="400">
                       {new Date(message.createdAt).toLocaleTimeString('en-US', {
@@ -677,8 +727,30 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                               <SVGIcon iconFile="/icons/image-icon.svg" />
                             </button>
                           )}
-                        {message.contentType !== 'ATTACHMENT' &&
-                          message.content}
+                        {message.contentType !== 'ATTACHMENT' && (
+                          <>
+                            {message.isDeleted === true ? (
+                              <PendingDeletedMessagesStyle>
+                                <SVGIcon iconFile="/icons/band.svg" />
+                                Se eliminó este mensage
+                              </PendingDeletedMessagesStyle>
+                            ) : (
+                              <>
+                                {new RegExp(regex).test(message.content) ? (
+                                  <Link href={`${message.content}`}>
+                                    <WrapperLinkOnConversation>
+                                      {message.content}{' '}
+                                    </WrapperLinkOnConversation>
+                                  </Link>
+                                ) : (
+                                  <StyledInputText>
+                                    {message.content}
+                                  </StyledInputText>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
                       </Text>
                       <Text>
                         {new Date(message.createdAt).toLocaleTimeString(

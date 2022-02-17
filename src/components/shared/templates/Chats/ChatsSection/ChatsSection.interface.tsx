@@ -67,6 +67,10 @@ export interface StyledPendingWrapperProps {
   pausedItem?: boolean;
 }
 
+export interface StyledOnConversationWrapperProps {
+  deletedMessage: boolean;
+}
+
 export interface ILiveChatModalProps {
   setLiveChatModal: React.Dispatch<React.SetStateAction<boolean>>;
   liveChatModal?: boolean;

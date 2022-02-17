@@ -49,7 +49,9 @@ export type Message = {
   createdAt: Date;
   updatedAt: Date;
   size?: string;
+  isDeleted?: boolean;
   _id?: string;
+  mid?: string;
 };
 
 export type Chat = {
@@ -70,4 +72,5 @@ export type Chat = {
   updatedAt: Date;
   finishedStatus?: ChatFinishedStatus;
   feedback?: string;
+  hasHistory?: boolean;
 };

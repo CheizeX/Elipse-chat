@@ -97,7 +97,7 @@ export const ChatsViewSelectedToConfirm: FC<
     (state) => state.liveChat.chatsOnConversation,
   );
 
-  const { hasHistory, seccionIsPending, idClient, idChannel } = useSelector(
+  const { idClient, idChannel } = useSelector(
     (state: RootState) => state.liveChat.chatsHistoryState,
   );
 
@@ -403,13 +403,15 @@ export const ChatsViewSelectedToConfirm: FC<
               </>
             )}
           </span>
-          {hasHistory && !seccionIsPending ? (
+          {chatsOnConversation?.find(
+            (user) => user.client.clientId === userSelected,
+          )?.hasHistory && (
             <button
               type="button"
               onClick={() => handleClickHistoryChat(true, 'HistoryChat')}>
               <SVGIcon iconFile="/icons/list_icons.svg" />
             </button>
-          ) : null}
+          )}
         </div>
         {chatsOnConversation?.find(
           (user) =>

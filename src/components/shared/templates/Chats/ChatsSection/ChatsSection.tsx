@@ -236,7 +236,6 @@ export const ChatsSection: FC<
         onChangeSearchName={onChangeSearchName}
         searchByName={searchByName}
       />
-
       {!userSelected ? (
         <ChatsViewNoSelected />
       ) : (

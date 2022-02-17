@@ -35,14 +35,10 @@ import {
   setSortedByFirstDate,
 } from '../../../../../../redux/slices/live-chat/on-conversation-chats';
 // import { Tag } from '../../../../../../models/tags/tag';
-import { readHistoryChat } from '../../../../../../api/chat';
 import {
-  setChatsHasHistory,
   setChatsIdChannel,
   setChatsIdClient,
 } from '../../../../../../redux/slices/live-chat/chat-history';
-import { useToastContext } from '../../../../molecules/Toast/useToast';
-import { Toast } from '../../../../molecules/Toast/Toast.interface';
 import { baseRestApi } from '../../../../../../api/base';
 import { getTimeAgo } from '../../ChatsSection/ChatsSection.shared';
 
@@ -68,7 +64,6 @@ export const InConversationChatItem: FC<
   //   (state) => state.optionsToFilterChats,
   // );
   const dispatch = useAppDispatch();
-  const showAlert = useToastContext();
 
   const { chatsOnConversation } = useAppSelector(
     (state) => state.liveChat.chatsOnConversation,
@@ -90,24 +85,11 @@ export const InConversationChatItem: FC<
       setUserSelected(clientId);
       handleResetNoViewedChats(chatId);
 
-      try {
-        const hasHistory = await readHistoryChat(
-          channel,
-          clientId,
-          'hasHistory',
-        );
-        dispatch(setChatsHasHistory(hasHistory));
-        dispatch(setChatsIdChannel(channel));
-        dispatch(setChatsIdClient(clientId));
-      } catch (err) {
-        showAlert?.addToast({
-          alert: Toast.ERROR,
-          title: 'ERROR',
-          message: `No se puede establecer la conexión con el servidor`,
-        });
-      }
+      // Éstas estaban dentro del try catch de hasHistory y las dejé por si se usaban para otra cosa.
+      dispatch(setChatsIdChannel(channel));
+      dispatch(setChatsIdClient(clientId));
     },
-    [dispatch, setUserSelected, showAlert, handleResetNoViewedChats],
+    [dispatch, setUserSelected, handleResetNoViewedChats],
   );
 
   useEffect(() => {

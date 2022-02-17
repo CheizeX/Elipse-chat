@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { StyledOnConversationWrapperProps } from '../../ChatsSection/ChatsSection.interface';
 import { StyledClientAndAgentAvatars } from '../PendingsChatItem/PendingsChatItem.styles';
+// import { StyledOnConversationWrapperProps } from '../../ChatsSection/ChatsSection.interface';
 
 export const StyledDialoguesContainer = styled.div`
   width: 100%;
@@ -16,7 +18,7 @@ export const StyledDialoguesContainer = styled.div`
   }
 `;
 
-export const StyledUserDialogue = styled.div`
+export const StyledUserDialogue = styled.div<StyledOnConversationWrapperProps>`
   min-height: 65px;
   max-width: 380px;
   width: fit-content;
@@ -112,8 +114,11 @@ export const StyledUserDialogue = styled.div`
         display: flex;
         justify-content: space-between;
         flex-direction: column;
-        margin-left: 10px;
-        border-left: 2px dashed ${({ theme }) => theme.Colors.grays[8]};
+        margin-left: ${({ deletedMessage }) =>
+          deletedMessage === true ? '0px' : '10px'};
+        border-left: 2px dashed
+          ${({ theme, deletedMessage }) =>
+            deletedMessage === true ? 'transparent' : theme.Colors.grays[8]};
         & > button {
           display: flex;
           justify-content: center;
@@ -424,11 +429,69 @@ export const StyledUserPendingDialogue = styled.div`
 `;
 
 export const StyledInputText = styled.p`
-  /* outline: none;
-  width: 100%;
-  &:-webkit-autofill {
-    & {
-      transition: background-color 600000s 0s, color 600000s 0s;
+  & > span {
+    color: ${({ theme }) => theme.Colors.grays[1]};
+    & > a {
+      color: ${({ theme }) => theme.Colors.grays[1]};
+      & > span {
+        color: ${({ theme }) => theme.Colors.grays[1]};
+      }
     }
-  } */
+  }
+`;
+export const StyledDeletedMessage = styled.span`
+  font-style: italic;
+  align-items: center;
+  & > div {
+    width: 20px;
+    height: 20px;
+    margin-left: 0;
+    & * {
+      & > svg {
+        max-width: 20px;
+        max-height: 20px;
+        & * {
+          & path {
+            fill: gray;
+          }
+        }
+      }
+    }
+  }
+`;
+export const PendingDeletedMessagesStyle = styled.div`
+  font-style: italic;
+  align-items: center;
+  border-radius: 0px 10px 10px 10px;
+  background-color: #ffffff;
+  color: #2a2a2a;
+  font-weight: 400;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  transition: all 1s ease-in-out;
+  overflow: hidden;
+  & > div {
+    width: 20px;
+    height: 20px;
+    margin-left: 0;
+    margin-right: 8px;
+    border: none;
+    border-left: none;
+    & * {
+      & > svg {
+        max-width: 20px;
+        max-height: 20px;
+        & * {
+          & path {
+            fill: gray;
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const WrapperLinkOnConversation = styled.p`
+  cursor: pointer;
 `;
