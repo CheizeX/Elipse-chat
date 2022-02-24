@@ -211,7 +211,6 @@ export const StyledNotViewedMessages = styled.div`
   position: absolute;
   left: 40px;
   bottom: 6px;
-  box-shadow: 0px 0px 7px 0px ${({ theme }) => theme.Colors.grays[4]};
   border: 2px solid ${({ theme }) => theme.Colors.grays[10]};
-  background-color: ${({ theme }) => theme.Colors.grays[2]};
+  background-color: ${({ theme }) => theme.Colors.purples[1]};
 `;

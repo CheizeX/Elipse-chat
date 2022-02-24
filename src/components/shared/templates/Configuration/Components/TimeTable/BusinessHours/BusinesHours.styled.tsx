@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-identical-functions */
 import styled from 'styled-components';
-import { ConfigSectionInterface } from '../../ConfigurationSection/ConfigurationSection.interface';
+import { ConfigSectionInterface } from '../../../ConfigurationSection/ConfigurationSection.interface';
 
 export const StyledBusinessHours = styled.div`
   background-color: ${({ theme }) => theme.Colors.grays[10]};
@@ -20,7 +20,7 @@ export const StyledBusinessHours = styled.div`
 `;
 export const StyledBusinessHoursHeader = styled.div`
   width: 100%;
-  height: 60px;
+  min-height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;

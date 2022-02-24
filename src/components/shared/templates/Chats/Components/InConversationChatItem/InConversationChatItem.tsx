@@ -85,7 +85,6 @@ export const InConversationChatItem: FC<
       setUserSelected(clientId);
       handleResetNoViewedChats(chatId);
 
-      // Éstas estaban dentro del try catch de hasHistory y las dejé por si se usaban para otra cosa.
       dispatch(setChatsIdChannel(channel));
       dispatch(setChatsIdClient(clientId));
     },

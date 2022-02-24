@@ -30,15 +30,22 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
     min-width: 220px;
     max-width: max-content;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     & button {
+      position: relative;
+      right: -10px;
       cursor: pointer;
       min-width: 40px;
       max-width: 40px;
       width: 100%;
       height: 36px;
       display: flex;
-      justify-content: flex-end;
+      & * {
+        & :hover {
+          fill: ${({ theme }) => theme.Colors.blue[2]};
+        }
+      }
+      /* justify-content: flex-end; */
     }
     & > :first-child {
       border-radius: 50%;
@@ -63,30 +70,44 @@ export const StyledHeaderChatsViewSelectedToConfirm = styled.div`
     & > :nth-child(2) {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
       min-width: 60px;
       max-height: 40px;
       text-align: left;
       & > :first-child {
         color: ${({ theme }) => theme.Colors.grays[5]};
-        font-weight: ${({ theme }) => theme.fontWeight[400]};
-        font-size: ${({ theme }) => theme.fontSize[12]};
-        margin-bottom: -3px;
+        font-weight: ${({ theme }) => theme.fontWeight[500]};
+        font-size: ${({ theme }) => theme.fontSize[16]};
+        margin-bottom: 0px;
       }
       & > :last-child {
         word-wrap: nowrap;
         display: flex;
         flex-direction: row;
         color: ${({ theme }) => theme.Colors.grays[1]};
-        margin-top: -3px;
+        font-size: ${({ theme }) => theme.fontSize[14]};
+        font-weight: 500;
       }
     }
     & > :nth-child(3) {
       & div {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-end;
         height: 100%;
+        width: 100%;
+        & svg {
+          position: relative;
+          border-radius: 3px;
+          height: 80%;
+          width: 80%;
+        }
+        & * {
+          fill: ${({ theme }) => theme.Colors.blue[1]};
+          & :hover {
+            fill: ${({ theme }) => theme.Colors.blue[2]};
+          }
+        }
       }
     }
   }

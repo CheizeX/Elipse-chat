@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ConfigSectionInterface } from '../../ConfigurationSection/ConfigurationSection.interface';
+import { ConfigSectionInterface } from '../../../ConfigurationSection/ConfigurationSection.interface';
 
 export const StyledLeftSideTimeRestrictions = styled.div`
   padding-top: 20px;

@@ -52,7 +52,10 @@ import { setChatToSetOnConversationInStateId } from '../../../../../../redux/sli
 import { RootState } from '../../../../../../redux';
 import { readHistoryChat } from '../../../../../../api/chat';
 import { setChatsHistory } from '../../../../../../redux/slices/live-chat/chat-history';
-import { StyledCopyToClipboardUser } from '../DiaolguesBox/DialoguesBox.styles';
+import {
+  StyledCopyToClipboardUser,
+  StyledNameAndContactSeparator,
+} from '../DiaolguesBox/DialoguesBox.styles';
 
 export const ChatsViewSelectedToConfirm: FC<
   SelectedUserProps &
@@ -369,38 +372,36 @@ export const ChatsViewSelectedToConfirm: FC<
             <SVGIcon iconFile="/icons/user.svg" />
           )}
           <span>
-            <Text>Cliente</Text>
+            <Text>
+              Cliente
+              <StyledCopyToClipboardUser
+                onClick={() => handleCopyTextToClipboard(String(userSelected))}>
+                <CgClipboard />
+              </StyledCopyToClipboardUser>
+            </Text>
             {chatsOnConversation?.find(
               (chat) => chat.client.clientId === userSelected?.toString(),
             ) && (
-              <>
-                <Text>
-                  {chatsOnConversation?.find(
-                    (chat) => chat.client.clientId === userSelected,
-                  )?.client.name || userSelected}
-                  {' - '}
-                  {chatsOnConversation?.find(
-                    (chat) => chat.client.clientId === userSelected,
-                  )?.client.clientId || userSelected}
-                  <StyledCopyToClipboardUser
-                    onClick={() =>
-                      handleCopyTextToClipboard(String(userSelected))
-                    }>
-                    <CgClipboard />
-                  </StyledCopyToClipboardUser>
-                </Text>
-              </>
+              <Text>
+                {chatsOnConversation?.find(
+                  (chat) => chat.client.clientId === userSelected,
+                )?.client.name || userSelected}{' '}
+                <StyledNameAndContactSeparator />{' '}
+                {chatsOnConversation?.find(
+                  (chat) =>
+                    chat.client.clientId === userSelected &&
+                    chat.channel === ('Webchat' || 'WhatsApp'),
+                )?.client.clientId || ''}
+              </Text>
             )}
             {chatsPendings?.find(
               (chat) => chat.client.clientId === userSelected?.toString(),
             ) && (
-              <>
-                <Text>
-                  {chatsPendings?.find(
-                    (chat) => chat.client.clientId === userSelected,
-                  )?.client.name || userSelected}
-                </Text>
-              </>
+              <Text>
+                {chatsPendings?.find(
+                  (chat) => chat.client.clientId === userSelected,
+                )?.client.name || userSelected}
+              </Text>
             )}
           </span>
           {chatsOnConversation?.find(

@@ -18,39 +18,40 @@ import {
   StyledLeftSideTimeRestrictionsBodyRestrictions,
   StyledLeftSideTimeRestrictionsHeaderChipMapped,
 } from './ListedRestrictions.styled';
-import { Text } from '../../../../atoms/Text/Text';
-import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
+import { Text } from '../../../../../atoms/Text/Text';
+import { SVGIcon } from '../../../../../atoms/SVGIcon/SVGIcon';
 import {
   ButtonMolecule,
   ButtonState,
   ButtonVariant,
-} from '../../../../atoms/Button/Button';
-import { ConfigSectionInterface } from '../../ConfigurationSection/ConfigurationSection.interface';
-import { ModalMolecule } from '../../../../molecules/Modal/Modal';
+} from '../../../../../atoms/Button/Button';
+import { ConfigSectionInterface } from '../../../ConfigurationSection/ConfigurationSection.interface';
+import { ModalMolecule } from '../../../../../molecules/Modal/Modal';
+
+import { ContainerInput } from '../../../../../molecules/Input/ContainerInput';
+import { SingleDatepicker } from '../../../../../organisms/Datepicker/SingleDatepicker';
+import { TimeController } from '../../../../../molecules/TimeController/TimeController';
+import {
+  setHour,
+  setMinute,
+} from '../../../ConfigurationSection/ConfigurationSection.shared';
+import {
+  StyledEndTimeController,
+  StyledStartTimeController,
+} from '../../../../../molecules/TimeController/TimeController.styled';
+import { baseRestApi } from '../../../../../../../api/base';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../../redux/hook/hooks';
+import { useToastContext } from '../../../../../molecules/Toast/useToast';
+import { Toast } from '../../../../../molecules/Toast/Toast.interface';
+import { getConfigurationData } from '../../../../../../../redux/slices/configuration/configuration-info';
 import {
   ToogleComponentForActivateRestriction,
   ToogleComponentForMappedRestrictions,
   ToogleComponentForMappedRestrictionsNoSel,
-} from '../../ConfigurationSection/ConfigurationSection.styled';
-import { ContainerInput } from '../../../../molecules/Input/ContainerInput';
-import { SingleDatepicker } from '../../../../organisms/Datepicker/SingleDatepicker';
-import { TimeController } from '../../../../molecules/TimeController/TimeController';
-import {
-  setHour,
-  setMinute,
-} from '../../ConfigurationSection/ConfigurationSection.shared';
-import {
-  StyledEndTimeController,
-  StyledStartTimeController,
-} from '../../../../molecules/TimeController/TimeController.styled';
-import { baseRestApi } from '../../../../../../api/base';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../../../../../redux/hook/hooks';
-import { useToastContext } from '../../../../molecules/Toast/useToast';
-import { Toast } from '../../../../molecules/Toast/Toast.interface';
-import { getConfigurationData } from '../../../../../../redux/slices/configuration/configuration-info';
+} from '../TimeTable.styled';
 
 export const ListedRestrictionsLeft: FC<ConfigSectionInterface> = () => {
   const dispatch = useAppDispatch();

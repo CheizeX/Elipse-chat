@@ -6,15 +6,15 @@ import {
   ButtonMolecule,
   ButtonState,
   ButtonVariant,
-} from '../../../../atoms/Button/Button';
-import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
-import { Text } from '../../../../atoms/Text/Text';
-import { ModalMolecule } from '../../../../molecules/Modal/Modal';
-import { Checkbox } from '../../../../atoms/Checkbox/Checkbox';
+} from '../../../../../atoms/Button/Button';
+import { SVGIcon } from '../../../../../atoms/SVGIcon/SVGIcon';
+import { Text } from '../../../../../atoms/Text/Text';
+import { ModalMolecule } from '../../../../../molecules/Modal/Modal';
+import { Checkbox } from '../../../../../atoms/Checkbox/Checkbox';
 import {
   setHour,
   setMinute,
-} from '../../ConfigurationSection/ConfigurationSection.shared';
+} from '../../../ConfigurationSection/ConfigurationSection.shared';
 import {
   StyledSetBusinessTimeSetDayItem,
   StyledSetBusinessTimeDateAndHoursBody,
@@ -33,18 +33,18 @@ import {
   StyledBusinessHoursBodySetted,
   StyledBusinessHoursBodySettedGroupedDays,
 } from './BusinesHours.styled';
-import { IconButtonMolecule } from '../../../../atoms/IconButton/IconButton';
-import { ContainerInput } from '../../../../molecules/Input/ContainerInput';
-import { TimeController } from '../../../../molecules/TimeController/TimeController';
-import { ConfigSectionInterface } from '../../ConfigurationSection/ConfigurationSection.interface';
-import { baseRestApi } from '../../../../../../api/base';
+import { IconButtonMolecule } from '../../../../../atoms/IconButton/IconButton';
+import { ContainerInput } from '../../../../../molecules/Input/ContainerInput';
+import { TimeController } from '../../../../../molecules/TimeController/TimeController';
+import { ConfigSectionInterface } from '../../../ConfigurationSection/ConfigurationSection.interface';
+import { baseRestApi } from '../../../../../../../api/base';
 import {
   useAppDispatch,
   useAppSelector,
-} from '../../../../../../redux/hook/hooks';
-import { useToastContext } from '../../../../molecules/Toast/useToast';
-import { Toast } from '../../../../molecules/Toast/Toast.interface';
-import { getConfigurationData } from '../../../../../../redux/slices/configuration/configuration-info';
+} from '../../../../../../../redux/hook/hooks';
+import { useToastContext } from '../../../../../molecules/Toast/useToast';
+import { Toast } from '../../../../../molecules/Toast/Toast.interface';
+import { getConfigurationData } from '../../../../../../../redux/slices/configuration/configuration-info';
 
 export const BusinessHours: FC<ConfigSectionInterface> = () => {
   const dispatch = useAppDispatch();

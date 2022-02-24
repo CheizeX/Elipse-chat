@@ -1,4 +1,4 @@
-import { MouseEventHandler } from '@nivo/pie';
+import { MouseEventHandler } from 'react';
 
 export interface ConfigSectionInterface {
   datePickerDate?: boolean;

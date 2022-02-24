@@ -160,20 +160,20 @@ export const StyledUserDialogue = styled.div<StyledOnConversationWrapperProps>`
 `;
 export const StyledCopyToClipboardUser = styled.span`
   position: relative;
-  top: -12px;
-  right: -10px;
+  top: 4px;
+  right: -5px;
   max-width: 20px;
   height: 20px;
   &:hover {
     cursor: pointer;
     & > svg {
-      color: ${({ theme }) => theme.Colors.purples[2]};
+      color: ${({ theme }) => theme.Colors.orange[1]};
     }
   }
   & > svg {
     width: 15px;
     height: 20px;
-    color: ${({ theme }) => theme.Colors.grays[8]};
+    color: ${({ theme }) => theme.Colors.orange[3]};
   }
 `;
 export const StyledCopyToClipboardAgent = styled.span`
@@ -494,4 +494,14 @@ export const PendingDeletedMessagesStyle = styled.div`
 
 export const WrapperLinkOnConversation = styled.p`
   cursor: pointer;
+`;
+
+export const StyledNameAndContactSeparator = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: ${({ theme }) => theme.Colors.green[4]};
+  border-radius: 50%;
+  margin: 0px 5px;
+  position: relative;
+  top: 5.5px;
 `;
