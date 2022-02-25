@@ -35,7 +35,9 @@ export const userData = {
   trialEnd: '',
 };
 
-const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripe = loadStripe(
+  String(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!),
+);
 
 export const SubscriptionSection: FC<SubscriptionSectionProps> = () => {
   const [showCard, setShowCard] = useState(false);
