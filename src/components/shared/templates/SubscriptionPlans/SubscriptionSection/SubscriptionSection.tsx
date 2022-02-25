@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable import/no-cycle */
-/* eslint-disable no-nested-ternary */
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { SVGIcon } from '../../../atoms/SVGIcon/SVGIcon';
@@ -42,22 +40,11 @@ const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 export const SubscriptionSection: FC<SubscriptionSectionProps> = () => {
   const [showCard, setShowCard] = useState(false);
   const [planNameSelected, setPlanNameSelected] = useState('');
-  const [clientSecret, setClientSecret] = useState('');
 
   const handlePlanClick = (planName: string) => {
     setPlanNameSelected(planName);
     setShowCard(true);
   };
-  useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    fetch('/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: [{ id: planNameSelected }] }),
-    })
-      .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
-  }, [planNameSelected]);
 
   return (
     <StyledSubscriptionSection>
@@ -195,7 +182,7 @@ export const SubscriptionSection: FC<SubscriptionSectionProps> = () => {
           </div>
         </div>
       </StyledSubscriptionSectionBody>
-      {showCard && !clientSecret && (
+      {showCard && (
         <Elements stripe={stripe}>
           <ModalMolecule isModal={showCard} setModal={setShowCard}>
             <StripeForm

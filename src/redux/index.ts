@@ -36,8 +36,8 @@ import chatIntegrationQRState from './slices/channels/integration-with-qr';
 import listChannelState from './slices/channels/list-channel';
 import chatsHistoryState from './slices/live-chat/chat-history';
 import chatsTodayTransferState from './slices/live-chat/chat-transfer';
-import chatContainerAccountInstagramState from './slices/channels/account-instagram';
 import configurationInfo from './slices/configuration/configuration-info';
+import chatContainerAccountInstagramState from './slices/channels/account-instagram';
 
 const liveChat = combineReducers({
   chatsPendings,

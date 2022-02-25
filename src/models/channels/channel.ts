@@ -68,3 +68,9 @@ export type IPropsInstagram = {
   accessToken: string;
   isActive: boolean;
 };
+
+export type IPropsUnOfficialWhatsapp = {
+  success: boolean;
+  code: number;
+  result: string;
+};

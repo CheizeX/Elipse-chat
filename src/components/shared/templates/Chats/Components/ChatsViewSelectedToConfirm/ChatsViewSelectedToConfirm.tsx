@@ -387,11 +387,14 @@ export const ChatsViewSelectedToConfirm: FC<
                   (chat) => chat.client.clientId === userSelected,
                 )?.client.name || userSelected}{' '}
                 <StyledNameAndContactSeparator />{' '}
-                {chatsOnConversation?.find(
-                  (chat) =>
-                    chat.client.clientId === userSelected &&
-                    chat.channel === ('Webchat' || 'WhatsApp'),
-                )?.client.clientId || ''}
+                {
+                  chatsOnConversation?.find(
+                    (chat) =>
+                      (chat.client.clientId === userSelected &&
+                        chat.channel === 'WhatsApp') ||
+                      chat.channel === 'Webchat',
+                  )?.client.clientId
+                }
               </Text>
             )}
             {chatsPendings?.find(
@@ -403,6 +406,13 @@ export const ChatsViewSelectedToConfirm: FC<
                 )?.client.name || userSelected}
               </Text>
             )}
+            {
+              chatsOnConversation?.find(
+                (chat) =>
+                  chat.client.clientId === userSelected &&
+                  chat.channel === ('Webchat' || 'WhatsApp'),
+              )?.client.clientId
+            }
           </span>
           {chatsOnConversation?.find(
             (user) => user.client.clientId === userSelected,

@@ -177,8 +177,6 @@ export const CheckBox = styled.input`
       height: 12px;
       margin-left: 2px;
       transition: 0.2s;
-      // background-color: ${({ theme }) => theme.Colors.green[2]};
-      // opacity: 0.3;
     }
   }
 `;
@@ -254,5 +252,55 @@ export const StyledFacebookService = styled.div`
       line-height: 14px;
       letter-spacing: 0.4px;
     }
+  }
+`;
+
+export const StyledLogoInstagram = styled.div`
+  display: flex;
+  & > div {
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & img {
+    max-width: 74px;
+    max-height: 74px;
+    object-fit: cover;
+    font-size: ${({ theme }) => theme.fontSize[12]};
+  }
+  & svg {
+    z-index: 2;
+  }
+`;
+
+export const StyledLogoWebChat = styled.div`
+  display: flex;
+  & > div {
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & img {
+    max-width: 44px;
+    max-height: 44px;
+    object-fit: cover;
+  }
+  & svg {
+    z-index: 2;
+  }
+`;
+export const LogoWassenger = styled.div`
+  display: flex;
+  & img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+    width: 100%;
   }
 `;

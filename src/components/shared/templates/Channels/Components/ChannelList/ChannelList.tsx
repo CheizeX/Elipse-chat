@@ -44,6 +44,7 @@ export const ChannelList: FC<IPropsList> = ({
               name={`+${listChannel?.unofficialWhatsApp.phoneNumber}`}
               icon="whatsapp"
               service="WhatsApp"
+              providerName={listChannel?.unofficialWhatsApp.providerName}
               isActive={listChannel?.unofficialWhatsApp.isActive}
               setIsSectionWebChat={setIsSectionWebChat}
               setSeletedComponent={setSeletedComponent}

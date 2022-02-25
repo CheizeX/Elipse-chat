@@ -176,13 +176,53 @@ export const StyledCopyToClipboardUser = styled.span`
     color: ${({ theme }) => theme.Colors.orange[3]};
   }
 `;
+export const StyledTooltipText = styled.span`
+  width: 100%;
+`;
+
+export const TooltipBoxToClipboard = styled.div`
+  position: absolute;
+  top: calc(100% + 15px);
+  visibility: hidden;
+  color: transparent;
+  background-color: transparent;
+  width: 100%;
+  min-width: max-content;
+  padding: 5px 5px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  transition: visibility 0.5s, color 0.5s, background-color 0.5s, width 0.5s,
+    padding 0.5s ease-in-out;
+  &:before {
+    content: '';
+    width: 0;
+    height: 0;
+    left: 40px;
+    top: -10px;
+    position: absolute;
+    border: 10px solid transparent;
+    transform: rotate(135deg);
+    transition: border 0.3s ease-in-out;
+  }
+`;
+
 export const StyledCopyToClipboardAgent = styled.span`
   position: relative;
   top: -12px;
   left: -10px;
   max-width: 20px;
   height: 20px;
-  &:hover {
+  & ${StyledTooltipText}:hover + ${TooltipBoxToClipboard} {
+    visibility: visible;
+    color: #fff;
+    background-color: ${({ theme }) => theme.Colors.purples[3]};
+    z-index: 1;
+    &:before {
+      border-color: transparent transparent
+        ${({ theme }) => theme.Colors.purples[3]}
+        ${({ theme }) => theme.Colors.purples[3]};
+    }
     cursor: pointer;
     & > svg {
       color: ${({ theme }) => theme.Colors.grays[10]};
@@ -424,18 +464,6 @@ export const StyledUserPendingDialogue = styled.div`
       color: ${({ theme }) => theme.Colors.grays[5]};
       padding: 10px;
       font-weight: 400;
-    }
-  }
-`;
-
-export const StyledInputText = styled.p`
-  & > span {
-    color: ${({ theme }) => theme.Colors.grays[1]};
-    & > a {
-      color: ${({ theme }) => theme.Colors.grays[1]};
-      & > span {
-        color: ${({ theme }) => theme.Colors.grays[1]};
-      }
     }
   }
 `;

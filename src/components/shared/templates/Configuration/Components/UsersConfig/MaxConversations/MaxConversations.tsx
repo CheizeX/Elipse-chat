@@ -14,23 +14,27 @@ import {
 } from './MaxConversations.styled';
 import { useToastContext } from '../../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../../molecules/Toast/Toast.interface';
-import { useAppSelector } from '../../../../../../../redux/hook/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../../redux/hook/hooks';
+import { getGeneralConfigurationData } from '../../../../../../../redux/slices/configuration/configuration-info';
 
 export const MaxConversations: FC = () => {
+  const dispatch = useAppDispatch();
   const showAlert = useToastContext();
 
-  const { userDataInState }: any = useAppSelector(
-    (state) => state.userAuthCredentials,
+  const { generalConfigurationData } = useAppSelector(
+    (state) => state.configurationInfo,
   );
+  const { maxChatsOnConversation } = generalConfigurationData;
 
-  const [maxChats, setMaxChats] = useState(
-    String(userDataInState.maxChatsOnConversation),
-  );
+  const [maxChats, setMaxChats] = useState(String(maxChatsOnConversation));
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
     setLoading(true);
-    if (maxChats !== String(userDataInState.maxChatsOnConversation)) {
+    if (maxChats !== String(maxChatsOnConversation)) {
       try {
         await baseRestApi.patch(
           `${process.env.NEXT_PUBLIC_REST_API_URL}/settings/setMaxChatsOnConversation`,
@@ -38,6 +42,7 @@ export const MaxConversations: FC = () => {
             newMax: maxChats,
           },
         );
+        dispatch(getGeneralConfigurationData());
         showAlert?.addToast({
           alert: Toast.SUCCESS,
           title: 'MÁXIMO ACTUALIZADO',
@@ -74,7 +79,7 @@ export const MaxConversations: FC = () => {
           state={
             loading
               ? ButtonState.LOADING
-              : maxChats === String(userDataInState.maxChatsOnConversation)
+              : maxChats === String(maxChatsOnConversation)
               ? ButtonState.DISABLED
               : ButtonState.NORMAL
           }

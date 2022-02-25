@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { FC, useRef, useCallback, useState } from 'react';
-import Link from 'next/link';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
 import { SelectedUserProps } from '../../ChatsSection/ChatsSection.interface';
@@ -12,10 +12,8 @@ import {
   StyledAgentAvatar,
   StyledUserPendingDialogue,
   StyledBoxAvatar,
-  StyledInputText,
   StyledDeletedMessage,
   PendingDeletedMessagesStyle,
-  WrapperLinkOnConversation,
 } from './DialoguesBox.styles';
 import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import { ModalBackgroundProps } from '../../../../molecules/Modal/Modal';
@@ -40,8 +38,28 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   const profilePicture = `${userDataInState?.urlAvatar}?token=${accessToken}`;
 
   const dialogueBoxRef = useRef<HTMLDivElement>(null);
-  const regex =
-    '[a-zA-Zd]+://(w+:w+@)?([a-zA-Zd.-]+.[A-Za-z]{2,4})(:d+)?(/.*)?';
+
+  const readUrl = (text: string) => {
+    // Exp valida url
+    const regex =
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
+    // Extrae la url del array
+    const t = regex.exec(text);
+    // remplaza la url por string vacio.
+    const res = text.replace(/http([^"'\s]+)/g, '');
+    const url = t ? t[0] : '';
+    return (
+      <p>
+        {res}
+        <a
+          href={url}
+          target="_blank"
+          dangerouslySetInnerHTML={{ __html: url }}
+          rel="noreferrer"
+        />
+      </p>
+    );
+  };
 
   const scrollToBottom = useCallback(() => {
     dialogueBoxRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -326,7 +344,6 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                             </>
                           )}
                         </Text>
-
                         <Text>
                           {new Date(message.createdAt).toLocaleTimeString(
                             'en-US',
@@ -347,19 +364,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                             <SVGIcon iconFile="/icons/band.svg" />
                           </StyledDeletedMessage>
                         ) : (
-                          <>
-                            {new RegExp(regex).test(message.content) ? (
-                              <Link href={`${message.content}`}>
-                                <WrapperLinkOnConversation>
-                                  {message.content}{' '}
-                                </WrapperLinkOnConversation>
-                              </Link>
-                            ) : (
-                              <StyledInputText>
-                                {message.content}
-                              </StyledInputText>
-                            )}
-                          </>
+                          <p>{readUrl(message.content)}</p>
                         )}
                         <Text>
                           {new Date(message.createdAt).toLocaleTimeString(
@@ -638,19 +643,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                             <SVGIcon iconFile="/icons/band.svg" />
                           </StyledDeletedMessage>
                         ) : (
-                          <>
-                            {new RegExp(regex).test(message.content) ? (
-                              <Link href={`${message.content}`}>
-                                <WrapperLinkOnConversation>
-                                  {message.content}{' '}
-                                </WrapperLinkOnConversation>
-                              </Link>
-                            ) : (
-                              <StyledInputText>
-                                {message.content}
-                              </StyledInputText>
-                            )}
-                          </>
+                          <p>{readUrl(message.content)}</p>
                         )}
                       </>
                     )}
@@ -735,19 +728,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 Se eliminó este mensage
                               </PendingDeletedMessagesStyle>
                             ) : (
-                              <>
-                                {new RegExp(regex).test(message.content) ? (
-                                  <Link href={`${message.content}`}>
-                                    <WrapperLinkOnConversation>
-                                      {message.content}{' '}
-                                    </WrapperLinkOnConversation>
-                                  </Link>
-                                ) : (
-                                  <StyledInputText>
-                                    {message.content}
-                                  </StyledInputText>
-                                )}
-                              </>
+                              <p>{readUrl(message.content)}</p>
                             )}
                           </>
                         )}

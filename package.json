@@ -43,6 +43,7 @@
     "@stripe/stripe-js": "^1.23.0",
     "@types/react-redux": "^7.1.18",
     "axios": "^0.21.1",
+    "caniuse-lite": "^1.0.30001312",
     "consola": "^2.15.3",
     "d3": "5.x",
     "dotenv": "^16.0.0",

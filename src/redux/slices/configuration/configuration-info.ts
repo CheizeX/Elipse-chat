@@ -19,6 +19,18 @@ export const getConfigurationData = createAsyncThunk(
     return [];
   },
 );
+export const getGeneralConfigurationData = createAsyncThunk(
+  'configurationDataInState/getGeneralConfigurationData',
+  async () => {
+    const response = await baseRestApi.get(
+      `${process.env.NEXT_PUBLIC_REST_API_URL}/settings`,
+    );
+    if (response.success !== false) {
+      return response;
+    }
+    return [];
+  },
+);
 
 export const getBusinessHoursData = createAction(
   'configurationDataInState/getBusinessHoursData',
@@ -61,16 +73,20 @@ export const getListOfRestrictions = createAction(
 
 interface ConfigurationDataSliceInterface {
   configurationData: any[];
+  generalConfigurationData: any;
   businessHoursData: any[];
   listOfRestrictions: any[];
   loadingConfigData: boolean;
+  loadingGeneralConfigData: boolean;
 }
 
 const initialState: ConfigurationDataSliceInterface = {
   configurationData: [],
+  generalConfigurationData: {},
   businessHoursData: [],
   listOfRestrictions: [],
   loadingConfigData: false,
+  loadingGeneralConfigData: false,
 };
 
 export const configurationDataToState = createSlice({
@@ -79,6 +95,9 @@ export const configurationDataToState = createSlice({
   reducers: {
     setconfigurationData: (state, action: PayloadAction<any[]>) => {
       state.configurationData = action.payload;
+    },
+    setGeneralConfigurationData: (state, action: PayloadAction<any[]>) => {
+      state.generalConfigurationData = action.payload;
     },
     setBusinessHoursData: (state, action: PayloadAction<any[]>) => {
       state.businessHoursData = action.payload;
@@ -103,6 +122,20 @@ export const configurationDataToState = createSlice({
       state.loadingConfigData = false;
     },
 
+    [getGeneralConfigurationData.pending.type]: (state) => {
+      state.loadingGeneralConfigData = true;
+    },
+    [getGeneralConfigurationData.fulfilled.type]: (
+      state,
+      action: PayloadAction<any[]>,
+    ) => {
+      state.generalConfigurationData = action.payload;
+      state.loadingGeneralConfigData = false;
+    },
+    [getGeneralConfigurationData.rejected.type]: (state) => {
+      state.loadingGeneralConfigData = false;
+    },
+
     [getBusinessHoursData.type]: (state, action: PayloadAction<any[]>) => {
       state.businessHoursData = action.payload;
     },
@@ -115,6 +148,7 @@ export const configurationDataToState = createSlice({
 
 export const {
   setconfigurationData,
+  setGeneralConfigurationData,
   setBusinessHoursData,
   setListOfRestrictions,
 } = configurationDataToState.actions;

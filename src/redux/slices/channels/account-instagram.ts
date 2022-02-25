@@ -3,20 +3,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPropsInstagram } from '../../../models/channels/channel';
 
 interface IAuthFacebookSlice {
-  dataInfoIntagram: IPropsInstagram;
+  dataInfoInstagram: IPropsInstagram;
   isLoanding: boolean;
   error: string | null;
 }
 
 const initialState: IAuthFacebookSlice = {
-  dataInfoIntagram: {
+  dataInfoInstagram: {
     name: '',
     image: '',
     id: '',
     isActive: false,
     accessToken: '',
     username: '',
-    // isActive: false,
   },
   isLoanding: false,
   error: null,
@@ -26,11 +25,11 @@ export const accountInstagramStore = createSlice({
   name: 'chatContainerAccountInstagramState',
   initialState,
   reducers: {
-    setAccountIntagram: (state, action: PayloadAction<IPropsInstagram>) => {
-      state.dataInfoIntagram = action.payload;
+    setAccountInstagram: (state, action: PayloadAction<IPropsInstagram>) => {
+      state.dataInfoInstagram = action.payload;
     },
   },
 });
 
-export const { setAccountIntagram } = accountInstagramStore.actions;
+export const { setAccountInstagram } = accountInstagramStore.actions;
 export default accountInstagramStore.reducer;

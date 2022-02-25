@@ -1,11 +1,12 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable no-nested-ternary */
 import { FC, useState } from 'react';
 import { BiMessageAltX } from 'react-icons/bi';
 import { baseRestApi } from '../../../../../../../api/base';
-
-// import { useAppSelector } from '../../../../../../../redux/hook/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../../redux/hook/hooks';
+import { getGeneralConfigurationData } from '../../../../../../../redux/slices/configuration/configuration-info';
 import {
   ButtonMolecule,
   ButtonState,
@@ -24,13 +25,17 @@ import {
 } from './OutOfHourMessage.styled';
 
 export const OutOfHourMessage: FC<ConfigSectionInterface> = () => {
+  const dispatch = useAppDispatch();
   const showAlert = useToastContext();
 
-  // const { userDataInState }: any = useAppSelector(
-  //   (state) => state.userAuthCredentials,
-  // );
+  const { generalConfigurationData } = useAppSelector(
+    (state) => state.configurationInfo,
+  );
+  const { outOfTimeMessage } = generalConfigurationData;
+
   const [loading, setLoading] = useState(false);
-  const [validateEmptyMessage, setValidateEmptyMessage] = useState('');
+  const [validateEmptyMessage, setValidateEmptyMessage] =
+    useState(outOfTimeMessage);
 
   const [enabledEditMessage, setEnabledEditMessage] = useState(false);
   const [text, setText] = useState(validateEmptyMessage || '');
@@ -50,6 +55,7 @@ export const OutOfHourMessage: FC<ConfigSectionInterface> = () => {
         title: 'MÁXIMO ACTUALIZADO',
         message: `Se ha seteado el nuevo mensaje`,
       });
+      dispatch(getGeneralConfigurationData());
       setEnabledEditMessage(false);
     } catch (error) {
       showAlert?.addToast({
@@ -61,6 +67,7 @@ export const OutOfHourMessage: FC<ConfigSectionInterface> = () => {
     }
     setLoading(false);
   };
+
   return (
     <>
       <StyledOutOfHourMessage>
@@ -106,7 +113,7 @@ export const OutOfHourMessage: FC<ConfigSectionInterface> = () => {
                   state={
                     loading
                       ? ButtonState.LOADING
-                      : validateEmptyMessage === text || text === ''
+                      : validateEmptyMessage === text
                       ? ButtonState.DISABLED
                       : ButtonState.NORMAL
                   }

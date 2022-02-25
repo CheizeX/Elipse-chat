@@ -27,6 +27,7 @@ import useLocalStorage from '../../../../../hooks/use-local-storage';
 import {
   getBusinessHoursData,
   getConfigurationData,
+  getGeneralConfigurationData,
   getListOfRestrictions,
 } from '../../../../../redux/slices/configuration/configuration-info';
 
@@ -79,6 +80,7 @@ export const BackOffice: FC<IBackOfficeProps> = ({ text }) => {
       dispatch(setUserDataInState(decodedToken));
     }
     dispatch(getConfigurationData());
+    dispatch(getGeneralConfigurationData());
   }, [decodedToken, dispatch]);
 
   useEffect(() => {
