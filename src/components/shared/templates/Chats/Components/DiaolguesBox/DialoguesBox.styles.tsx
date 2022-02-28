@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-import { StyledOnConversationWrapperProps } from '../../ChatsSection/ChatsSection.interface';
+import {
+  IWrapperColorDialogues,
+  StyledOnConversationWrapperProps,
+} from '../../ChatsSection/ChatsSection.interface';
 import { StyledClientAndAgentAvatars } from '../PendingsChatItem/PendingsChatItem.styles';
 // import { StyledOnConversationWrapperProps } from '../../ChatsSection/ChatsSection.interface';
 
@@ -196,10 +199,19 @@ export const StyledBoxAvatar = styled.img`
   height: 30px;
   max-width: 1.9rem;
   max-height: 1.9rem;
-  box-shadow: 1px 3px 3px 1px ${({ theme }) => theme.Colors.purples[3]};
+  /* box-shadow: 1px 3px 3px 1px ${({ theme }) => theme.Colors.purples[3]}; */
+`;
+export const StyledBoxBotAvatar = styled.img`
+  width: 30px;
+  height: 30px;
+  max-width: 1.9rem;
+  max-height: 1.9rem;
+  //box-shadow: 0px 1px 5px 0px ${({ theme }) => theme.Colors.grays[1]};
+  //box-shadow: 1px 3px 3px 1px ${({ theme }) => theme.Colors.blue[2]};
+  //outline: 2px solid ${({ theme }) => theme.Colors.blue[2]};
 `;
 
-export const StyledAgentOrSUpervisorDialogue = styled.div`
+export const StyledAgentOrSUpervisorDialogue = styled.div<IWrapperColorDialogues>`
   min-height: 65px;
   max-height: fit-content;
   display: flex;
@@ -216,8 +228,8 @@ export const StyledAgentOrSUpervisorDialogue = styled.div`
     & > :nth-child(1) {
       word-wrap: break-word;
       border-radius: 10px 0px 10px 10px;
-      // background-color: #24c3a7;
-      background-color: ${({ theme }) => theme.Colors.purples[1]};
+      background-color: ${({ theme, chatFrom }) =>
+        chatFrom && chatFrom === 'Bot' ? '#4D5ECA' : theme.Colors.purples[1]};
       color: ${({ theme }) => theme.Colors.grays[10]};
       padding: 14px 15px;
       font-weight: 400;

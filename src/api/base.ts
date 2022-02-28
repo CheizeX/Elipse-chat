@@ -54,12 +54,15 @@ export class BaseRestApi {
     }
   }
 
-  async post<T = unknown>(uri: string, body: unknown): Promise<T> {
+  async post<T = unknown>(uri: string, body: unknown): Promise<any> {
     try {
       const response = await this.instance.post<ISuccessResponse<T>>(uri, body);
       // if (!response.data.success) {
       //   router.push('/');
       // }
+      if (!response.data.success) {
+        return response.data;
+      }
       return response.data.result;
     } catch (err: any) {
       appLogger.warn(err);

@@ -66,6 +66,13 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
     return null;
   };
 
+  // const imageOnErrorHandler = (
+  //   event: React.SyntheticEvent<HTMLImageElement, Event>,
+  // ) => {
+  //   event.currentTarget.src = '/icons/unknown_user.svg';
+  //   event.currentTarget.className = 'error';
+  // };
+
   return (
     <StyledWrapperSectionMonitor>
       <StyledHeaderFirstSection>
@@ -112,6 +119,12 @@ export const MonitorSecondSection: FC<IMonitorSecondSection> = ({
                   alt={name.slice(0, 7)}
                 />
               ) : (
+                // <img
+                //   src={`${urlAvatar}?token=${accessToken}`}
+                //   // onLoad={imageOnLoadHandler}
+                //   onError={imageOnErrorHandler}
+                //   alt="www.kindacode.com"
+                // />
                 // <StyledMyAccountAvatar src="/icons/user.svg" />
                 <SVGIcon iconFile="/icons/unknown_user.svg" />
               )}

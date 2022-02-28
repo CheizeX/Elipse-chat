@@ -1,9 +1,11 @@
 /* eslint-disable no-nested-ternary */
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import axios, { AxiosRequestConfig } from 'axios';
 import { useRouter } from 'next/router';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import {
   StyledTrialFormContainer,
   StyledTrialFormLayout,
@@ -28,13 +30,6 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .email('El email es inválido')
     .required('El email es requerido'),
-  phone: Yup.string()
-    .required('El teléfono es requerido')
-    .matches(
-      /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-      'El teléfono es inválido',
-    ),
-
   password: Yup.string()
     .required('La contraseña es requerida')
     .min(6, 'La contraseña debe tener al menos 6 caracteres')
@@ -43,19 +38,27 @@ const validationSchema = Yup.object({
     [Yup.ref('password'), null],
     'Las contraseñas no coinciden',
   ),
+  // phone: Yup.string()
+  //   .required('El teléfono es requerido')
+  //   .matches(
+  //     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+  //     'El teléfono es inválido',
+  //   ),
 });
-const initialValues = {
-  companyName: '',
-  name: '',
-  lastName: '',
-  phone: '',
-  email: '',
-  password: '',
-  verifyPassword: '',
-};
 
 export const TrialForm: FC = () => {
   const router = useRouter();
+  const [phone, setPhone] = useState('');
+
+  const initialValues = {
+    companyName: '',
+    name: '',
+    lastName: '',
+    phone,
+    email: '',
+    password: '',
+    verifyPassword: '',
+  };
 
   const onSubmit = async (values: {
     companyName: string;
@@ -74,13 +77,12 @@ export const TrialForm: FC = () => {
           companyName: values.companyName,
           name: values.name,
           lastName: values.lastName,
-          phone: values.phone,
+          phone,
           email: values.email,
           password: values.password,
         },
       };
       const { data } = await axios(axiosConfig);
-
       if (data.success) {
         router.push(`/`);
       }
@@ -109,9 +111,7 @@ export const TrialForm: FC = () => {
                   Completa los siguientes campos para poder acceder al período
                   de evaluación
                 </h1>
-
                 <Form>
-                  {/* <h1>Datos personales:</h1> */}
                   <Field type="text" name="name" placeholder="Nombre" />
                   <div>
                     <ErrorMessage name="name" component="div" />
@@ -124,10 +124,19 @@ export const TrialForm: FC = () => {
                   <div>
                     <ErrorMessage name="email" component="div" />
                   </div>
-                  <Field
-                    type="phone"
-                    name="phone"
-                    placeholder="Número de teléfono"
+                  <PhoneInput
+                    inputProps={{
+                      required: true,
+                      autoFocus: true,
+                      name: 'phone',
+                    }}
+                    onChange={(e) => {
+                      setPhone(e);
+                    }}
+                    value={phone}
+                    country="cl"
+                    enableSearch
+                    searchPlaceholder="Buscar país..."
                   />
                   <div>
                     <ErrorMessage name="phone" component="div" />
