@@ -158,6 +158,7 @@ export const StyledUserDialogue = styled.div<StyledOnConversationWrapperProps>`
     }
   }
 `;
+
 export const StyledCopyToClipboardUser = styled.span`
   position: relative;
   top: 4px;
@@ -176,36 +177,6 @@ export const StyledCopyToClipboardUser = styled.span`
     color: ${({ theme }) => theme.Colors.orange[3]};
   }
 `;
-export const StyledTooltipText = styled.span`
-  width: 100%;
-`;
-
-export const TooltipBoxToClipboard = styled.div`
-  position: absolute;
-  top: calc(100% + 15px);
-  visibility: hidden;
-  color: transparent;
-  background-color: transparent;
-  width: 100%;
-  min-width: max-content;
-  padding: 5px 5px;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 12px;
-  transition: visibility 0.5s, color 0.5s, background-color 0.5s, width 0.5s,
-    padding 0.5s ease-in-out;
-  &:before {
-    content: '';
-    width: 0;
-    height: 0;
-    left: 40px;
-    top: -10px;
-    position: absolute;
-    border: 10px solid transparent;
-    transform: rotate(135deg);
-    transition: border 0.3s ease-in-out;
-  }
-`;
 
 export const StyledCopyToClipboardAgent = styled.span`
   position: relative;
@@ -213,21 +184,6 @@ export const StyledCopyToClipboardAgent = styled.span`
   left: -10px;
   max-width: 20px;
   height: 20px;
-  & ${StyledTooltipText}:hover + ${TooltipBoxToClipboard} {
-    visibility: visible;
-    color: #fff;
-    background-color: ${({ theme }) => theme.Colors.purples[3]};
-    z-index: 1;
-    &:before {
-      border-color: transparent transparent
-        ${({ theme }) => theme.Colors.purples[3]}
-        ${({ theme }) => theme.Colors.purples[3]};
-    }
-    cursor: pointer;
-    & > svg {
-      color: ${({ theme }) => theme.Colors.grays[10]};
-    }
-  }
   & > svg {
     width: 15px;
     height: 20px;
@@ -240,6 +196,7 @@ export const StyledBoxAvatar = styled.img`
   height: 30px;
   max-width: 1.9rem;
   max-height: 1.9rem;
+  box-shadow: 1px 3px 3px 1px ${({ theme }) => theme.Colors.purples[3]};
 `;
 
 export const StyledAgentOrSUpervisorDialogue = styled.div`
@@ -259,6 +216,7 @@ export const StyledAgentOrSUpervisorDialogue = styled.div`
     & > :nth-child(1) {
       word-wrap: break-word;
       border-radius: 10px 0px 10px 10px;
+      // background-color: #24c3a7;
       background-color: ${({ theme }) => theme.Colors.purples[1]};
       color: ${({ theme }) => theme.Colors.grays[10]};
       padding: 14px 15px;
@@ -520,8 +478,8 @@ export const PendingDeletedMessagesStyle = styled.div`
   }
 `;
 
-export const WrapperLinkOnConversation = styled.p`
-  cursor: pointer;
+export const WrapperOnConversation = styled.span`
+  display: flex;
 `;
 
 export const StyledNameAndContactSeparator = styled.div`

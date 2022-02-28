@@ -84,8 +84,6 @@ export const TrialForm: FC = () => {
       if (data.success) {
         router.push(`/`);
       }
-
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

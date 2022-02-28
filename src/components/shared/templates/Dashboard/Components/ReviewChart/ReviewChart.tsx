@@ -79,8 +79,8 @@ export const ReviewChart: FC<IPropsReview> = ({
     return {
       id: item._id,
       day: weekdays[index]?.day,
-      Satisfactorio: item.satisfactory,
       Insatisfactorio: item.unsatisfactory,
+      Satisfactorio: item.satisfactory,
     };
   });
   const handleClick = () => {

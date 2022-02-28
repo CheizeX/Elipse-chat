@@ -14,6 +14,7 @@ import {
   StyledBoxAvatar,
   StyledDeletedMessage,
   PendingDeletedMessagesStyle,
+  WrapperOnConversation,
 } from './DialoguesBox.styles';
 import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import { ModalBackgroundProps } from '../../../../molecules/Modal/Modal';
@@ -364,7 +365,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                             <SVGIcon iconFile="/icons/band.svg" />
                           </StyledDeletedMessage>
                         ) : (
-                          <p>{readUrl(message.content)}</p>
+                          <WrapperOnConversation>
+                            {readUrl(message.content)}
+                          </WrapperOnConversation>
                         )}
                         <Text>
                           {new Date(message.createdAt).toLocaleTimeString(
@@ -643,7 +646,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                             <SVGIcon iconFile="/icons/band.svg" />
                           </StyledDeletedMessage>
                         ) : (
-                          <p>{readUrl(message.content)}</p>
+                          <WrapperOnConversation>
+                            {readUrl(message.content)}
+                          </WrapperOnConversation>
                         )}
                       </>
                     )}
@@ -662,7 +667,16 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                         alt={userDataInState.name}
                       />
                     ) : (
-                      <SVGIcon iconFile="/icons/user.svg" />
+                      <>
+                        {message.from === 'Bot' ? (
+                          <StyledBoxAvatar
+                            src="/avatars/Robot_1.svg"
+                            alt="Bot"
+                          />
+                        ) : (
+                          <SVGIcon iconFile="/icons/user.svg" />
+                        )}
+                      </>
                     )}
                   </StyledAgentAvatar>
                 </StyledAgentOrSUpervisorDialogue>
@@ -728,7 +742,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                 Se eliminó este mensage
                               </PendingDeletedMessagesStyle>
                             ) : (
-                              <p>{readUrl(message.content)}</p>
+                              <WrapperOnConversation>
+                                {readUrl(message.content)}
+                              </WrapperOnConversation>
                             )}
                           </>
                         )}

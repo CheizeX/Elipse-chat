@@ -84,6 +84,10 @@ export const StripeForm: FC<SubscriptionSectionItemsProps> = ({
             : ButtonState.NORMAL
         }
       />
+      <img
+        src="https://stripe.com/about/logos/powered-by-stripe"
+        alt="Powered by Stripe"
+      />
     </StyledStripePaymentMethod>
   );
 };
