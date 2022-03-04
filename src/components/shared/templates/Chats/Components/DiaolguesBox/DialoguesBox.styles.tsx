@@ -104,12 +104,11 @@ export const StyledUserDialogue = styled.div<StyledOnConversationWrapperProps>`
             }
           }
         }
-        & div {
-          & * {
-            width: 100%;
-            height: 100%;
-            fill: ${({ theme }) => theme.Colors.grays[10]};
-          }
+        & * {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          color: ${({ theme }) => theme.Colors.grays[10]};
         }
       }
       & > div {
@@ -322,18 +321,12 @@ export const StyledAgentOrSUpervisorDialogue = styled.div<IWrapperColorDialogues
         align-items: center;
         &:hover {
           cursor: pointer;
-          & div {
-            & * {
-              fill: ${({ theme }) => theme.Colors.purples[2]};
-            }
-          }
         }
-        & div {
-          & * {
-            width: 100%;
-            height: 100%;
-            fill: ${({ theme }) => theme.Colors.grays[10]};
-          }
+        & * {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          color: ${({ theme }) => theme.Colors.grays[10]};
         }
       }
     }

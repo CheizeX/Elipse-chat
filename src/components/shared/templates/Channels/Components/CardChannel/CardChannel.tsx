@@ -120,7 +120,7 @@ export const CardChannel: FC<IPropsCardChannel> = ({
         {service === 'Instagram' ? (
           <StyledLogoInstagram>
             <img
-              src="https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png"
+              src="/image/instagram_logo.png"
               alt="No se encontro la imagen"
             />
           </StyledLogoInstagram>

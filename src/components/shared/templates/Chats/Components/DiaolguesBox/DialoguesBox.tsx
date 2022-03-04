@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { FC, useRef, useCallback, useState } from 'react';
+import { IoMdCloseCircle } from 'react-icons/io';
 import { SVGIcon } from '../../../../atoms/SVGIcon/SVGIcon';
 import { Text } from '../../../../atoms/Text/Text';
 import { SelectedUserProps } from '../../ChatsSection/ChatsSection.interface';
@@ -165,9 +166,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => setIdModal('')}>
-                                    <SVGIcon
-                                      iconFile="/icons/minimize.svg"
+                                    <IoMdCloseCircle
                                       color="white"
+                                      width="30px"
                                     />
                                   </button>
                                   <article>
@@ -223,9 +224,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => setIdModal('')}>
-                                    <SVGIcon
-                                      iconFile="/icons/minimize.svg"
+                                    <IoMdCloseCircle
                                       color="white"
+                                      width="30px"
                                     />
                                   </button>
                                   <article>
@@ -281,9 +282,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => setIdModal('')}>
-                                    <SVGIcon
-                                      iconFile="/icons/minimize.svg"
+                                    <IoMdCloseCircle
                                       color="white"
+                                      width="30px"
                                     />
                                   </button>
                                   <article>
@@ -340,9 +341,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => setIdModal('')}>
-                                    <SVGIcon
-                                      iconFile="/icons/minimize.svg"
+                                    <IoMdCloseCircle
                                       color="white"
+                                      width="30px"
                                     />
                                   </button>
                                   <article>
@@ -450,9 +451,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => setIdModal('')}>
-                                    <SVGIcon
-                                      iconFile="/icons/minimize.svg"
+                                    <IoMdCloseCircle
                                       color="white"
+                                      width="30px"
                                     />
                                   </button>
                                   <article>
@@ -509,9 +510,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     <button
                                       type="button"
                                       onClick={() => setIdModal('')}>
-                                      <SVGIcon
-                                        iconFile="/icons/minimize.svg"
+                                      <IoMdCloseCircle
                                         color="white"
+                                        width="30px"
                                       />
                                     </button>
                                     <article>
@@ -563,9 +564,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     <button
                                       type="button"
                                       onClick={() => setIdModal('')}>
-                                      <SVGIcon
-                                        iconFile="/icons/minimize.svg"
+                                      <IoMdCloseCircle
                                         color="white"
+                                        width="30px"
                                       />
                                     </button>
                                     <article>
@@ -617,9 +618,9 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
                                     <button
                                       type="button"
                                       onClick={() => setIdModal('')}>
-                                      <SVGIcon
-                                        iconFile="/icons/minimize.svg"
+                                      <IoMdCloseCircle
                                         color="white"
+                                        width="30px"
                                       />
                                     </button>
                                     <article>

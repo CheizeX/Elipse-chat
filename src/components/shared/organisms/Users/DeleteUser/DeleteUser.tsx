@@ -15,6 +15,7 @@ import {
 } from './DeleteUser.styled';
 import { IDeleteUserProps } from './DeleteUser.interface';
 import { useToastContext } from '../../../molecules/Toast/useToast';
+// import { websocketContext } from '../../../../../chat/index';
 import { Toast } from '../../../molecules/Toast/Toast.interface';
 import { deleteUser } from '../../../../../api/users';
 import { RootState } from '../../../../../redux';
