@@ -205,7 +205,7 @@ export const ChatsHistory: FC<IChatHistoryProps> = ({
         />
       );
     }
-    return 'La imagen que intantas descargar no se puede visualizar';
+    return 'La imagen que intentas descargar no se puede visualizar';
   };
 
   const openMaxModalAgent = (content: string, channel: string) => {

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { IContainerCard } from './CardChannel.interface';
 
 export const StyledCardChannel = styled.div`
+  position: relative;
   width: 309px;
   height: 144px;
   border-radius: 10px;
@@ -12,7 +13,7 @@ export const StyledCardChannel = styled.div`
     display: flex;
     height: 92px;
     width: 100%;
-    border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[8]};
+    border-bottom: 1px solid ${({ theme }) => theme.Colors.grays[9]};
     & > :nth-child(2) {
       display: flex;
       flex-direction: column;
@@ -35,6 +36,8 @@ export const StyledCardChannel = styled.div`
     }
     & > :nth-child(3) {
       display: flex;
+      position: absolute;
+      right: -8px;
       width: 100%;
       max-width: 100px;
       justify-content: center;
@@ -53,8 +56,13 @@ export const StyledCardChannel = styled.div`
               & > svg {
                 width: 6px;
                 height: 22px;
+                &:hover {
+                  & > path {
+                    fill: ${({ theme }) => theme.Colors.grays[5]};
+                  }
+                }
                 & > path {
-                  fill: ${({ theme }) => theme.Colors.grays[6]};
+                  fill: ${({ theme }) => theme.Colors.grays[7]};
                 }
               }
             }
@@ -192,6 +200,7 @@ export const DropdownContainerCard = styled.div`
     border-radius: 4px;
     justify-content: flex-start;
     width: 100%;
+    cursor: pointer;
     &:hover {
       background-color: ${({ theme }) => theme.Colors.grays[9]};
     }

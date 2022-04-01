@@ -38,6 +38,7 @@ export const ReviewChart: FC<IPropsReview> = ({
   const { reviewChats, datePicker } = useAppSelector(
     (state) => state.review.chatContainerReviewState,
   );
+
   const { ref, isComponentVisible, setIsComponentVisible } =
     useDisplayElementOrNot(false);
 

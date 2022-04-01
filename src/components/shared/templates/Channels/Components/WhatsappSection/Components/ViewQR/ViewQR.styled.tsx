@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const StyledViewQr = styled.div`
   width: 304px;
   height: 290px;
-  margin: auto;
   border-radius: 0.625rem;
   & > :nth-child(1) {
     height: fit-content;
@@ -37,7 +36,7 @@ export const StyledViewQr = styled.div`
     & > :nth-child(2) {
       width: 304px;
       height: 100%;
-      min-height: 276px;
+      min-height: 306px;
       border-radius: 0.625rem;
       background-color: ${({ theme }) => theme.Colors.grays[9]};
       margin-bottom: 8px;
@@ -66,8 +65,24 @@ export const StyledViewQr = styled.div`
 `;
 export const StyledQR = styled.div`
   height: 100%;
-  min-height: 270px;
+  min-height: 312px;
   width: 100%;
+  position: relative;
+  & > button {
+    cursor: pointer;
+    position: absolute;
+    top: -6px;
+    right: -5px;
+    border-radius: 50%;
+    min-width: 22px;
+    min-height: 22px;
+    background: ${({ theme }) => theme.Colors.grays[2]};
+    & > svg {
+      width: 22px;
+      height: 20px;
+      fill: ${({ theme }) => theme.Colors.grays[10]};
+    }
+  }
   & > div {
     max-width: 240px;
     width: 100%;
@@ -111,7 +126,7 @@ export const StyledQR = styled.div`
     }
   }
   & > iframe {
-    min-height: 270px;
+    min-height: 264px;
     width: 100%;
     margin-left: 36px;
     & div {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledWrappperWhatsappUnOfficial = styled.div`
   width: 304px;
   height: 100%;
+  max-height: 418px;
   background-color: ${({ theme }) => theme.Colors.grays[10]};
   margin-top: 10px;
   & > span {

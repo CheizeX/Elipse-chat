@@ -154,9 +154,12 @@ export const AddedUsersSection: FC = () => {
   };
 
   useEffect(() => {
-    dataApi();
+    // dataApi();
     getFilterTag();
-  }, [dataApi, getFilterTag]);
+  }, [
+    // dataApi,
+    getFilterTag,
+  ]);
 
   useEffect(() => {
     socket.on('newUser', (data: User[]) => {

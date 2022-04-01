@@ -10,6 +10,8 @@ export type User = {
   tags: Tag[] | undefined;
   status?: UserStatus;
   urlAvatar?: string;
+  invitationAccepted?: boolean;
+  persistent?: boolean;
 };
 
 export type Status = {

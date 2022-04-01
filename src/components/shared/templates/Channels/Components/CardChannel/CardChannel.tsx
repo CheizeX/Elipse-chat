@@ -19,7 +19,11 @@ import { BadgeMolecule } from '../../../../molecules/Badge/Badge';
 import useDisplayElementOrNot from '../../../../../../hooks/use-display-element-or-not';
 import { dataAvatar } from '../WebChatSection/Components/AvatarContainer/AvatarContainer';
 import { setIdChannel } from '../../../../../../redux/slices/channels/list-channel';
-import { useAppDispatch } from '../../../../../../redux/hook/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../redux/hook/hooks';
+import { Scripts } from '../Scripts/Scripts';
 
 export const CardChannel: FC<IPropsCardChannel> = ({
   name,
@@ -33,13 +37,21 @@ export const CardChannel: FC<IPropsCardChannel> = ({
   setSeletedComponent,
 }) => {
   const dispatch = useAppDispatch();
+  const { scripts: scriptArray } = useAppSelector(
+    (state) => state.channel.listChannelState.listChannel.webchat,
+  );
+
   const { ref, isComponentVisible, setIsComponentVisible } =
     useDisplayElementOrNot(false);
   const [toggle, setToggle] = useState<boolean>(isActive);
+  const [scripts, setScripts] = useState<boolean>(false);
+
   const inputRef = useRef(null);
+
   const handleClick = () => {
     setIsComponentVisible(!isComponentVisible);
   };
+
   const handleClickCard = (arg: string) => {
     setSeletedComponent('DeleteChannel');
     dispatch(setIdChannel(arg));
@@ -47,93 +59,107 @@ export const CardChannel: FC<IPropsCardChannel> = ({
   };
 
   return (
-    <StyledCardChannel>
-      <div>
-        <StyledPicture>
-          <div>
-            {service === 'Web Chat' &&
-            dataAvatar.filter((item) => item.name.includes(image)) ? (
-              <SVGIcon iconFile={`/avatars/${image}.svg`} />
-            ) : (
-              <img src={`${image}`} alt="No se encontro la imagen" />
-            )}
-          </div>
-          <SVGIcon iconFile={`/icons/${icon}.svg`} />
-        </StyledPicture>
+    <>
+      <StyledCardChannel>
         <div>
-          <span>{name}</span>
-          <Text>Servicio al Cliente</Text>
-        </div>
-        <div>
-          <div>
-            <StyledBoxWrapper>
-              <CheckBox type="checkbox" />
-              <CheckBoxLabel
-                isChecked={toggle}
-                ref={inputRef}
-                onClick={() => setToggle(!toggle)}
-              />
-            </StyledBoxWrapper>
-            <button type="button" onClick={handleClick}>
-              {isComponentVisible ? (
-                <SVGIcon iconFile="/icons/user_options.svg" />
-              ) : (
-                <SVGIcon color="#8520D0" iconFile="/icons/user_options.svg" />
-              )}
-            </button>
-            {isComponentVisible ? (
-              <div ref={ref}>
-                <DropdownContainerCard>
-                  <BadgeMolecule
-                    bgColor="transparent"
-                    leftIcon={() => <SVGIcon iconFile="/icons/delete.svg" />}>
-                    <button
-                      type="button"
-                      onClick={() => handleClickCard(_idChannel || '')}>
-                      <Text>Eliminar </Text>
-                    </button>
-                  </BadgeMolecule>
-                </DropdownContainerCard>
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </div>
-      <div>
-        {providerName === 'Wassenger' && service === 'WhatsApp' ? (
-          <LogoWassenger>
-            <img src="/images/wassenger.png" alt="" />
-          </LogoWassenger>
-        ) : null}
-        {providerName === '360' && service === 'WhatsApp' ? (
-          <StyledWhatsApp360>
-            <img src="/images/dialog.png" alt="" />
-          </StyledWhatsApp360>
-        ) : null}
-        {!providerName && service === 'Messenger' ? (
-          <StyledFacebookService>
+          <StyledPicture>
             <div>
-              <span>facebook</span>
+              {service === 'Web Chat' &&
+              dataAvatar.filter((item) =>
+                item.name.includes(image.slice(0, image.length - 4)),
+              ) ? (
+                <SVGIcon iconFile={`/avatars/${image}.svg`} />
+              ) : (
+                <img src={`${image}`} alt="No se encontro la imagen" />
+              )}
             </div>
-          </StyledFacebookService>
-        ) : null}
-        {service === 'Instagram' ? (
-          <StyledLogoInstagram>
-            <img
-              src="/image/instagram_logo.png"
-              alt="No se encontro la imagen"
-            />
-          </StyledLogoInstagram>
-        ) : null}
-        {service === 'Web Chat' ? (
-          <StyledLogoWebChat>
-            <img src="/images/Elipse-chat-redondo-azul-oscuro.png" alt="" />
-          </StyledLogoWebChat>
-        ) : null}
-        <div>
-          <Text>{service}</Text>
+            <SVGIcon iconFile={`/icons/${icon}.svg`} />
+          </StyledPicture>
+          <div>
+            <span>{name}</span>
+            <Text>Servicio al Cliente</Text>
+          </div>
+          <div>
+            <div>
+              <StyledBoxWrapper>
+                <CheckBox type="checkbox" />
+                <CheckBoxLabel
+                  isChecked={toggle}
+                  ref={inputRef}
+                  onClick={() => setToggle(!toggle)}
+                />
+              </StyledBoxWrapper>
+              <button type="button" onClick={handleClick}>
+                {isComponentVisible ? (
+                  <SVGIcon iconFile="/icons/user_options.svg" />
+                ) : (
+                  <SVGIcon color="#8520D0" iconFile="/icons/user_options.svg" />
+                )}
+              </button>
+              {isComponentVisible ? (
+                <div ref={ref}>
+                  <DropdownContainerCard>
+                    {service === 'Web Chat' && scriptArray && (
+                      <BadgeMolecule
+                        bgColor="transparent"
+                        leftIcon={() => <SVGIcon iconFile="/icons/eye.svg" />}>
+                        <button type="button" onClick={() => setScripts(true)}>
+                          <Text>Scripts</Text>
+                        </button>
+                      </BadgeMolecule>
+                    )}
+                    <BadgeMolecule
+                      bgColor="transparent"
+                      leftIcon={() => <SVGIcon iconFile="/icons/delete.svg" />}>
+                      <button
+                        type="button"
+                        onClick={() => handleClickCard(_idChannel || '')}>
+                        <Text>Eliminar </Text>
+                      </button>
+                    </BadgeMolecule>
+                  </DropdownContainerCard>
+                </div>
+              ) : null}
+            </div>
+          </div>
         </div>
-      </div>
-    </StyledCardChannel>
+        <div>
+          {providerName === 'Wassenger' && service === 'WhatsApp' ? (
+            <LogoWassenger>
+              <img src="/images/wassenger.png" alt="" />
+            </LogoWassenger>
+          ) : null}
+          {providerName === '360' && service === 'WhatsApp' ? (
+            <StyledWhatsApp360>
+              <img src="/images/dialog.png" alt="" />
+            </StyledWhatsApp360>
+          ) : null}
+          {!providerName && service === 'Messenger' ? (
+            <StyledFacebookService>
+              <div>
+                <span>facebook</span>
+              </div>
+            </StyledFacebookService>
+          ) : null}
+          {service === 'Instagram' ? (
+            <StyledLogoInstagram>
+              <img
+                src="/image/instagram_logo.png"
+                alt="No se encontro la imagen"
+              />
+            </StyledLogoInstagram>
+          ) : null}
+          {service === 'Web Chat' ? (
+            <StyledLogoWebChat>
+              <img src="/images/Elipse-chat-redondo-azul-oscuro.png" alt="" />
+            </StyledLogoWebChat>
+          ) : null}
+          <div>
+            <Text>{service}</Text>
+          </div>
+        </div>
+      </StyledCardChannel>
+      {scripts && <Scripts setScripts={setScripts} />}
+    </>
   );
 };

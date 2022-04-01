@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useJwt } from 'react-jwt';
 import { NavBarLive } from '../../organisms/NavBar/NavBarLive/NavBarLive';
@@ -15,6 +15,7 @@ import { useAppSelector } from '../../../../redux/hook/hooks';
 import useLocalStorage from '../../../../hooks/use-local-storage';
 import { UserRole } from '../../../../models/users/role';
 import { Loader } from '../../atoms/Loader/Loader';
+import { ContactsSetion } from '../../templates/Contacts/ContactsSection/ContactsSection';
 
 export const LiveChatsPage: FC<
   UploadableFile & FilterChannelsProps & FilterChannel & IBackOfficeProps
@@ -33,6 +34,8 @@ export const LiveChatsPage: FC<
   const { push } = useRouter();
 
   const [accessToken] = useLocalStorage('AccessToken', '');
+  const [seletedSectionLiveChat, setSeletedSectionLiveChat] =
+    useState<string>('Chat');
   const { decodedToken }: any = useJwt(accessToken);
 
   const { userDataInState } = useAppSelector(
@@ -50,7 +53,7 @@ export const LiveChatsPage: FC<
     ) {
       push('/backoffice');
     }
-  }, [decodedToken]);
+  }, [accessToken, decodedToken, push, userDataInState]);
 
   return (
     <>
@@ -60,21 +63,25 @@ export const LiveChatsPage: FC<
             setMyAccount={setMyAccount}
             messageIcon={() => <SVGIcon iconFile="/icons/message_icons.svg" />}
             bellIcon={() => <SVGIcon iconFile="/icons/bell.svg" />}
+            setSeletedSectionLiveChat={setSeletedSectionLiveChat}
           />
-          <ChatsSection
-            checkedTags={checkedTags}
-            setCheckedTags={setCheckedTags}
-            handleCleanChannels={handleCleanChannels}
-            selectedChannels={selectedChannels}
-            setSelectedChannels={setSelectedChannels}
-            channel={channel}
-            emojisDisplayed
-            setEmojisDisplayed={() => {}}
-            id={id}
-            file={file}
-            errors={errors}
-            setChatInputDialogue={() => {}}
-          />
+          {seletedSectionLiveChat === 'Chat' ? (
+            <ChatsSection
+              checkedTags={checkedTags}
+              setCheckedTags={setCheckedTags}
+              handleCleanChannels={handleCleanChannels}
+              selectedChannels={selectedChannels}
+              setSelectedChannels={setSelectedChannels}
+              channel={channel}
+              emojisDisplayed
+              setEmojisDisplayed={() => {}}
+              id={id}
+              file={file}
+              errors={errors}
+              setChatInputDialogue={() => {}}
+            />
+          ) : null}
+          {seletedSectionLiveChat === 'Contactos' ? <ContactsSetion /> : null}
         </StyledLiveChats>
       ) : (
         <Loader />

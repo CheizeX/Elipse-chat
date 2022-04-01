@@ -8,14 +8,14 @@ import {
   StyledNavBarLive,
   Wrapper,
   Logo,
-  Ailalia,
+  // Ailalia,
   Letter,
   LiveNavDropdownContainer,
   LiveTriggerElement,
   LiveStyledAvatar,
   LiveArrowIcon,
 } from './NavBarLive.styled';
-import { INavBarLiveProps } from './NavBarLive.interface';
+import { INavBarLive, INavBarLiveProps } from './NavBarLive.interface';
 import { useAuth } from '../../../../../hooks/auth';
 import { changeStatus } from '../../../../../api/users';
 import { StatusAgent } from '../../../../../models/users/status';
@@ -31,114 +31,117 @@ import useDisplayElementOrNot from '../../../../../hooks/use-display-element-or-
 import { IBackOfficeProps } from '../BackOffice/NavBarBackOffice.interface';
 import useLocalStorage from '../../../../../hooks/use-local-storage';
 
-export const NavBarLive: FC<INavBarLiveProps & IBackOfficeProps> = ({
-  elipsis,
-}) => {
-  // Manejo del dropdown de disponibilidad
-  const [statusChecked, setStatusChecked] = useState<string>('Disponible');
-  const [activoCheck, setActivoChecked] = useState<number>(0);
-  const [myAccount, setMyAccount] = React.useState<number>(0);
+export const NavBarLive: FC<INavBarLiveProps & IBackOfficeProps & INavBarLive> =
+  ({ setSeletedSectionLiveChat }) => {
+    // Manejo del dropdown de disponibilidad
+    const [statusChecked, setStatusChecked] = useState<string>('Disponible');
+    const [activoCheck, setActivoChecked] = useState<number>(0);
+    const [myAccount, setMyAccount] = React.useState<number>(0);
 
-  const showAlert = useToastContext();
-  const dispatch = useAppDispatch();
+    const showAlert = useToastContext();
+    const dispatch = useAppDispatch();
 
-  const handleClickStatus = async (
-    arg: string,
-    index: number,
-    data: string,
-  ) => {
-    setStatusChecked(arg);
-    setActivoChecked(index);
-    try {
-      await changeStatus({ status: data as StatusAgent });
-    } catch (error) {
-      showAlert?.addToast({
-        alert: Toast.ERROR,
-        title: '¡Upps!',
-        message: `${error}`,
-      });
-    }
-  };
+    const handleClickStatus = async (
+      arg: string,
+      index: number,
+      data: string,
+    ) => {
+      setStatusChecked(arg);
+      setActivoChecked(index);
+      try {
+        await changeStatus({ status: data as StatusAgent });
+      } catch (error) {
+        showAlert?.addToast({
+          alert: Toast.ERROR,
+          title: '¡Upps!',
+          message: `${error}`,
+        });
+      }
+    };
 
-  // Manejo del dropdown de agentes
-  const { ref, isComponentVisible, setIsComponentVisible } =
-    useDisplayElementOrNot(false);
+    // Manejo del dropdown de agentes
+    const { ref, isComponentVisible, setIsComponentVisible } =
+      useDisplayElementOrNot(false);
 
-  const handleNavUserDropdown = () => {
-    setIsComponentVisible(!isComponentVisible);
-  };
+    const handleNavUserDropdown = () => {
+      setIsComponentVisible(!isComponentVisible);
+    };
 
-  // Manejo de Logout
-  const { signOut } = useAuth();
-  const [accessToken] = useLocalStorage('AccessToken', '');
-  const { userDataInState }: any = useAppSelector(
-    (state) => state.userAuthCredentials,
-  );
-  const profilePicture = userDataInState?.urlAvatar
-    ? `${userDataInState.urlAvatar}?token=${accessToken}`
-    : '';
-  const handleCloseSession = async () => {
-    try {
-      await signOut();
+    // Manejo de Logout
+    const { signOut } = useAuth();
+    const [accessToken] = useLocalStorage('AccessToken', '');
+    const { userDataInState }: any = useAppSelector(
+      (state) => state.userAuthCredentials,
+    );
+    const profilePicture = userDataInState?.urlAvatar
+      ? `${userDataInState.urlAvatar}?token=${accessToken}`
+      : '';
+    const handleCloseSession = async () => {
+      try {
+        await signOut();
+        setIsComponentVisible(false);
+        dispatch(setUserDataInState({} as DecodedToken));
+      } catch (error) {
+        showAlert?.addToast({
+          alert: Toast.ERROR,
+          title: '¡Upps!',
+          message: `${error}`,
+        });
+      }
+    };
+
+    const handleMyAccount = (number: number) => {
+      setMyAccount(number);
       setIsComponentVisible(false);
-      dispatch(setUserDataInState({} as DecodedToken));
-    } catch (error) {
-      showAlert?.addToast({
-        alert: Toast.ERROR,
-        title: '¡Upps!',
-        message: `${error}`,
-      });
-    }
-  };
-
-  const handleMyAccount = (number: number) => {
-    setMyAccount(number);
-    setIsComponentVisible(false);
-  };
-  return (
-    <>
-      <StyledNavBarLive>
-        <Wrapper>
-          <Logo>
-            <img src="/images/elipse-chat-blanco.png" alt="sidebar-1" />
-            {/* <SVGIcon iconFile="/icons/Trazado_ailalia.svg" /> */}
-          </Logo>
-          <Ailalia>
-            {/* <SVGIcon iconFile="/icons/Trazado_ailalia.svg" /> */}
-          </Ailalia>
-          <Letter>
-            <span>
-              <BadgeMolecule>
-                <Text>Chats</Text>
-              </BadgeMolecule>
-            </span>
-            <span>
-              <BadgeMolecule>
-                <Text>Monitor</Text>
-                {elipsis && elipsis()}
-              </BadgeMolecule>
-            </span>
-            <span>
-              <BadgeMolecule>
-                <Text>Biblioteca</Text>
-              </BadgeMolecule>
-            </span>
-          </Letter>
-        </Wrapper>
-        <Wrapper>
-          {/* <MessageIcon onClick={onClick ?? (() => {})}>
+    };
+    return (
+      <>
+        <StyledNavBarLive>
+          <Wrapper>
+            <Logo>
+              <img src="/images/elipse-chat-blanco.png" alt="sidebar-1" />
+              {/* <SVGIcon iconFile="/icons/Trazado_ailalia.svg" /> */}
+            </Logo>
+            {/* <Ailalia>
+            <SVGIcon iconFile="/icons/Trazado_ailalia.svg" /> 
+          </Ailalia> */}
+            <Letter>
+              <button
+                type="button"
+                onClick={() => setSeletedSectionLiveChat('Chat')}>
+                <BadgeMolecule>
+                  <Text>Chats</Text>
+                </BadgeMolecule>
+              </button>
+              {/* <button type="button">
+                <BadgeMolecule>
+                  <Text>Monitor</Text>
+                  {elipsis && elipsis()}
+                </BadgeMolecule>
+              </button> */}
+              <button
+                type="button"
+                onClick={() => setSeletedSectionLiveChat('Contactos')}>
+                <BadgeMolecule>
+                  <Text>Contactos</Text>
+                </BadgeMolecule>
+              </button>
+            </Letter>
+          </Wrapper>
+          <Wrapper>
+            {/* <MessageIcon onClick={onClick ?? (() => {})}>
           {messageIcon && messageIcon()}
         </MessageIcon> */}
-          {/* <BellIcon onClick={onClick ?? (() => {})}>
+            {/* <BellIcon onClick={onClick ?? (() => {})}>
           {bellIcon && bellIcon()}
         </BellIcon> */}
-          {/* <NotificationStyledNavBar /> */}
-          <DropdownStatus
-            statusChecked={statusChecked}
-            activoCheck={activoCheck}
-            handleClickStatus={handleClickStatus}
-          />
-          {/* <Dropdown
+            {/* <NotificationStyledNavBar /> */}
+            <DropdownStatus
+              statusChecked={statusChecked}
+              activoCheck={activoCheck}
+              handleClickStatus={handleClickStatus}
+            />
+            {/* <Dropdown
             triggerElement={() => (
               <TriggerElement statusChecked={statusChecked}>
                 <Text>{statusChecked}</Text>
@@ -192,48 +195,48 @@ export const NavBarLive: FC<INavBarLiveProps & IBackOfficeProps> = ({
          
             </StyledAgentStatusSropdown>
           </Dropdown> */}
-          <LiveTriggerElement>
-            <LiveStyledAvatar>
-              {profilePicture && profilePicture !== '' ? (
-                <img src={profilePicture} alt={userDataInState.name} />
-              ) : (
-                <SVGIcon iconFile="/icons/unknown_user.svg" />
-              )}
-            </LiveStyledAvatar>
-            <LiveArrowIcon onClick={handleNavUserDropdown}>
-              {isComponentVisible ? (
-                <SVGIcon iconFile="/icons/chevron-square-up.svg" />
-              ) : (
-                <SVGIcon iconFile="/icons/chevron-square-down.svg" />
-              )}
-            </LiveArrowIcon>
-          </LiveTriggerElement>
-          {isComponentVisible && (
-            <LiveNavDropdownContainer ref={ref}>
-              <button type="button" onClick={() => handleMyAccount(1)}>
-                <BadgeMolecule>
-                  <SVGIcon iconFile="/icons/mi-cuenta.svg" />
-                  <Text size="12px" weight="600">
-                    Mi cuenta
-                  </Text>
-                </BadgeMolecule>
-              </button>
-              <button type="button" onClick={handleCloseSession}>
-                <BadgeMolecule>
-                  <SVGIcon iconFile="/icons/cerrar-sesion.svg" />
-                  <Text size="12px" weight="600">
-                    Cerrar sesión
-                  </Text>
-                </BadgeMolecule>
-              </button>
-            </LiveNavDropdownContainer>
-          )}
-        </Wrapper>
-      </StyledNavBarLive>
-      <MyAccountSidebarOrganism
-        setMyAccount={setMyAccount}
-        myAccount={myAccount}
-      />
-    </>
-  );
-};
+            <LiveTriggerElement>
+              <LiveStyledAvatar>
+                {profilePicture && profilePicture !== '' ? (
+                  <img src={profilePicture} alt={userDataInState.name} />
+                ) : (
+                  <SVGIcon iconFile="/icons/unknown_user.svg" />
+                )}
+              </LiveStyledAvatar>
+              <LiveArrowIcon onClick={handleNavUserDropdown}>
+                {isComponentVisible ? (
+                  <SVGIcon iconFile="/icons/chevron-square-up.svg" />
+                ) : (
+                  <SVGIcon iconFile="/icons/chevron-square-down.svg" />
+                )}
+              </LiveArrowIcon>
+            </LiveTriggerElement>
+            {isComponentVisible && (
+              <LiveNavDropdownContainer ref={ref}>
+                <button type="button" onClick={() => handleMyAccount(1)}>
+                  <BadgeMolecule>
+                    <SVGIcon iconFile="/icons/mi-cuenta.svg" />
+                    <Text size="12px" weight="600">
+                      Mi cuenta
+                    </Text>
+                  </BadgeMolecule>
+                </button>
+                <button type="button" onClick={handleCloseSession}>
+                  <BadgeMolecule>
+                    <SVGIcon iconFile="/icons/cerrar-sesion.svg" />
+                    <Text size="12px" weight="600">
+                      Cerrar sesión
+                    </Text>
+                  </BadgeMolecule>
+                </button>
+              </LiveNavDropdownContainer>
+            )}
+          </Wrapper>
+        </StyledNavBarLive>
+        <MyAccountSidebarOrganism
+          setMyAccount={setMyAccount}
+          myAccount={myAccount}
+        />
+      </>
+    );
+  };

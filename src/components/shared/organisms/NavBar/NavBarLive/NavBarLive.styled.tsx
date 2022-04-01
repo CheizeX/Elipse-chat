@@ -139,17 +139,33 @@ export const Letter = styled.div`
   width: 395px;
   height: 38px;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   padding: 2px 36px 0px 54px;
-  & > span {
+  & > button {
+    font-size: ${({ theme }) => theme.fontSize[12]};
+    font-weight: ${({ theme }) => theme.fontWeight[600]};
+    border-radius: 50px;
+    padding: 5px 10px;
+    div {
+      background: transparent;
+      border-radius: 50px;
+      height: 38px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+    &:hover {
+      transition: background-color 0.5s;
+      & * {
+        background-color: ${({ theme }) => theme.Colors.grays[10]};
+        color: ${({ theme }) => theme.Colors.purples[1]};
+        cursor: pointer;
+      }
+    }
     & > div {
-      & > div {
-        & > div {
-          & > div {
-            padding: 0px;
-            height: 2px;
-          }
-        }
+      & > span {
+        font-size: ${({ theme }) => theme.fontSize[14]};
+        font-weight: ${({ theme }) => theme.fontWeight[700]};
+        line-height: 14px;
       }
     }
   }

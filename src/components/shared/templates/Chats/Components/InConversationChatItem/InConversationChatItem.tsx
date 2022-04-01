@@ -41,6 +41,8 @@ import {
 } from '../../../../../../redux/slices/live-chat/chat-history';
 import { baseRestApi } from '../../../../../../api/base';
 import { getTimeAgo } from '../../ChatsSection/ChatsSection.shared';
+import { useToastContext } from '../../../../molecules/Toast/useToast';
+import { Toast } from '../../../../molecules/Toast/Toast.interface';
 
 export const InConversationChatItem: FC<
   StyledLabelProps &
@@ -64,21 +66,29 @@ export const InConversationChatItem: FC<
   //   (state) => state.optionsToFilterChats,
   // );
   const dispatch = useAppDispatch();
+  const showAlert = useToastContext();
 
   const { chatsOnConversation } = useAppSelector(
     (state) => state.liveChat.chatsOnConversation,
   );
 
-  const handleResetNoViewedChats = useCallback(async (id: string) => {
-    try {
-      await baseRestApi.patch(
-        `${process.env.NEXT_PUBLIC_REST_API_URL}/chats/resetUnreadMessages/${id}`,
-        {},
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  const handleResetNoViewedChats = useCallback(
+    async (id: string) => {
+      try {
+        await baseRestApi.patch(
+          `${process.env.NEXT_PUBLIC_REST_API_URL}/chats/resetUnreadMessages/${id}`,
+          {},
+        );
+      } catch (error) {
+        showAlert?.addToast({
+          alert: Toast.ERROR,
+          title: 'ERROR',
+          message: `INIT-CONVERSATION-ERROR ${error}`,
+        });
+      }
+    },
+    [showAlert],
+  );
 
   const handleSendMessageToUser = useCallback(
     async (clientId: string, channel: string, chatId: string) => {
@@ -161,6 +171,9 @@ export const InConversationChatItem: FC<
                   )}
                   {chat.channel === Channels.WEBCHAT && (
                     <SVGIcon iconFile="/icons/webchat.svg" />
+                  )}
+                  {chat.channel === Channels.WASSENGER && (
+                    <SVGIcon iconFile="/icons/whatsapp.svg" />
                   )}
                   {chat.unreadMessages > 0 && (
                     <StyledNotViewedMessages>

@@ -116,6 +116,9 @@ export const PendingsChatItem: FC<
                   {chat.channel === Channels.WEBCHAT && (
                     <SVGIcon iconFile="/icons/webchat.svg" />
                   )}
+                  {chat.channel === Channels.WASSENGER && (
+                    <SVGIcon iconFile="/icons/whatsapp.svg" />
+                  )}
                 </StyledClientAndAgentAvatars>
                 <StyledNameAndDialog>
                   <Text>

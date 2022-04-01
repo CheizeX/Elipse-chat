@@ -197,6 +197,13 @@ export const ChatsViewSelectedToConfirm: FC<
             bodyObject,
           );
         }
+        if (chatToTalkWithUser?.channel === 'Wassenger') {
+          await baseRestApi.patch(
+            `/wassenger/sendMessageToUser/${chatToTalkWithUserId}/${chatToTalkWithUserNumber}`,
+            bodyObject,
+          );
+        }
+        // https://rest-ailalia.ngrok.io/rest/v1/api/wassenger/sendMessageToUser/:chatId/:userId
       } catch (error) {
         showAlert?.addToast({
           alert: Toast.ERROR,
@@ -242,6 +249,12 @@ export const ChatsViewSelectedToConfirm: FC<
           bodyObject,
         );
       }
+      if (chatToTalkWithUser?.channel === 'Wassenger') {
+        await baseRestApi.patch(
+          `/wassenger/sendMessageToUser/${chatToTalkWithUserId}/${chatToTalkWithUserNumber}`,
+          bodyObject,
+        );
+      }
       setSendingMessage(false);
     } catch (error) {
       showAlert?.addToast({
@@ -283,6 +296,12 @@ export const ChatsViewSelectedToConfirm: FC<
       if (chatToTalkWithUser?.channel === 'Webchat') {
         await baseRestApi.patch(
           `/webchat/sendMessageToUser/${chatToTalkWithUserId}`,
+          bodyObject,
+        );
+      }
+      if (chatToTalkWithUser?.channel === 'Wassenger') {
+        await baseRestApi.patch(
+          `/wassenger/sendMessageToUser/${chatToTalkWithUserId}/${chatToTalkWithUserNumber}`,
           bodyObject,
         );
       }
@@ -376,7 +395,8 @@ export const ChatsViewSelectedToConfirm: FC<
               Cliente
               {chatsOnConversation?.find(
                 (chat) =>
-                  chat.client.clientId === userSelected &&
+                  (chat.client.clientId === userSelected &&
+                    chat.channel === 'Wassenger') ||
                   chat.channel === 'WhatsApp',
               )?.client.clientId ? (
                 <StyledCopyToClipboardUser
@@ -417,8 +437,9 @@ export const ChatsViewSelectedToConfirm: FC<
                 {
                   chatsOnConversation?.find(
                     (chat) =>
-                      chat.client.clientId === userSelected &&
-                      chat.channel === 'WhatsApp',
+                      (chat.client.clientId === userSelected &&
+                        chat.channel === 'WhatsApp') ||
+                      chat.channel === 'Wassenger',
                   )?.client.clientId
                 }
               </Text>

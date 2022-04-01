@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-// import { useAppSelector } from '../../../../../../../../redux/hook/hooks';
+import { MdRefresh } from 'react-icons/md';
 import { SpinnerDotted } from 'spinners-react';
 import { Text } from '../../../../../../atoms/Text/Text';
 import { LinkToMolecule } from '../../../../../../molecules/LinkTo/LinkTo';
@@ -35,24 +35,39 @@ export const ViewQR: FC<IViewQR> = ({ handleClickQR }) => {
             <LinkToMolecule
               href="https://elipse.ai/politicas-de-privacidad/"
               color="#2477ff"
-              text="terminos y condiciones"
+              text="términos y condiciones"
             />
           </div>
         </StyledLink>
         <StyledQR>
           {imageQR ? (
-            <iframe
-              src={imageQR}
-              frameBorder="0"
-              height="260px"
-              width="100%"
-              title="qr"
-            />
+            <>
+              {loadQR ? (
+                <SpinnerDotted
+                  color="#8769FF"
+                  size="100%"
+                  style={{ maxHeight: '5rem' }}
+                />
+              ) : (
+                <>
+                  <iframe
+                    src={imageQR}
+                    frameBorder="0"
+                    height="260px"
+                    width="100%"
+                    title="qr"
+                  />
+                  <button type="button" onClick={handleLoadQr}>
+                    <MdRefresh />
+                  </button>
+                </>
+              )}
+            </>
           ) : (
             <div>
               <SVGIcon iconFile="/icons/sad-face-2691.svg" />
               <Text>
-                Ups el código QR no se cargo correctamente intentalo nuevamente.
+                Ups el código QR no se cargó correctamente inténtalo nuevamente.
               </Text>
               <div>
                 {loadQR ? (
@@ -80,7 +95,7 @@ export const ViewQR: FC<IViewQR> = ({ handleClickQR }) => {
               <LinkToMolecule
                 href="https://faq.whatsapp.com/web/download-and-installation/how-to-log-in-or-out?lang=es"
                 color="#2477ff"
-                text="esta guia"
+                text="esta guía"
               />
               <p>para asegurar</p>
             </div>

@@ -65,7 +65,7 @@ export const ChatTransfer: FC<IChatTransfer> = ({
         message: `${error}`,
       });
     }
-  }, []);
+  }, [dispatch, toasts]);
 
   const getChatsToday = useCallback(async () => {
     try {
@@ -82,12 +82,12 @@ export const ChatTransfer: FC<IChatTransfer> = ({
         message: `${error}`,
       });
     }
-  }, []);
+  }, [dispatch, toasts]);
 
   useEffect(() => {
     getAgentAvailable();
     getChatsToday();
-  }, []);
+  }, [getAgentAvailable, getChatsToday]);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchAgent(event.target.value);

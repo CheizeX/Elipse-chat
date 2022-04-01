@@ -20,7 +20,7 @@ export const NotificationDiviceCreated: FC<INotificationProps> = ({
     setIsLoanding(true);
     await handleClickQR();
     setIsSectionWebChat(true);
-    setSeletedComponent('UnofficialWhatsapp');
+    setSeletedComponent('unofficialWhatsApp');
     setSelectedByComponentUnOfficialWhatsapp(3);
     setIsLoanding(false);
     setShowDivice(false);

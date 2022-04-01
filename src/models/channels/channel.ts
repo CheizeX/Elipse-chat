@@ -16,6 +16,7 @@ export type ListChannel = {
   officialWhatsApp: IOfficialWhatsApp;
   unofficialWhatsApp: IOfficialWhatsApp;
   instagram: IPropsInstagram;
+  availableChannels: IPropsChannel[];
 };
 
 export type IFacebook = {
@@ -58,6 +59,22 @@ export type IPropsWebChat = {
   avatar: string;
   isActive: boolean;
   _id: string;
+  scripts: IPropsScripts;
+};
+
+export type IPropsScripts = {
+  js: string;
+  css: string;
+  div: string;
+};
+
+export type IWebChat = {
+  name: string;
+  description: string;
+  primaryColor: string;
+  secondaryColor: string;
+  avatar: string;
+  animation: string;
 };
 
 export type IPropsInstagram = {
@@ -74,3 +91,7 @@ export type IPropsUnOfficialWhatsapp = {
   code: number;
   result: string;
 };
+export interface IPropsChannel {
+  _id: string;
+  name: string;
+}

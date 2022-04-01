@@ -2,6 +2,8 @@ import {
   Channel,
   IPropsInstagram,
   IPropsOfficialWhatsapp,
+  IWebChat,
+  ListChannel,
 } from '../../models/channels/channel';
 import {
   IReceiveAuthFacebook,
@@ -26,7 +28,9 @@ export const updateChannel = (
 };
 
 export const deleteChannel = (channelId: string) => {
-  return baseRestApi.delete<string>(`/channelsCredentials/${channelId}`);
+  return baseRestApi.delete<ListChannel>(
+    `/channelsCredentials/channel/${channelId}`,
+  );
 };
 
 export const authFacebook = (userToken: string) => {
@@ -67,13 +71,15 @@ export const getNewDevicedIDWassenger = () => {
 export const getDevicedStatusWassenger = () => {
   return baseRestApi.get<string>('wassenger/deviceAuthorized');
 };
-export const getWassengerQR = (force: boolean, deviceId: string) => {
-  return baseRestApi.get<string>(
-    `wassenger/generateQR?force=${force}&deviceId=${deviceId}`,
-  );
+export const getWassengerQR = () => {
+  return baseRestApi.get<string>(`wassenger/generateQR`);
 };
 export const readWhatsappDevice = () => {
   return baseRestApi.post<string>('/wassenger/savePhoneAndImage', {});
+};
+
+export const resetWassenger = () => {
+  return baseRestApi.post<string>('/wassenger/resetSession', {});
 };
 
 export const getAllChannel = () => {
@@ -81,4 +87,7 @@ export const getAllChannel = () => {
 };
 export const getHasPageInstagram = () => {
   return baseRestApi.get<IPropsInstagram[]>('/instagram');
+};
+export const createWebChat = (data: IWebChat) => {
+  return baseRestApi.post<string>('/webchat', data);
 };

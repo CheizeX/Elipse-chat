@@ -39,7 +39,11 @@ export const SearchForChats: FC<ISearchForChats> = ({ datsReports }) => {
             ({ _id, channel, status, assignedAgent, createdAt }, index) => (
               <WrapperReports key={_id} index={index} position={status}>
                 <div>
-                  <SVGIcon iconFile={`/icons/${channel}.svg`} />
+                  <SVGIcon
+                    iconFile={`/icons/${
+                      channel === 'Wassenger' ? 'Whatsapp' : channel
+                    }.svg`}
+                  />
                   <Text>{channel}</Text>
                 </div>
                 <span>

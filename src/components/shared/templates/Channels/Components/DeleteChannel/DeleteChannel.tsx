@@ -14,30 +14,35 @@ import {
   Size,
 } from '../../../../atoms/Button/Button';
 import { IDeleteChannel } from './DeleteChannel.interface';
-// import { deleteChannel } from '../../../../../../api/channels';
 import { useToastContext } from '../../../../molecules/Toast/useToast';
 import { Toast } from '../../../../molecules/Toast/Toast.interface';
 import { RootState } from '../../../../../../redux';
+import { setlistChannel } from '../../../../../../redux/slices/channels/list-channel';
+import { deleteChannel } from '../../../../../../api/channels';
+import { useAppDispatch } from '../../../../../../redux/hook/hooks';
 
 export const DeleteChannel: FC<IDeleteChannel> = ({ setIsSectionWebChat }) => {
   const showAlert = useToastContext();
+  const dispatch = useAppDispatch();
+
   const { idChannel }: any = useSelector(
     (state: RootState) => state.channel.listChannelState,
   );
 
   const handleDelete = async () => {
     try {
-      // const response = await deleteChannel(idChannel);
+      const response = await deleteChannel(idChannel);
+      dispatch(setlistChannel(response));
       // console.log(response);
-      if (idChannel) {
-        console.log(idChannel);
-      } else {
-        showAlert?.addToast({
-          alert: Toast.ERROR,
-          title: 'ERROR',
-          message: 'No se puede eliminar este canal.',
-        });
-      }
+      // if (idChannel) {
+      //   console.log(idChannel);
+      // } else {
+      //   showAlert?.addToast({
+      //     alert: Toast.ERROR,
+      //     title: 'ERROR',
+      //     message: 'No se puede eliminar este canal.',
+      //   });
+      // }
       setIsSectionWebChat(false);
     } catch (err) {
       showAlert?.addToast({

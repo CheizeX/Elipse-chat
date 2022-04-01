@@ -38,6 +38,8 @@ import chatsHistoryState from './slices/live-chat/chat-history';
 import chatsTodayTransferState from './slices/live-chat/chat-transfer';
 import configurationInfo from './slices/configuration/configuration-info';
 import chatContainerAccountInstagramState from './slices/channels/account-instagram';
+import subscriptionsInfo from './slices/subscriptions/subscriptions-info';
+import invoices from './slices/subscriptions/invoices';
 
 const liveChat = combineReducers({
   chatsPendings,
@@ -109,6 +111,8 @@ export const store = configureStore({
     optionsToFilterChats,
     channel,
     configurationInfo,
+    subscriptionsInfo,
+    invoices,
   },
 });
 

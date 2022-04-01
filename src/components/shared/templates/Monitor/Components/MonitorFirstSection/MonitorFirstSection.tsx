@@ -123,7 +123,11 @@ export const MonitorFirstSection: FC<IFirstSetionProps> = ({
                   position={status}
                   isColorPaused={isPaused}>
                   <div>
-                    <SVGIcon iconFile={`/icons/${channel}.svg`} />
+                    <SVGIcon
+                      iconFile={`/icons/${
+                        channel === 'Wassenger' ? 'Whatsapp' : channel
+                      }.svg`}
+                    />
                   </div>
                   <span>
                     <BadgeMolecule>

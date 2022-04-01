@@ -21,6 +21,7 @@ import {
 import { useAppSelector } from '../../../../../../redux/hook/hooks';
 import { ModalBackgroundProps } from '../../../../molecules/Modal/Modal';
 import useLocalStorage from '../../../../../../hooks/use-local-storage';
+import { ContactForm } from '../ContactForm/ContactForm';
 
 export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
   userSelected,
@@ -78,6 +79,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
         <a
           href={url}
           target="_blank"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: url }}
           rel="noreferrer"
         />
@@ -112,6 +114,7 @@ export const DialoguesBox: FC<SelectedUserProps & ModalBackgroundProps> = ({
 
   return (
     <StyledDialoguesContainer>
+      <ContactForm />
       {chatsOnConversation &&
         chatsOnConversation
           ?.filter(

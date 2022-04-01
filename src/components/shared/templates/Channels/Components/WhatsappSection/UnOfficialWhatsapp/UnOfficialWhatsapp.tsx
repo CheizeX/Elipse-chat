@@ -26,10 +26,15 @@ import { Toast } from '../../../../../molecules/Toast/Toast.interface';
 import { useToastContext } from '../../../../../molecules/Toast/useToast';
 import { WhatsappExists } from '../Components/WhatsappExists/WhatsappExists';
 import { AddDivice } from '../Components/AddDivice/AddDivice';
-import { readWhatsappDevice } from '../../../../../../../api/channels';
+import {
+  getDevicedStatusWassenger,
+  readWhatsappDevice,
+  resetWassenger,
+} from '../../../../../../../api/channels';
 import { OfficialWhatsAppSuccess } from '../Components/OfficialWhatsappSuccess/OfficialWhatsappSuccess';
 import { OfficialWhatsappRejected } from '../Components/OfficialWhatsappRejected/OfficialWhatsappRejected';
 import { useAppSelector } from '../../../../../../../redux/hook/hooks';
+import { RejectSaveImage } from '../../RejectSaveImage/RejectSaveImage';
 
 const dataUnOfficialWhatsApp = [
   {
@@ -55,12 +60,13 @@ export const UnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
   setSelectedByComponentUnOfficialWhatsapp,
   setIsSectionWebChat,
   handleClickQR,
-  // getChannelList,
+  getChannelList,
   whatsappUnOfficial,
   handleDiveceCreate,
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [unLink, setUnLink] = useState<boolean>(false);
+  const [isLoanding, setIsLoanding] = useState<boolean>(false);
   const showAlert = useToastContext();
   const { imageQR } = useAppSelector(
     (state) => state.channel.chatIntegrationQRState,
@@ -77,20 +83,52 @@ export const UnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
     );
   };
 
+  const handleClickRejectSaveImage = async () => {
+    try {
+      setIsLoanding(true);
+      const response = await readWhatsappDevice();
+      if (response.success === false) {
+        setIsLoanding(false);
+        setSelectedByComponentUnOfficialWhatsapp(6);
+      } else {
+        setIsLoanding(false);
+        setSelectedByComponentUnOfficialWhatsapp(4);
+      }
+    } catch (err) {
+      showAlert?.addToast({
+        alert: Toast.ERROR,
+        title: 'ERROR',
+        message: `${err}`,
+      });
+    }
+  };
+
   const handleSubmit = async () => {
     try {
       if (selectedByComponentUnOfficialWhatsapp === 3) {
-        const response = await readWhatsappDevice();
-        if (response === 'SAVED') {
-          handleNext();
-          // setIsSectionWebChat(false);
-        } else {
-          setSelectedByComponentUnOfficialWhatsapp(5);
-        }
+        setIsLoanding(true);
+        setTimeout(async () => {
+          const response = await readWhatsappDevice();
+          if (response === 'SAVED') {
+            await getChannelList();
+            setIsLoanding(false);
+            handleNext();
+            // setIsSectionWebChat(false);
+          } else {
+            setSelectedByComponentUnOfficialWhatsapp(6);
+          }
+        }, 10000);
       } else if (
         selectedByComponentUnOfficialWhatsapp === 4 ||
         selectedByComponentUnOfficialWhatsapp === 5
       ) {
+        setIsLoanding(true);
+        const response = await readWhatsappDevice();
+        if (response === 'SAVED') {
+          await getChannelList();
+          setIsLoanding(false);
+          // setIsSectionWebChat(false);
+        }
         setSelectedByComponentUnOfficialWhatsapp(1);
         setIsSectionWebChat(false);
       } else {
@@ -111,6 +149,32 @@ export const UnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
         handleDiveceCreate();
       }
     } catch (err) {
+      showAlert?.addToast({
+        alert: Toast.ERROR,
+        title: 'ERROR',
+        message: `${err}`,
+      });
+    }
+  };
+
+  const handleReset = async () => {
+    try {
+      // enpoit para disvincular el dispositivo.
+      handleNext();
+      const response = await resetWassenger();
+      if (response.success === false) {
+        const isAutorize = await getDevicedStatusWassenger();
+        if (isAutorize.success === false) {
+          setSelectedByComponentUnOfficialWhatsapp(5);
+        } else {
+          setSelectedByComponentUnOfficialWhatsapp(3);
+        }
+      } else {
+        await handleClickQR();
+        setSelectedByComponentUnOfficialWhatsapp(3);
+      }
+    } catch (err) {
+      setSelectedByComponentUnOfficialWhatsapp(3);
       showAlert?.addToast({
         alert: Toast.ERROR,
         title: 'ERROR',
@@ -154,7 +218,9 @@ export const UnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
           {whatsappUnOfficial && selectedByComponentUnOfficialWhatsapp === 1 ? (
             <WhatsappExists setUnLink={setUnLink} unLink={unLink} />
           ) : null}
-          {selectedByComponentUnOfficialWhatsapp === 2 ? <AddDivice /> : null}
+          {selectedByComponentUnOfficialWhatsapp === 2 ? (
+            <AddDivice whatsappUnOfficial={whatsappUnOfficial} />
+          ) : null}
           {selectedByComponentUnOfficialWhatsapp === 3 ? (
             <ViewQR whatsappUnOfficial={false} handleClickQR={handleClickQR} />
           ) : null}
@@ -163,6 +229,12 @@ export const UnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
           ) : null}
           {selectedByComponentUnOfficialWhatsapp === 5 ? (
             <OfficialWhatsappRejected />
+          ) : null}
+          {selectedByComponentUnOfficialWhatsapp === 6 ? (
+            <RejectSaveImage
+              isLoanding={isLoanding}
+              handleRejectSaveImage={handleClickRejectSaveImage}
+            />
           ) : null}
         </div>
       </StyledBodyAddChannel>
@@ -173,7 +245,8 @@ export const UnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
           size={Size.MEDIUM}
           onClick={handlePrev}
           state={
-            selectedByComponentUnOfficialWhatsapp <= 1
+            selectedByComponentUnOfficialWhatsapp <= 1 ||
+            selectedByComponentUnOfficialWhatsapp > 4
               ? ButtonState.DISABLED
               : ButtonState.NORMAL
           }
@@ -186,11 +259,19 @@ export const UnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
                 : 'Siguiente'
             }
             size={Size.MEDIUM}
-            onClick={handleSubmit}
+            onClick={
+              selectedByComponentUnOfficialWhatsapp === 1
+                ? handleReset
+                : handleSubmit
+            }
             state={
+              // eslint-disable-next-line no-nested-ternary
               !unLink ||
-              (selectedByComponentUnOfficialWhatsapp === 3 && !imageQR)
+              (selectedByComponentUnOfficialWhatsapp === 3 && !imageQR) ||
+              selectedByComponentUnOfficialWhatsapp === 2
                 ? ButtonState.DISABLED
+                : isLoanding
+                ? ButtonState.LOADING
                 : ButtonState.NORMAL
             }
           />
@@ -204,9 +285,12 @@ export const UnOfficialWhatsAppComponent: FC<IPropsChannelAdd> = ({
             size={Size.MEDIUM}
             onClick={handleSubmit}
             state={
+              // eslint-disable-next-line no-nested-ternary
               !isChecked ||
               (selectedByComponentUnOfficialWhatsapp === 3 && !imageQR)
                 ? ButtonState.DISABLED
+                : isLoanding
+                ? ButtonState.LOADING
                 : ButtonState.NORMAL
             }
           />

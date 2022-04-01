@@ -58,7 +58,7 @@ export const StyledUserDialogue = styled.div<StyledOnConversationWrapperProps>`
       }
       & article {
         transition: all 1s ease-in-out;
-        z-index: 1;
+        z-index: 2;
         background-color: ${({ theme }) => theme.Colors.grays[1]};
         position: absolute;
         width: 100%;
@@ -87,7 +87,7 @@ export const StyledUserDialogue = styled.div<StyledOnConversationWrapperProps>`
       }
       & > button {
         transition: all 1s ease-in-out;
-        z-index: 2;
+        z-index: 3;
         position: absolute;
         top: 10px;
         right: 13px;

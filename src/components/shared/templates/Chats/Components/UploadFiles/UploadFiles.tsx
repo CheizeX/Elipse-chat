@@ -113,6 +113,12 @@ export const UploadFiles: FC<
           formData,
         );
       }
+      // if (chatToTalkWithUser?.channel === 'Wassenger') {
+      //   await baseRestApi.postMultipart(
+      //     `/wassenger/sendFiles/${chatToTalkWithUserId}?from=AGENT&companyId=${userDataInState.companyId}`,
+      //     formData,
+      //   );
+      // }
       setUploading(false);
     } catch (error) {
       showAlert?.addToast({

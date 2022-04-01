@@ -6,6 +6,7 @@ export enum Channels {
   MESSENGER = 'Messenger',
   INSTAGRAM = 'Instagram',
   WEBCHAT = 'Webchat',
+  WASSENGER = 'Wassenger',
 }
 
 export enum ChatStatus {
