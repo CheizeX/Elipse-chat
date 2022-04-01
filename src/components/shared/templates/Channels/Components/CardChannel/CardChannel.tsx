@@ -37,8 +37,9 @@ export const CardChannel: FC<IPropsCardChannel> = ({
   setSeletedComponent,
 }) => {
   const dispatch = useAppDispatch();
-  const { scripts: scriptArray } = useAppSelector(
-    (state) => state.channel.listChannelState.listChannel.webchat,
+
+  const { webchat } = useAppSelector(
+    (state) => state.channel.listChannelState.listChannel,
   );
 
   const { ref, isComponentVisible, setIsComponentVisible } =
@@ -99,7 +100,7 @@ export const CardChannel: FC<IPropsCardChannel> = ({
               {isComponentVisible ? (
                 <div ref={ref}>
                   <DropdownContainerCard>
-                    {service === 'Web Chat' && scriptArray && (
+                    {service === 'Web Chat' && webchat.scripts && (
                       <BadgeMolecule
                         bgColor="transparent"
                         leftIcon={() => <SVGIcon iconFile="/icons/eye.svg" />}>

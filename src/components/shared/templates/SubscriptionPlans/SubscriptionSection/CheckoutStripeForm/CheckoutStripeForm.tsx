@@ -103,6 +103,12 @@ export const StripeForm: FC<SubscriptionSectionItemsProps> = ({
       dispatch(getSubscriptionsData());
       setShowCard(false);
       onClose && onClose();
+    } else {
+      showAlert?.addToast({
+        alert: Toast.ERROR,
+        title: 'ERROR',
+        message: `Intenta nuevamente o prueba con otra tarjeta.`,
+      });
     }
   };
 
