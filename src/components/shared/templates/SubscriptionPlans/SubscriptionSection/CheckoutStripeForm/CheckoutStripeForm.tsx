@@ -106,8 +106,8 @@ export const StripeForm: FC<SubscriptionSectionItemsProps> = ({
     } else {
       showAlert?.addToast({
         alert: Toast.ERROR,
-        title: 'ERROR',
-        message: `Intenta nuevamente o prueba con otra tarjeta.`,
+        title: 'ERROR EN TARJETA',
+        message: `Intenta nuevamente o prueba con una diferente.`,
       });
     }
   };
